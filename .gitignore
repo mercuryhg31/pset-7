@@ -1,0 +1,7 @@
+.classpath
+.project
+.settings/
+data/*.db
+bin/
+src/*.class
+*.class
