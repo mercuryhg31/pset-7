@@ -15,13 +15,7 @@ public class Student extends User {
     private String lastName;
     
     public Student(User user, ResultSet rs) {
-        this.studentId = user.getUserId();
-        if (super.isStudent() == false) {
-            //cleanup thingies
-        } else {
-            //do the things you want to do here lmao
-            
-        }
-
+        this.studentId = rs.getInt("user_id");
+        this.studentId = user.getUserId(); // ?
     }
 }
