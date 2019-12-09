@@ -14,7 +14,7 @@ public class Teacher extends User {
     public Teacher(User user, ResultSet rs) {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
-        this.teacherId = rs.getInt("user_id");
+        this.teacherId = rs.getInt("teacher_id");
         this.departmentId = rs.getInt("department_id");
         this.firstName = rs.getString("first_name");
         this.lastName = rs.getString("last_name");
