@@ -15,7 +15,14 @@ public class Student extends User {
     private String lastName;
     
     public Student(User user, ResultSet rs) {
+        super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
+
         this.studentId = rs.getInt("user_id");
-        this.studentId = user.getUserId(); // ?
+        this.classRank = rs.getInt("class_rank");
+        this.gradeLevel = rs.getInt("grade_level");
+        this.graduationYear = rs.getInt("graduation");
+        this.gpa = rs.getDouble("gpa");
+        this.firstName = rs.getString("first_name");
+        this.lastName = rs.getString("last_name");
     }
 }
