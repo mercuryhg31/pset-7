@@ -2,6 +2,8 @@
 
 It's time to put your skills to the test. Rather than solving a disjointed set of exercises, this problem set focuses on building a persistent application backed by a real database. Portions of the application are already implemented for you. It's your job to fill in the pieces.
 
+[Skeleton Repository](https://github.com/ap-java-ucvts/pset-7-skeleton)
+
 ## Getting Started
 
 To get started, create a [GitHub](https://github.com/) repository to store your code. When you're finished, clone my skeleton to get all of the starter code and instructions. Setup a remote to push your code to your repository instead of mine.

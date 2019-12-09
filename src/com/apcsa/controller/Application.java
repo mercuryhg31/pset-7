@@ -50,17 +50,44 @@ public class Application {
                     ? activeUser : null;
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
-                    // first-time users need to change their passwords from the default provided
+                    System.out.print("Please set your password: ");
+                    activeUser.setPassword(in.next());
                 }
 
-                // create and show the user interface
-                //
-                // remember, the interface will be difference depending on the type
-                // of user that is logged in (root, administrator, teacher, student)
+                if (activeUser.isStudent()) {
+                    studentSelection();
+                } else if (activeUser.isTeacher()) {
+                    teacherSelection();
+                } else if (activeUser.isAdministrator()) {
+                    adminSelection();
+                } else if (activeUser.isRoot()) {
+                    rootSelection();
+                }
+
             } else {
                 System.out.println("\nInvalid username and/or password.");
             }
         }
+    }
+
+    public void studentSelection() {
+        System.out.println("\nStudent:");
+        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+    }
+
+    public void teacherSelection() {
+        System.out.println("\nTeacher:");
+        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+    }
+
+    public void adminSelection() {
+        System.out.println("\nAdmin:");
+        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+    }
+
+    public void rootSelection() {
+        System.out.println("\nRoot:");
+        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
     }
 
     /**
