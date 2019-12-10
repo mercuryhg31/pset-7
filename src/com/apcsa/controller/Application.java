@@ -71,25 +71,40 @@ public class Application {
     }
 
     public void studentSelection() {
-        System.out.println("\nStudent:");
-        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+        System.out.println("[1] View course grades.");
+        System.out.println("[2] View assignment grades by course.");
+        System.out.println("[3] Change password.");
+        System.out.println("[4] Logout.");
     }
 
     public void teacherSelection() {
-        System.out.println("\nTeacher:");
-        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
-        // hi
-        // hi 2
+        System.out.println("[1] View enrollment by course.");
+        System.out.println("[2] Add assignment.");
+        System.out.println("[3] Delete assignment.");
+        System.out.println("[4] Enter grade.");
+        System.out.println("[5] Change password.");
+        System.out.println("[6] Logout.");
     }
 
     public void adminSelection() {
-        System.out.println("\nAdmin:");
-        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+        // System.out.println("\nHello, again, NAME!\n");
+        System.out.println("[1] View faculty.");
+        System.out.println("[2] View faculty by department.");
+        System.out.println("[3] View student enrollment.");
+        System.out.println("[4] View student enrollment by grade.");
+        System.out.println("[5] View student enrollment by course.");
+        System.out.println("[6] Change password.");
+        System.out.println("[7] Logout.\n");
+        System.out.println("\n::: ");
     }
 
     public void rootSelection() {
-        System.out.println("\nRoot:");
-        System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+        System.out.println("\nHello, again, Root!\n");
+        System.out.println("[1] Reset user password.");
+        System.out.println("[2] Factory reset database.");
+        System.out.println("[3] Logout.");
+        System.out.println("[4] Shutdown.\n");
+        System.out.println("\n::: ");
     }
 
     /**
