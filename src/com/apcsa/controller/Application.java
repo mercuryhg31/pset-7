@@ -9,6 +9,26 @@ public class Application {
     private Scanner in;
     private User activeUser;
 
+    enum Menu {
+        VIEW_GRADES,
+        VIEW_GRADES_COURSE,
+        CHANGE_PW,
+        LOGOUT,
+        VIEW_ENROLL_COURSE,
+        ADD_ASSNG,
+        DELETE_ASSNG,
+        ENTER_GRADE,
+        VIEW_FCLTY,
+        VIEW_FCLTY_B_DEPT,
+        VIEW_ST_ENROLL,
+        VIEW_ST_ENROLL_GRADE,
+        VIEW_ST_ENROLL_COURSE,
+        RESET_PW, // unless this means change root password TODO check
+        FACTORY_RESET,
+        SHUTDOWN,
+        INVALID;
+    }
+
     /**
      * Creates an instance of the Application class, which is responsible for interacting
      * with the user via the command line interface.
@@ -55,13 +75,13 @@ public class Application {
                 }
 
                 if (activeUser.isStudent()) {
-                    studentSelection();
+                    studentMenu();
                 } else if (activeUser.isTeacher()) {
-                    teacherSelection();
+                    teacherMenu();
                 } else if (activeUser.isAdministrator()) {
-                    adminSelection();
+                    adminMenu();
                 } else if (activeUser.isRoot()) {
-                    rootSelection();
+                    rootMenu();
                 }
 
             } else {
@@ -70,14 +90,14 @@ public class Application {
         }
     }
 
-    public void studentSelection() {
+    public void studentMenu() {
         System.out.println("[1] View course grades.");
         System.out.println("[2] View assignment grades by course.");
         System.out.println("[3] Change password.");
         System.out.println("[4] Logout.");
     }
 
-    public void teacherSelection() {
+    public void teacherMenu() {
         System.out.println("[1] View enrollment by course.");
         System.out.println("[2] Add assignment.");
         System.out.println("[3] Delete assignment.");
@@ -86,7 +106,7 @@ public class Application {
         System.out.println("[6] Logout.");
     }
 
-    public void adminSelection() {
+    public void adminMenu() {
         // System.out.println("\nHello, again, NAME!\n");
         System.out.println("[1] View faculty.");
         System.out.println("[2] View faculty by department.");
@@ -98,13 +118,53 @@ public class Application {
         System.out.println("\n::: ");
     }
 
-    public void rootSelection() {
+    public void rootMenu() {
         System.out.println("\nHello, again, Root!\n");
         System.out.println("[1] Reset user password.");
         System.out.println("[2] Factory reset database.");
         System.out.println("[3] Logout.");
         System.out.println("[4] Shutdown.\n");
         System.out.println("\n::: ");
+    }
+
+    public Menu returnSelection(int n) {
+        if (activeUser.isStudent()) {
+            switch (n) {
+                case 1:
+                    return Menu.VIEW_GRADES;
+                    break;
+                case 2:
+                    return Menu.VIEW_GRADES_COURSE;
+                    break;
+                case 3:
+                    return Menu.CHANGE_PW;
+                case 4:
+                    return Menu.LOGOUT;
+                default:
+                    return Menu.INVALID;
+            }
+        } else if (activeUser.isTeacher()) {
+            // TODO teacher selection cases
+        } else if (activeUser.isAdministrator()) {
+            // TODO admin selection cases
+        } else if (activeUser.isRoot()) {
+            switch (n) {
+                case 1:
+                    return Menu.RESET_PW;
+                    break;
+                case 2:
+                    return Menu.FACTORY_RESET;
+                    break;
+                case 3:
+                    return Menu.LOGOUT;
+                    break;
+                case 4:
+                    return Menu.SHUTDOWN;
+                    break;
+                default:
+                    return Menu.INVALID;
+            }
+        }
     }
 
     /**
