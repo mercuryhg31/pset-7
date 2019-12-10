@@ -78,6 +78,7 @@ public class Application {
     public void teacherSelection() {
         System.out.println("\nTeacher:");
         System.out.println("Mr. Wilson has yet to describe the specifics of the UI.\n");
+        // hi
     }
 
     public void adminSelection() {
