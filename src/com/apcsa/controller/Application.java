@@ -62,7 +62,7 @@ public class Application {
 
             // if login is successful, update generic user to administrator, teacher, or student
 
-            if (login(username, password)) {
+            if (login(username, password)) { 
                 activeUser = activeUser.isAdministrator()
                     ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
                     ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
@@ -144,9 +144,54 @@ public class Application {
                     return Menu.INVALID;
             }
         } else if (activeUser.isTeacher()) {
-            // TODO teacher selection cases
+            switch (n) {
+                case 1:
+                    return Menu.VIEW_ST_ENROLL_COURSE;
+                    break;
+                case 2:
+                    return Menu.ADD_ASSNG;
+                    break;
+                case 3:
+                    return Menu.DELETE_ASSNG;
+                    break;
+                case 4:
+                    return Menu.ENTER_GRADE;
+                    break;
+                case 5:
+                    return Menu.CHANGE_PW;
+                    break;
+                case 6:
+                    return Menu.LOGOUT;
+                    break;
+                default:
+                    return Menu.INVALID;
+            }
         } else if (activeUser.isAdministrator()) {
-            // TODO admin selection cases
+            switch (n) {
+                case 1:
+                    return Menu.VIEW_FCLTY;
+                    break;
+                case 2:
+                    return Menu.VIEW_FCLTY_B_DEPT;
+                    break;
+                case 3:
+                    return Menu.VIEW_ST_ENROLL;
+                    break;
+                case 4:
+                    return Menu.VIEW_ST_ENROLL_GRADE;
+                    break;
+                case 5:
+                    return Menu.VIEW_ENROLL_COURSE;
+                    break;
+                case 6:
+                    return Menu.CHANGE_PW;
+                    break;
+                case 7:
+                    return Menu.LOGOUT;
+                    break;
+                default:
+                    return Menu.INVALID;
+            }
         } else if (activeUser.isRoot()) {
             switch (n) {
                 case 1:
