@@ -101,23 +101,23 @@ public class PowerSchool {
      * @return the administrator account if it exists
      */
 
-    public static User getAdministrator(User user) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_ADMIN_SQL)) {
+    // public static User getAdministrator(User user) { TODO uncomment
+    //     try (Connection conn = getConnection();
+    //          PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_ADMIN_SQL)) {
 
-            stmt.setInt(1, user.getUserId());
+    //         stmt.setInt(1, user.getUserId());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Administrator(user, rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    //         try (ResultSet rs = stmt.executeQuery()) {
+    //             if (rs.next()) {
+    //                 return new Administrator(user, rs);
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
 
-        return user;
-    }
+    //     return user;
+    // }
 
     /**
      * Returns the teacher account associated with the user.
@@ -126,23 +126,23 @@ public class PowerSchool {
      * @return the teacher account if it exists
      */
 
-    public static User getTeacher(User user) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_TEACHER_SQL)) {
+    // public static User getTeacher(User user) { TODO uncomment
+    //     try (Connection conn = getConnection();
+    //          PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_TEACHER_SQL)) {
 
-            stmt.setInt(1, user.getUserId());
+    //         stmt.setInt(1, user.getUserId());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Teacher(user, rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    //         try (ResultSet rs = stmt.executeQuery()) {
+    //             if (rs.next()) {
+    //                 return new Teacher(user, rs);
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
 
-        return user;
-    }
+    //     return user;
+    // }
 
     /**
      * Returns the student account associated with the user.
@@ -151,25 +151,25 @@ public class PowerSchool {
      * @return the student account if it exists
      */
 
-    public static User getStudent(User user) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENT_SQL)) {
+    // public static User getStudent(User user) { TODO uncomment
+    //     try (Connection conn = getConnection();
+    //          PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_STUDENT_SQL)) {
 
-            stmt.setInt(1, user.getUserId());
+    //         stmt.setInt(1, user.getUserId());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Student(user, rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    //         try (ResultSet rs = stmt.executeQuery()) {
+    //             if (rs.next()) {
+    //                 return new Student(user, rs);
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
 
-        return user;
-    }
+    //     return user;
+    // }
 
-    /*
+    /**
      * Establishes a connection to the database.
      *
      * @return a database Connection object

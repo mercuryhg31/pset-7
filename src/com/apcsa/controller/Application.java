@@ -63,11 +63,11 @@ public class Application {
             // if login is successful, update generic user to administrator, teacher, or student
 
             if (login(username, password)) { 
-                activeUser = activeUser.isAdministrator()
-                    ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
-                    ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
-                    ? PowerSchool.getStudent(activeUser) : activeUser.isRoot()
-                    ? activeUser : null;
+                // activeUser = activeUser.isAdministrator()
+                //     ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
+                //     ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
+                //     ? PowerSchool.getStudent(activeUser) : activeUser.isRoot()
+                //     ? activeUser : null;
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     System.out.print("Please set your password: ");
@@ -190,6 +190,8 @@ public class Application {
                 default:
                     return Menu.INVALID;
             }
+        } else {
+            return Menu.INVALID;
         }
     }
 

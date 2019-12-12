@@ -18,12 +18,12 @@ public class Student extends User {
     public Student(User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
-        this.studentId = rs.getInt("user_id");
-        this.classRank = rs.getInt("class_rank");
-        this.gradeLevel = rs.getInt("grade_level");
-        this.graduationYear = rs.getInt("graduation");
-        this.gpa = rs.getDouble("gpa");
-        this.firstName = rs.getString("first_name");
-        this.lastName = rs.getString("last_name");
+        // this.studentId = rs.getInt("user_id");
+        // this.classRank = rs.getInt("class_rank");
+        // this.gradeLevel = rs.getInt("grade_level");
+        // this.graduationYear = rs.getInt("graduation");
+        // this.gpa = rs.getDouble("gpa");
+        // this.firstName = rs.getString("first_name");
+        // this.lastName = rs.getString("last_name");
     }
 }
