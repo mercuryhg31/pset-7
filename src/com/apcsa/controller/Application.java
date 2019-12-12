@@ -4,6 +4,8 @@ import java.util.Scanner;
 import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 
+// java -cp "./src;./lib/sqlite-jdbc-3.28.0.jar" com/apcsa/controller/Application
+
 public class Application {
 
     private Scanner in;
@@ -71,16 +73,20 @@ public class Application {
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     System.out.print("Please set your password: ");
-                    activeUser.setPassword(in.next());
+                    activeUser.setPassword(Utils.getHash(in.next()));
                 }
 
                 if (activeUser.isStudent()) {
+                    System.out.println("\nHello, again, NAME!\n");
                     studentMenu();
                 } else if (activeUser.isTeacher()) {
+                    System.out.println("\nHello, again, NAME!\n");
                     teacherMenu();
                 } else if (activeUser.isAdministrator()) {
+                    System.out.println("\nHello, again, NAME!\n");
                     adminMenu();
                 } else if (activeUser.isRoot()) {
+                    System.out.println("\nHello, again, Root!\n");
                     rootMenu();
                 }
 
@@ -90,11 +96,44 @@ public class Application {
         }
     }
 
+    public void changePassword() {
+        System.out.println("\nEnter current password: ");
+        String currentPW = Utils.getHash(in.next());
+        System.out.println("Enter new password: ");
+        String newPW = Utils.getHash(in.next());;
+
+        if (currentPW != activeUser.getPassword()) {
+            System.out.println("\nInvalid current password.");
+        } else {
+            activeUser.setPassword(newPW);
+        }
+    }
+
+
+    /**
+     * For root only - maybe this shouldn't be in Application, but User?
+     */
+    public void resetPassword() { // TODO wip
+        System.out.println("\nUsername: ");
+        String user = in.next(); // make this a User instead of string
+        
+        String confirm;
+        do {
+            System.out.println("Are you sure you want to reset the password for rwilson? (y/n) ");
+            confirm = in.next().toLowerCase();
+        } while (confirm != "y" && confirm != "n");
+
+        if (confirm == "y") {
+            // reset password
+        }
+    }
+
     public void studentMenu() {
         System.out.println("[1] View course grades.");
         System.out.println("[2] View assignment grades by course.");
         System.out.println("[3] Change password.");
         System.out.println("[4] Logout.");
+        System.out.println("\n::: ");
     }
 
     public void teacherMenu() {
@@ -104,10 +143,10 @@ public class Application {
         System.out.println("[4] Enter grade.");
         System.out.println("[5] Change password.");
         System.out.println("[6] Logout.");
+        System.out.println("\n::: ");
     }
 
     public void adminMenu() {
-        // System.out.println("\nHello, again, NAME!\n");
         System.out.println("[1] View faculty.");
         System.out.println("[2] View faculty by department.");
         System.out.println("[3] View student enrollment.");
@@ -119,7 +158,6 @@ public class Application {
     }
 
     public void rootMenu() {
-        System.out.println("\nHello, again, Root!\n");
         System.out.println("[1] Reset user password.");
         System.out.println("[2] Factory reset database.");
         System.out.println("[3] Logout.");

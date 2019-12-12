@@ -15,10 +15,10 @@ public class Administrator extends User {
     public Administrator (User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
-        // this.administratorId = rs.getInt("administrator_id"); 
-        // this.firstName = rs.getString("first_name");
-        // this.lastName = rs.getString("last_name");
-        // this.jobTitle = rs.getString("job_title");
+        this.administratorId = rs.getInt("administrator_id"); 
+        this.firstName = rs.getString("first_name");
+        this.lastName = rs.getString("last_name");
+        this.jobTitle = rs.getString("job_title");
     }
 
 }

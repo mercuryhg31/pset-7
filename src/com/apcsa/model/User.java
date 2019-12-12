@@ -46,6 +46,17 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
+
+    /**
+     * Trying to return a User based on username
+     * 
+     * @param username
+     * @return User
+     */
+    public User getUser(String username) {
+        return this; // TODO this is temp
+    }
+
     /**
      * @return userId
      */
@@ -78,14 +89,8 @@ public class User {
         return password;
     }
 
-    /**
-     * Sets password
-     * 
-     * @param password
-     */
-
     public void setPassword(String password) {
-        this.password = Utils.getHash(password);
+        this.password = password;
     }
 
     /**
