@@ -132,10 +132,8 @@ public class Application {
             switch (n) {
                 case 1:
                     return Menu.VIEW_GRADES;
-                    break;
                 case 2:
                     return Menu.VIEW_GRADES_COURSE;
-                    break;
                 case 3:
                     return Menu.CHANGE_PW;
                 case 4:
@@ -147,22 +145,16 @@ public class Application {
             switch (n) {
                 case 1:
                     return Menu.VIEW_ST_ENROLL_COURSE;
-                    break;
                 case 2:
                     return Menu.ADD_ASSNG;
-                    break;
                 case 3:
                     return Menu.DELETE_ASSNG;
-                    break;
                 case 4:
                     return Menu.ENTER_GRADE;
-                    break;
                 case 5:
                     return Menu.CHANGE_PW;
-                    break;
                 case 6:
                     return Menu.LOGOUT;
-                    break;
                 default:
                     return Menu.INVALID;
             }
@@ -170,25 +162,18 @@ public class Application {
             switch (n) {
                 case 1:
                     return Menu.VIEW_FCLTY;
-                    break;
                 case 2:
                     return Menu.VIEW_FCLTY_B_DEPT;
-                    break;
                 case 3:
                     return Menu.VIEW_ST_ENROLL;
-                    break;
                 case 4:
                     return Menu.VIEW_ST_ENROLL_GRADE;
-                    break;
                 case 5:
                     return Menu.VIEW_ENROLL_COURSE;
-                    break;
                 case 6:
                     return Menu.CHANGE_PW;
-                    break;
                 case 7:
                     return Menu.LOGOUT;
-                    break;
                 default:
                     return Menu.INVALID;
             }
@@ -196,16 +181,12 @@ public class Application {
             switch (n) {
                 case 1:
                     return Menu.RESET_PW;
-                    break;
                 case 2:
                     return Menu.FACTORY_RESET;
-                    break;
                 case 3:
                     return Menu.LOGOUT;
-                    break;
                 case 4:
                     return Menu.SHUTDOWN;
-                    break;
                 default:
                     return Menu.INVALID;
             }
