@@ -1,5 +1,7 @@
 package com.apcsa.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -53,8 +55,14 @@ public class User {
      * @param username
      * @return User
      */
-    public User getUser(String username) {
-        return this; // TODO this is temp
+    // public User getUser(String username) {
+    //     Connection conn = DriverManager.getConnection("jdbc:sqlite:" + "data/powerschool.db");
+    //     PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = " + username);
+    //     ResultSet rs = stmt.executeQuery();
+    //     return User(rs);
+    // }
+    public User(String username) {
+        
     }
 
     /**

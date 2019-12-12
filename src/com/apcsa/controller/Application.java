@@ -119,12 +119,13 @@ public class Application {
         
         String confirm;
         do {
-            System.out.println("Are you sure you want to reset the password for rwilson? (y/n) ");
+            System.out.println("Are you sure you want to reset the password for USERNAME? (y/n) ");
             confirm = in.next().toLowerCase();
         } while (confirm != "y" && confirm != "n");
 
         if (confirm == "y") {
-            // reset password
+            activeUser = User()
+            activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
         }
     }
 
