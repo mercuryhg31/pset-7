@@ -65,11 +65,11 @@ public class Application {
             // if login is successful, update generic user to administrator, teacher, or student
 
             if (login(username, password)) { 
-                // activeUser = activeUser.isAdministrator()
-                //     ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
-                //     ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
-                //     ? PowerSchool.getStudent(activeUser) : activeUser.isRoot()
-                //     ? activeUser : null;
+                activeUser = activeUser.isAdministrator()
+                    ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
+                    ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
+                    ? PowerSchool.getStudent(activeUser) : activeUser.isRoot()
+                    ? activeUser : null;
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     System.out.print("Please set your password: ");
@@ -79,9 +79,28 @@ public class Application {
                 if (activeUser.isStudent()) {
                     System.out.println("\nHello, again, NAME!\n");
                     studentMenu();
+                    switch (returnSelection(in.nextInt())) {
+                        case VIEW_GRADES:
+                            // do view grades things
+                            break;
+                        case VIEW_GRADES_COURSE:
+                            //
+                            break;
+                        case CHANGE_PW:
+                            changePassword();
+                            break;
+                        case LOGOUT:
+                            //
+                            break;
+                        default:
+                            System.out.println("\nInvalid selection.\n");
+                    }
                 } else if (activeUser.isTeacher()) {
                     System.out.println("\nHello, again, NAME!\n");
                     teacherMenu();
+                    switch (returnSelection(in.nextInt())) {
+                        case
+                    }
                 } else if (activeUser.isAdministrator()) {
                     System.out.println("\nHello, again, NAME!\n");
                     adminMenu();
@@ -124,7 +143,7 @@ public class Application {
         } while (confirm != "y" && confirm != "n");
 
         if (confirm == "y") {
-            activeUser = User()
+            // activeUser = User();
             activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
         }
     }
@@ -134,7 +153,7 @@ public class Application {
         System.out.println("[2] View assignment grades by course.");
         System.out.println("[3] Change password.");
         System.out.println("[4] Logout.");
-        System.out.println("\n::: ");
+        System.out.print("\n::: ");
     }
 
     public void teacherMenu() {
@@ -144,7 +163,7 @@ public class Application {
         System.out.println("[4] Enter grade.");
         System.out.println("[5] Change password.");
         System.out.println("[6] Logout.");
-        System.out.println("\n::: ");
+        System.out.print("\n::: ");
     }
 
     public void adminMenu() {
@@ -155,7 +174,7 @@ public class Application {
         System.out.println("[5] View student enrollment by course.");
         System.out.println("[6] Change password.");
         System.out.println("[7] Logout.\n");
-        System.out.println("\n::: ");
+        System.out.print("\n::: ");
     }
 
     public void rootMenu() {
@@ -163,7 +182,7 @@ public class Application {
         System.out.println("[2] Factory reset database.");
         System.out.println("[3] Logout.");
         System.out.println("[4] Shutdown.\n");
-        System.out.println("\n::: ");
+        System.out.print("\n::: ");
     }
 
     public Menu returnSelection(int n) {
