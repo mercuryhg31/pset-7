@@ -76,8 +76,8 @@ public class Application {
                     activeUser.setPassword(Utils.getHash(in.next()));
                 }
 
+                System.out.println("\nHello, again, " + activeUser.getFirstName() + "!\n");
                 if (activeUser.isStudent()) {
-                    System.out.println("\nHello, again, NAME!\n");
                     studentMenu();
                     switch (returnSelection(in.nextInt())) {
                         case VIEW_GRADES:
@@ -96,17 +96,19 @@ public class Application {
                             System.out.println("\nInvalid selection.\n");
                     }
                 } else if (activeUser.isTeacher()) {
-                    System.out.println("\nHello, again, NAME!\n");
                     teacherMenu();
                     switch (returnSelection(in.nextInt())) {
                         case
                     }
                 } else if (activeUser.isAdministrator()) {
-                    System.out.println("\nHello, again, NAME!\n");
                     adminMenu();
                 } else if (activeUser.isRoot()) {
-                    System.out.println("\nHello, again, Root!\n");
                     rootMenu();
+                    switch (returnSelection(in.nextInt())) {
+                        case SHUTDOWN:
+                            
+                            shutdown();
+                    }
                 }
 
             } else {
@@ -146,6 +148,23 @@ public class Application {
             // activeUser = User();
             activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
         }
+    }
+
+    public void shutdown(Exception e) {
+        if (in != null) {
+            in.close();
+        }
+        System.out.println("Encountered unrecoverable error. Shutting down...\n");
+        System.out.println(e.getMessage());
+        System.exit(0);
+    }
+
+    public void shutdown() {
+        if (in != null) {
+            in.close();
+        }
+        System.out.println("\nGoodbye!");
+        System.exit(0);
     }
 
     public void studentMenu() {
