@@ -106,8 +106,13 @@ public class Application {
                     rootMenu();
                     switch (returnSelection(in.nextInt())) {
                         case SHUTDOWN:
-                            
-                            shutdown();
+                            do {
+                                System.out.println("Are you sure? y/n ");
+                                String confirm = in.next();
+                                if (confirm == "y") {
+                                    shutdown();
+                                }
+                            } while (confirm != "y" && confirm != "n");
                     }
                 }
 
