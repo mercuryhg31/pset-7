@@ -26,4 +26,9 @@ public class Student extends User {
         this.firstName = rs.getString("first_name");
         this.lastName = rs.getString("last_name");
     }
+
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
 }

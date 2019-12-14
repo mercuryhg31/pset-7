@@ -56,14 +56,11 @@ public class User {
      * @return User
      */
     // public User getUser(String username) {
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:" + "data/powerschool.db");
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = " + username);
-        ResultSet rs = stmt.executeQuery();
-        return User(rs);
+    //     Connection conn = DriverManager.getConnection("jdbc:sqlite:" + "data/powerschool.db");
+    //     PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = " + username);
+    //     ResultSet rs = stmt.executeQuery();
+    //     return User(rs);
     // }
-    public User(String username) {
-        
-    }
 
     /**
      * @return userId

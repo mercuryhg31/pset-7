@@ -21,4 +21,8 @@ public class Administrator extends User {
         this.jobTitle = rs.getString("job_title");
     }
 
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
 }

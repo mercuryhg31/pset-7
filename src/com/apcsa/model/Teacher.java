@@ -20,4 +20,8 @@ public class Teacher extends User {
         this.lastName = rs.getString("last_name");
     }
 
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
 }

@@ -179,12 +179,14 @@ public class Application {
     public boolean confirm(String message) {
         String confirm;
         do {
-            System.out.println(message);
+            System.out.print(message);
             confirm = in.next().toLowerCase();
             if (confirm == "y") {
                 return true;
             }
-        } while (confirm != "y" && confirm != "n");
+            System.out.println(confirm);
+            System.out.println(confirm == "y");
+        } while (confirm != "y" && confirm != "n"); // TODO this won't turn to yes when it does answer y/n??
         return false;
     }
 
@@ -204,7 +206,6 @@ public class Application {
             activeUser.setPassword(newPW);
         }
     }
-
 
     /**
      * For root only - maybe this shouldn't be in Application, but User?
