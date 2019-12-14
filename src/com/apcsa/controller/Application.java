@@ -21,7 +21,7 @@ public class Application {
         DELETE_ASSNG,
         ENTER_GRADE,
         VIEW_FCLTY,
-        VIEW_FCLTY_B_DEPT,
+        VIEW_FCLTY_DEPT,
         VIEW_ST_ENROLL,
         VIEW_ST_ENROLL_GRADE,
         VIEW_ST_ENROLL_COURSE,
@@ -98,21 +98,75 @@ public class Application {
                 } else if (activeUser.isTeacher()) {
                     teacherMenu();
                     switch (returnSelection(in.nextInt())) {
-                        case
+                        case VIEW_ENROLL_COURSE:
+                            //
+                            break;
+                        case ADD_ASSNG:
+                            //
+                            break;
+                        case DELETE_ASSNG:
+                            //
+                            break;
+                        case ENTER_GRADE:
+                            //
+                            break;
+                        case CHANGE_PW:
+                            changePassword();
+                            break;
+                        case LOGOUT:
+                            //
+                            break;
+                        default:
+                            System.out.println("\nInvalid selection.\n");
                     }
                 } else if (activeUser.isAdministrator()) {
                     adminMenu();
+                    switch (returnSelection(in.nextInt())) {
+                        case VIEW_FCLTY:
+                            //
+                            break;
+                        case VIEW_FCLTY_DEPT:
+                            //
+                            break;
+                        case VIEW_ST_ENROLL:
+                            //
+                            break;
+                        case VIEW_ST_ENROLL_GRADE:
+                            //
+                            break;
+                        case VIEW_ST_ENROLL_COURSE:
+                            //
+                            break;
+                        case CHANGE_PW:
+                            changePassword();
+                            break;
+                        case LOGOUT:
+                            //
+                            break;
+                        default:
+                            System.out.println("\nInvalid selection.\n");
+                    }
                 } else if (activeUser.isRoot()) {
                     rootMenu();
                     switch (returnSelection(in.nextInt())) {
+                        case RESET_PW:
+                            resetPassword();
+                            break;
+                        case FACTORY_RESET:
+                            //
+                            break;
+                        case LOGOUT:
+                            if (confirm("Are you sure? y/n ")) {
+                                logout();
+                            }
+                            break;
                         case SHUTDOWN:
-                            do {
-                                System.out.println("Are you sure? y/n ");
-                                String confirm = in.next();
-                                if (confirm == "y") {
-                                    shutdown();
-                                }
-                            } while (confirm != "y" && confirm != "n");
+                            if (confirm("Are you sure? y/n ")) {
+                                shutdown();
+                            }
+                            break;
+                        default:
+                            System.out.println("\nInvalid selection.\n");
                     }
                 }
 
@@ -120,6 +174,22 @@ public class Application {
                 System.out.println("\nInvalid username and/or password.");
             }
         }
+    }
+
+    public boolean confirm(String message) {
+        String confirm;
+        do {
+            System.out.println(message);
+            confirm = in.next().toLowerCase();
+            if (confirm == "y") {
+                return true;
+            }
+        } while (confirm != "y" && confirm != "n");
+        return false;
+    }
+
+    public void logout() {
+        activeUser = null;
     }
 
     public void changePassword() {
@@ -142,14 +212,8 @@ public class Application {
     public void resetPassword() { // TODO wip
         System.out.println("\nUsername: ");
         String user = in.next(); // make this a User instead of string
-        
-        String confirm;
-        do {
-            System.out.println("Are you sure you want to reset the password for USERNAME? (y/n) ");
-            confirm = in.next().toLowerCase();
-        } while (confirm != "y" && confirm != "n");
 
-        if (confirm == "y") {
+        if (confirm("Are you sure you want to reset the password for USERNAME? (y/n) ")) {
             // activeUser = User();
             activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
         }
@@ -245,7 +309,7 @@ public class Application {
                 case 1:
                     return Menu.VIEW_FCLTY;
                 case 2:
-                    return Menu.VIEW_FCLTY_B_DEPT;
+                    return Menu.VIEW_FCLTY_DEPT;
                 case 3:
                     return Menu.VIEW_ST_ENROLL;
                 case 4:
