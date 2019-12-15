@@ -15,6 +15,7 @@ public class QueryUtils {
     
     /*
      * Updates the last login timestamp each time a user logs into the system.
+     * I'm pretty sure this is miscommented.
      */
 
     public static final String LOGIN_SQL =
@@ -30,7 +31,7 @@ public class QueryUtils {
         "UPDATE users " +
             "SET last_login = ? " +
         "WHERE username = ?";
-    
+
     /*
      * Retrieves an administrator associated with a user account.
      */
@@ -54,4 +55,12 @@ public class QueryUtils {
     public static final String GET_STUDENT_SQL =
         "SELECT * FROM students " +
             "WHERE user_id = ?";
+    
+    // /*
+    //  * Retrieves a user associated with a user account.
+    //  */
+
+    // public static final String GET_USER_SQL =
+    //     "SELECT * FROM users " +
+    //         "WHERE username = ?";
 }

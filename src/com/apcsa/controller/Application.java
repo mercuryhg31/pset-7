@@ -153,17 +153,13 @@ public class Application {
                             resetPassword();
                             break;
                         case FACTORY_RESET:
-                            //
+                            factoryReset();
                             break;
                         case LOGOUT:
-                            if (confirm("Are you sure? y/n ")) {
-                                logout();
-                            }
+                            logout();
                             break;
                         case SHUTDOWN:
-                            if (confirm("Are you sure? y/n ")) {
-                                shutdown();
-                            }
+                            shutdown();
                             break;
                         default:
                             System.out.println("\nInvalid selection.\n");
@@ -177,21 +173,24 @@ public class Application {
     }
 
     public boolean confirm(String message) {
-        String confirm;
-        do {
-            System.out.print(message);
-            confirm = in.next().toLowerCase();
-            if (confirm == "y") {
-                return true;
-            }
-            System.out.println(confirm);
-            System.out.println(confirm == "y");
-        } while (confirm != "y" && confirm != "n"); // TODO this won't turn to yes when it does answer y/n??
-        return false;
+        return true;
+        // String confirm;
+        // do {
+        //     System.out.print(message);
+        //     confirm = in.next().toLowerCase();
+        //     if (confirm == "y") {
+        //         return true;
+        //     }
+        //     System.out.println(confirm);
+        //     System.out.println(confirm == "y");
+        // } while (confirm != "y" && confirm != "n"); // TODO this won't turn to yes when it does answer y/n??
+        // return false;
     }
 
     public void logout() {
-        activeUser = null;
+        if (confirm("Are you sure? y/n ")) {
+            activeUser = null;
+        }
     }
 
     public void changePassword() {
@@ -212,11 +211,23 @@ public class Application {
      */
     public void resetPassword() { // TODO wip
         System.out.println("\nUsername: ");
-        String user = in.next(); // make this a User instead of string
+        String username = in.next(); // make this a User instead of string
+        // User user;
+
+        try {
+            // user = 
+        }
 
         if (confirm("Are you sure you want to reset the password for USERNAME? (y/n) ")) {
             // activeUser = User();
-            activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
+            // activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
+        }
+    }
+
+    public factoryReset() {
+        if (confirm("\nAre you sure you want to reset all settings and data? (y/n)")) {
+            PowerSchool.initialize(true);
+            System.out.println("\nSuccessfully reset database.\n");
         }
     }
 
@@ -230,11 +241,13 @@ public class Application {
     }
 
     public void shutdown() {
-        if (in != null) {
-            in.close();
+        if (confirm("Are you sure? (y/n) ")) {
+            if (in != null) {
+                in.close();
+            }
+            System.out.println("\nGoodbye!");
+            System.exit(0);
         }
-        System.out.println("\nGoodbye!");
-        System.exit(0);
     }
 
     public void studentMenu() {
@@ -262,7 +275,7 @@ public class Application {
         System.out.println("[4] View student enrollment by grade.");
         System.out.println("[5] View student enrollment by course.");
         System.out.println("[6] Change password.");
-        System.out.println("[7] Logout.\n");
+        System.out.println("[7] Logout.");
         System.out.print("\n::: ");
     }
 
@@ -270,7 +283,7 @@ public class Application {
         System.out.println("[1] Reset user password.");
         System.out.println("[2] Factory reset database.");
         System.out.println("[3] Logout.");
-        System.out.println("[4] Shutdown.\n");
+        System.out.println("[4] Shutdown.");
         System.out.print("\n::: ");
     }
 
