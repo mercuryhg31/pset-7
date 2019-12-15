@@ -83,13 +83,13 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(in.nextInt())) {
                             case VIEW_GRADES:
-                                // do view grades things
+                                viewCourseGrades(); // TODO
                                 break;
                             case VIEW_GRADES_COURSE:
-                                //
+                                viewAssngGradesByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword();
+                                changePassword(); // TODO
                                 break;
                             case LOGOUT:
                                 logout();
@@ -102,19 +102,19 @@ public class Application {
                         teacherMenu();
                         switch (returnSelection(in.nextInt())) {
                             case VIEW_ENROLL_COURSE:
-                                //
+                                viewEnrollmentByCourse(); // TODO
                                 break;
                             case ADD_ASSNG:
-                                //
+                                addAssng(); // TODO
                                 break;
                             case DELETE_ASSNG:
-                                //
+                                deleteAssng(); // TODO
                                 break;
                             case ENTER_GRADE:
-                                //
+                                enterGrade(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword();
+                                changePassword(); // TODO
                                 break;
                             case LOGOUT:
                                 logout();
@@ -127,22 +127,22 @@ public class Application {
                         adminMenu();
                         switch (returnSelection(in.nextInt())) {
                             case VIEW_FCLTY:
-                                //
+                                viewFaculty(); // TODO
                                 break;
                             case VIEW_FCLTY_DEPT:
-                                //
+                                viewFacultyByDept(); // TODO
                                 break;
                             case VIEW_ST_ENROLL:
-                                //
+                                viewStudentEnroll(); // TODO
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                //
+                                viewStudentEnrollByGrade(); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                //
+                                viewStudentEnrollByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword();
+                                changePassword(); // TODO
                                 break;
                             case LOGOUT:
                                 logout();
@@ -155,10 +155,10 @@ public class Application {
                         rootMenu();
                         switch (returnSelection(in.nextInt())) {
                             case RESET_PW:
-                                resetPassword();
+                                resetPassword(); // TODO
                                 break;
                             case FACTORY_RESET:
-                                factoryReset();
+                                factoryReset(); // TODO
                                 break;
                             case LOGOUT:
                                 logout();
@@ -194,27 +194,85 @@ public class Application {
         // return false;
     }
 
-    public void logout() {
-        if (confirm("Are you sure? y/n ")) {
-            activeUser = null;
-        }
-    }
+    /**
+     * Student method
+     */
+    public void viewCourseGrades() {
 
-    public void changePassword() {
-        System.out.println("\nEnter current password: ");
-        String currentPW = Utils.getHash(in.next());
-        System.out.println("Enter new password: ");
-        String newPW = Utils.getHash(in.next());;
-
-        if (currentPW != activeUser.getPassword()) {
-            System.out.println("\nInvalid current password.");
-        } else {
-            activeUser.setPassword(newPW);
-        }
     }
 
     /**
-     * For root only - maybe this shouldn't be in Application, but User?
+     * Student method
+     */
+    public void viewAssngGradesByCourse() {
+
+    }
+
+    /**
+     * Teacher method
+     */
+    public void viewEnrollmentByCourse() {
+
+    }
+
+    /**
+     * Teacher method
+     */
+    public void addAssng() {
+
+    }
+
+    /**
+     * Teacher method
+     */
+    public void deleteAssng() {
+
+    }
+
+    /**
+     * Teacher method
+     */
+    public void enterGrade() {
+
+    }
+
+    /**
+     * Admin method
+     */
+    public void viewFaculty() {
+
+    }
+
+    /**
+     * Admin method
+     */
+    public void viewFacultyByDept() {
+
+    }
+
+    /**
+     * Admin method
+     */
+    public void viewStudentEnroll() {
+
+    }
+
+    /**
+     * Admin method
+     */
+    public void viewStudentEnrollByGrade() {
+
+    }
+
+    /**
+     * Admin method
+     */
+    public void viewStudentEnrollByCourse() {
+
+    }
+
+    /**
+     * Root method - maybe this shouldn't be in Application, but User?
      */
     public void resetPassword() { // TODO wip
         System.out.println("\nUsername: ");
@@ -231,6 +289,9 @@ public class Application {
         }
     }
 
+    /**
+     * Root method
+     */
     public void factoryReset() {
         if (confirm("\nAre you sure you want to reset all settings and data? (y/n)")) {
             PowerSchool.initialize(true);
@@ -238,6 +299,10 @@ public class Application {
         }
     }
 
+    /**
+     * Root method
+     * @param e
+     */
     public void shutdown(Exception e) {
         if (in != null) {
             in.close();
@@ -247,6 +312,9 @@ public class Application {
         System.exit(0);
     }
 
+    /**
+     * Root method
+     */
     public void shutdown() {
         if (confirm("Are you sure? (y/n) ")) {
             if (in != null) {
@@ -254,6 +322,31 @@ public class Application {
             }
             System.out.println("\nGoodbye!");
             System.exit(0);
+        }
+    }
+
+    /**
+     * For all account types
+     */
+    public void logout() {
+        if (confirm("Are you sure? y/n ")) {
+            activeUser = null;
+        }
+    }
+
+    /**
+     * For all account types
+     */
+    public void changePassword() {
+        System.out.println("\nEnter current password: ");
+        String currentPW = Utils.getHash(in.next());
+        System.out.println("Enter new password: ");
+        String newPW = Utils.getHash(in.next());;
+
+        if (currentPW != activeUser.getPassword()) {
+            System.out.println("\nInvalid current password.");
+        } else {
+            activeUser.setPassword(newPW);
         }
     }
 
