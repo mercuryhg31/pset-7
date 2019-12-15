@@ -77,92 +77,99 @@ public class Application {
                 }
 
                 System.out.println("\nHello, again, " + activeUser.getFirstName() + "!\n");
-                if (activeUser.isStudent()) {
-                    studentMenu();
-                    switch (returnSelection(in.nextInt())) {
-                        case VIEW_GRADES:
-                            // do view grades things
-                            break;
-                        case VIEW_GRADES_COURSE:
-                            //
-                            break;
-                        case CHANGE_PW:
-                            changePassword();
-                            break;
-                        case LOGOUT:
-                            //
-                            break;
-                        default:
-                            System.out.println("\nInvalid selection.\n");
-                    }
-                } else if (activeUser.isTeacher()) {
-                    teacherMenu();
-                    switch (returnSelection(in.nextInt())) {
-                        case VIEW_ENROLL_COURSE:
-                            //
-                            break;
-                        case ADD_ASSNG:
-                            //
-                            break;
-                        case DELETE_ASSNG:
-                            //
-                            break;
-                        case ENTER_GRADE:
-                            //
-                            break;
-                        case CHANGE_PW:
-                            changePassword();
-                            break;
-                        case LOGOUT:
-                            //
-                            break;
-                        default:
-                            System.out.println("\nInvalid selection.\n");
-                    }
-                } else if (activeUser.isAdministrator()) {
-                    adminMenu();
-                    switch (returnSelection(in.nextInt())) {
-                        case VIEW_FCLTY:
-                            //
-                            break;
-                        case VIEW_FCLTY_DEPT:
-                            //
-                            break;
-                        case VIEW_ST_ENROLL:
-                            //
-                            break;
-                        case VIEW_ST_ENROLL_GRADE:
-                            //
-                            break;
-                        case VIEW_ST_ENROLL_COURSE:
-                            //
-                            break;
-                        case CHANGE_PW:
-                            changePassword();
-                            break;
-                        case LOGOUT:
-                            //
-                            break;
-                        default:
-                            System.out.println("\nInvalid selection.\n");
-                    }
-                } else if (activeUser.isRoot()) {
-                    rootMenu();
-                    switch (returnSelection(in.nextInt())) {
-                        case RESET_PW:
-                            resetPassword();
-                            break;
-                        case FACTORY_RESET:
-                            factoryReset();
-                            break;
-                        case LOGOUT:
-                            logout();
-                            break;
-                        case SHUTDOWN:
-                            shutdown();
-                            break;
-                        default:
-                            System.out.println("\nInvalid selection.\n");
+                boolean validLogin = true;
+                while (validLogin) {
+                    if (activeUser.isStudent()) {
+                        studentMenu();
+                        switch (returnSelection(in.nextInt())) {
+                            case VIEW_GRADES:
+                                // do view grades things
+                                break;
+                            case VIEW_GRADES_COURSE:
+                                //
+                                break;
+                            case CHANGE_PW:
+                                changePassword();
+                                break;
+                            case LOGOUT:
+                                logout();
+                                validLogin = false;
+                                break;
+                            default:
+                                System.out.println("\nInvalid selection.\n");
+                        }
+                    } else if (activeUser.isTeacher()) {
+                        teacherMenu();
+                        switch (returnSelection(in.nextInt())) {
+                            case VIEW_ENROLL_COURSE:
+                                //
+                                break;
+                            case ADD_ASSNG:
+                                //
+                                break;
+                            case DELETE_ASSNG:
+                                //
+                                break;
+                            case ENTER_GRADE:
+                                //
+                                break;
+                            case CHANGE_PW:
+                                changePassword();
+                                break;
+                            case LOGOUT:
+                                logout();
+                                validLogin = false;
+                                break;
+                            default:
+                                System.out.println("\nInvalid selection.\n");
+                        }
+                    } else if (activeUser.isAdministrator()) {
+                        adminMenu();
+                        switch (returnSelection(in.nextInt())) {
+                            case VIEW_FCLTY:
+                                //
+                                break;
+                            case VIEW_FCLTY_DEPT:
+                                //
+                                break;
+                            case VIEW_ST_ENROLL:
+                                //
+                                break;
+                            case VIEW_ST_ENROLL_GRADE:
+                                //
+                                break;
+                            case VIEW_ST_ENROLL_COURSE:
+                                //
+                                break;
+                            case CHANGE_PW:
+                                changePassword();
+                                break;
+                            case LOGOUT:
+                                logout();
+                                validLogin = false;
+                                break;
+                            default:
+                                System.out.println("\nInvalid selection.\n");
+                        }
+                    } else if (activeUser.isRoot()) {
+                        rootMenu();
+                        switch (returnSelection(in.nextInt())) {
+                            case RESET_PW:
+                                resetPassword();
+                                break;
+                            case FACTORY_RESET:
+                                factoryReset();
+                                break;
+                            case LOGOUT:
+                                logout();
+                                validLogin = false;
+                                break;
+                            case SHUTDOWN:
+                                shutdown();
+                                break;
+                            default:
+                                System.out.println("\nInvalid selection.\n");
+                        }
                     }
                 }
 
@@ -214,9 +221,9 @@ public class Application {
         String username = in.next(); // make this a User instead of string
         // User user;
 
-        try {
-            // user = 
-        }
+        // try {
+        //     // user = 
+        // }
 
         if (confirm("Are you sure you want to reset the password for USERNAME? (y/n) ")) {
             // activeUser = User();
@@ -224,7 +231,7 @@ public class Application {
         }
     }
 
-    public factoryReset() {
+    public void factoryReset() {
         if (confirm("\nAre you sure you want to reset all settings and data? (y/n)")) {
             PowerSchool.initialize(true);
             System.out.println("\nSuccessfully reset database.\n");
