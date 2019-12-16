@@ -169,6 +169,50 @@ public class PowerSchool {
         return user;
     }
 
+
+    // public static User getUser(String username) {
+    //     try (Connection conn = getConnection();
+    //          PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_USER_SQL)) {
+
+    //         stmt.setString(1, username);
+
+    //         try (ResultSet rs = stmt.executeQuery()) {
+    //             if (rs.next()) {
+    //                 return new User(rs);
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return null;
+    // }
+
+    public static int updatePassword(String username, String password) { // Emily - Mr. Wilson actually
+
+    	try (Connection conn = getConnection();
+    		 PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {
+
+            conn.setAutoCommit(false);
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+
+            if (stmt.executeUpdate() == 1) {
+                conn.commit();
+
+                return 1;
+            } else {
+                conn.rollback();
+
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return -1;
+        }
+    }
+
     /**
      * Establishes a connection to the database.
      *

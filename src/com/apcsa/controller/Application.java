@@ -52,7 +52,7 @@ public class Application {
      */
 
     public void startup() {
-        System.out.println("PowerSchool -- now for students, teachers, and school administrators!");
+        System.out.println("\nPowerSchool -- now for students, teachers, and school administrators!");
 
         // continuously prompt for login credentials and attempt to login
 
@@ -286,17 +286,18 @@ public class Application {
      * Root method - maybe this shouldn't be in Application, but User?
      */
     public void resetPassword() { // TODO wip
-        System.out.println("\nUsername: ");
-        String username = in.next(); // make this a User instead of string
-        // User user;
-
-        // try {
-        //     // user = 
-        // }
-
-        if (confirm("Are you sure you want to reset the password for USERNAME? (y/n) ")) {
-            // activeUser = User();
-            // activeUser.setPassword(Utils.getHash(activeUser.getUsername()));
+        System.out.print("\nUsername: ");
+        String username = in.next();
+        User user;
+        try {
+            user = PowerSchool.getUser(username);
+            if (confirm("Are you sure you want to reset the password for " + user.getUsername() + "? (y/n) ")) {
+                user.setPassword(Utils.getHash(user.getUsername()));
+            }
+            System.out.println();
+        } catch (Exception e) {
+            System.out.println("\nInvalid username.\n");
+            return;
         }
     }
 

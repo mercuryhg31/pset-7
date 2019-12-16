@@ -56,11 +56,16 @@ public class QueryUtils {
         "SELECT * FROM students " +
             "WHERE user_id = ?";
     
-    // /*
-    //  * Retrieves a user associated with a user account.
-    //  */
+    /*
+     * Retrieves a user associated with a user account.
+     */
 
-    // public static final String GET_USER_SQL =
-    //     "SELECT * FROM users " +
-    //         "WHERE username = ?";
+    public static final String GET_USER_SQL =
+        "SELECT * FROM users " +
+            "WHERE username = ?";
+
+    public static final String UPDATE_PASSWORD_SQL =
+        "UPDATE users " +
+            "SET auth = ? " +
+        "WHERE username = ?";
 }
