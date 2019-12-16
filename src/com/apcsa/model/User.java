@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.apcsa.controller.Utils;
+import com.apcsa.data.PowerSchool;
 
 public class User {
 
@@ -96,6 +97,7 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        PowerSchool.updatePassword(this.username, this.password);
     }
 
     /**

@@ -288,13 +288,11 @@ public class Application {
     public void resetPassword() { // TODO wip
         System.out.print("\nUsername: ");
         String username = in.next();
-        User user;
         try {
-            user = PowerSchool.getUser(username);
-            if (confirm("Are you sure you want to reset the password for " + user.getUsername() + "? (y/n) ")) {
-                user.setPassword(Utils.getHash(user.getUsername()));
+            if (confirm("Are you sure you want to reset the password for " + username + "? (y/n) ")) {
+                PowerSchool.updatePassword(username, Utils.getHash(username));
+                System.out.println("Successfully reset password for " + username + ".\n");
             }
-            System.out.println();
         } catch (Exception e) {
             System.out.println("\nInvalid username.\n");
             return;
