@@ -180,7 +180,7 @@ public class PowerSchool {
         return DriverManager.getConnection(PROTOCOL + DATABASE_URL);
     }
 
-    /*
+    /**
      * Updates the last login time for the user.
      *
      * @param conn the current database connection
@@ -212,7 +212,7 @@ public class PowerSchool {
         }
     }
 
-    /*
+    /**
      * Builds the database. Executes a SQL script from a configuration file to
      * create the tables, setup the primary and foreign keys, and load sample data.
      */

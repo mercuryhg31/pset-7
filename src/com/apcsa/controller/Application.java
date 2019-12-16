@@ -3,7 +3,7 @@ package com.apcsa.controller;
 import java.util.Scanner;
 import java.util.ArrayList;
 import com.apcsa.data.PowerSchool;
-import com.apcsa.model.User;
+import com.apcsa.model.*;
 
 // java -cp "./src;./lib/sqlite-jdbc-3.28.0.jar" com/apcsa/controller/Application
 
@@ -181,18 +181,17 @@ public class Application {
     }
 
     public boolean confirm(String message) {
-        return true;
-        // String confirm;
-        // do {
-        //     System.out.print(message);
-        //     confirm = in.next().toLowerCase();
-        //     if (confirm == "y") {
-        //         return true;
-        //     }
-        //     System.out.println(confirm);
-        //     System.out.println(confirm == "y");
-        // } while (confirm != "y" && confirm != "n"); // TODO this won't turn to yes when it does answer y/n??
-        // return false;
+        String confirm;
+        do {
+            System.out.print(message);
+            confirm = in.next().toLowerCase();
+            if (confirm.equals("y")) {
+                return true;
+            }
+            System.out.println(confirm);
+            System.out.println(confirm.equals("y"));
+        } while (!confirm.equals("y") && !confirm.equals("n"));
+        return false;
     }
 
     /**
@@ -241,18 +240,18 @@ public class Application {
      * Admin method
      */
     public void viewFaculty() {
-        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
+        // ArrayList<Teacher> teachers = PowerSchool.getTeachers();
     
-        if (teachers.isEmpty()) {
-            System.out.println("\nNo teachers to display.");
-        } else {
-            System.out.println();
+        // if (teachers.isEmpty()) {
+        //     System.out.println("\nNo teachers to display.");
+        // } else {
+        //     System.out.println();
             
-            int i = 1;
-            for (Teacher teacher : teachers) {
-                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
-            } 
-        }
+        //     int i = 1;
+        //     for (Teacher teacher : teachers) {
+        //         System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
+        //     } 
+        // }
     }
 
     /**
@@ -305,7 +304,7 @@ public class Application {
      * Root method
      */
     public void factoryReset() {
-        if (confirm("\nAre you sure you want to reset all settings and data? (y/n)")) {
+        if (confirm("\nAre you sure you want to reset all settings and data? (y/n) ")) {
             PowerSchool.initialize(true);
             System.out.println("\nSuccessfully reset database.\n");
         }
