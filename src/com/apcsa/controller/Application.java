@@ -1,6 +1,7 @@
 package com.apcsa.controller;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 
@@ -25,7 +26,7 @@ public class Application {
         VIEW_ST_ENROLL,
         VIEW_ST_ENROLL_GRADE,
         VIEW_ST_ENROLL_COURSE,
-        RESET_PW, // unless this means change root password TODO check
+        RESET_PW,
         FACTORY_RESET,
         SHUTDOWN,
         INVALID;
@@ -240,7 +241,18 @@ public class Application {
      * Admin method
      */
     public void viewFaculty() {
-
+        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
+    
+        if (teachers.isEmpty()) {
+            System.out.println("\nNo teachers to display.");
+        } else {
+            System.out.println();
+            
+            int i = 1;
+            for (Teacher teacher : teachers) {
+                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
+            } 
+        }
     }
 
     /**
