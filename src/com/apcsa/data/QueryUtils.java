@@ -64,6 +64,9 @@ public class QueryUtils {
         "SELECT * FROM users " +
             "WHERE username = ?";
 
+    /*
+     * Sets password for user associated with a username.
+     */
     public static final String UPDATE_PASSWORD_SQL =
         "UPDATE users " +
             "SET auth = ? " +

@@ -53,6 +53,7 @@ public class Application {
 
     public void startup() {
         System.out.println("\nPowerSchool -- now for students, teachers, and school administrators!");
+        System.out.println("\nमपददत"); // this means "mpggth." this is totally a real word.
 
         // continuously prompt for login credentials and attempt to login
 
@@ -90,7 +91,7 @@ public class Application {
                                 viewAssngGradesByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword(); // TODO
+                                changePassword();
                                 break;
                             case LOGOUT:
                                 logout();
@@ -115,7 +116,7 @@ public class Application {
                                 enterGrade(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword(); // TODO
+                                changePassword();
                                 break;
                             case LOGOUT:
                                 logout();
@@ -143,7 +144,7 @@ public class Application {
                                 viewStudentEnrollByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
-                                changePassword(); // TODO
+                                changePassword();
                                 break;
                             case LOGOUT:
                                 logout();
@@ -156,10 +157,10 @@ public class Application {
                         rootMenu();
                         switch (returnSelection(in.nextInt())) {
                             case RESET_PW:
-                                resetPassword(); // TODO
+                                resetPassword();
                                 break;
                             case FACTORY_RESET:
-                                factoryReset(); // TODO
+                                factoryReset();
                                 break;
                             case LOGOUT:
                                 logout();
@@ -348,12 +349,12 @@ public class Application {
      * For all account types
      */
     public void changePassword() {
-        System.out.println("\nEnter current password: ");
+        System.out.print("\nEnter current password: ");
         String currentPW = Utils.getHash(in.next());
-        System.out.println("Enter new password: ");
+        System.out.print("Enter new password: ");
         String newPW = Utils.getHash(in.next());;
 
-        if (currentPW != activeUser.getPassword()) {
+        if (!currentPW.equals(activeUser.getPassword())) {
             System.out.println("\nInvalid current password.");
         } else {
             activeUser.setPassword(newPW);
