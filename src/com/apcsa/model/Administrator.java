@@ -25,4 +25,8 @@ public class Administrator extends User {
     public String getFirstName() {
         return firstName;
     }
+
+    public String getName() {
+        return firstName + " " + lastName;
+    }
 }

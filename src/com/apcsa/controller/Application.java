@@ -83,7 +83,7 @@ public class Application {
                 while (validLogin) {
                     if (activeUser.isStudent()) {
                         studentMenu();
-                        switch (returnSelection(in.nextInt())) {
+                        switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
                                 viewCourseGrades(); // TODO
                                 break;
@@ -102,7 +102,7 @@ public class Application {
                         }
                     } else if (activeUser.isTeacher()) {
                         teacherMenu();
-                        switch (returnSelection(in.nextInt())) {
+                        switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_ENROLL_COURSE:
                                 viewEnrollmentByCourse(); // TODO
                                 break;
@@ -127,7 +127,7 @@ public class Application {
                         }
                     } else if (activeUser.isAdministrator()) {
                         adminMenu();
-                        switch (returnSelection(in.nextInt())) {
+                        switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_FCLTY:
                                 viewFaculty(); // TODO
                                 break;
@@ -155,7 +155,7 @@ public class Application {
                         }
                     } else if (activeUser.isRoot()) {
                         rootMenu();
-                        switch (returnSelection(in.nextInt())) {
+                        switch (returnSelection(Utils.getInt(in, -1))) {
                             case RESET_PW:
                                 resetPassword();
                                 break;
@@ -241,25 +241,50 @@ public class Application {
      * Admin method
      */
     public void viewFaculty() {
-        // ArrayList<Teacher> teachers = PowerSchool.getTeachers();
+        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
     
-        // if (teachers.isEmpty()) {
-        //     System.out.println("\nNo teachers to display.");
-        // } else {
-        //     System.out.println();
-            
-        //     int i = 1;
-        //     for (Teacher teacher : teachers) {
-        //         System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
-        //     } 
-        // }
+        if (teachers.isEmpty()) {
+            System.out.println("\nNo teachers to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Teacher teacher : teachers) {
+                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Retrieves the user's department selection.
+     * Not a menu method.
+     * 
+     * @return the selected department
+     */
+
+    private int getDepartmentSelection() {
+        int selection = -1;
+        System.out.println("\nChoose a department.");
+        while (selection < 1 || selection > 6) {
+            System.out.println("\n[1] Computer Science.");
+            System.out.println("[2] English.");
+            System.out.println("[3] History.");
+            System.out.println("[4] Mathematics.");
+            System.out.println("[5] Physical Education.");
+            System.out.println("[6] Science.");
+            System.out.print("\n::: ");
+            selection = Utils.getInt(in, -1);
+        }
+        return selection;
     }
 
     /**
      * Admin method
      */
     public void viewFacultyByDept() {
-
+        switch (getDepartmentSelection()) {
+            
+        }
     }
 
     /**
@@ -267,6 +292,30 @@ public class Application {
      */
     public void viewStudentEnroll() {
 
+    }
+
+    /**
+     * Retrieves a user's grade selection.
+     * Not a menu method.
+     * 
+     * @return the selected grade
+     */
+
+    private int getGradeSelection() {
+        int selection = -1;
+        System.out.println("\nChoose a grade level.");
+        
+        while (selection < 1 || selection > 4) {
+            System.out.println("\n[1] Freshman.");
+            System.out.println("[2] Sophomore.");
+            System.out.println("[3] Junior.");
+            System.out.println("[4] Senior.");
+            System.out.print("\n::: ");
+            
+            selection = Utils.getInt(in, -1);
+        }
+        
+        return selection + 8;   // +8 because you want a value between 9 and 12
     }
 
     /**
@@ -465,6 +514,30 @@ public class Application {
             return Menu.INVALID;
         }
     }
+
+    /**
+     * Retrieves a user's course selection.
+     * 
+     * @return the selected course
+     */
+
+    // private String getCourseSelection() throws SQLException {
+    //     boolean valid = false;
+    //     String courseNo = null;
+        
+    //     while (!valid) {
+    //         System.out.print("\nCourse No.: ");
+    //         courseNo = in.next();
+            
+    //         if (/* is a valid course number */) { // TODO
+    //             valid = true;
+    //         } else {
+    //             System.out.println("\nCourse not found.");
+    //         }
+    //     }
+        
+    //     return courseNo;
+    // }
 
     /**
      * Logs in with the provided credentials.

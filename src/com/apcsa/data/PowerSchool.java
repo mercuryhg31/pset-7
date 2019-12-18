@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.ArrayList;
 import com.apcsa.controller.Utils;
 import com.apcsa.model.Administrator;
 import com.apcsa.model.Student;
@@ -95,6 +96,49 @@ public class PowerSchool {
     }
 
     /**
+     * Retrieves all faculty members.
+     * 
+     * @return a list of teachers
+     */
+    
+    public static ArrayList<Teacher> getTeachers() {
+        ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+        
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+                        
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_SQL)) {
+                while (rs.next()) {
+                    teachers.add(new Teacher(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return teachers;
+    }
+
+    public static String getDepartments() {
+        ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+        
+            try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_DEPARTMENTS_SQL);
+            stmt.setString(1, "hi");) { // TODO wip
+                        
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_DEPARTMENTS_SQL)) {
+                while (rs.next()) {
+                    teachers.add(new Teacher(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return teachers;
+    }
+
+    /**
      * Returns the administrator account associated with the user.
      *
      * @param user the user
@@ -169,7 +213,6 @@ public class PowerSchool {
         return user;
     }
 
-
     // public static User getUser(String username) {
     //     try (Connection conn = getConnection();
     //          PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_USER_SQL)) {
@@ -188,7 +231,16 @@ public class PowerSchool {
     //     return null;
     // }
 
-    public static int updatePassword(String username, String password) { // Emily - Mr. Wilson actually
+    /**
+     * Updates a changed password for a user.
+     *
+     * @param conn the current database connection
+     * @param username the user's username
+     * @param password the new password
+     * @return the number of affected rows
+     */
+
+    public static int updatePassword(String username, String password) {
 
     	try (Connection conn = getConnection();
     		 PreparedStatement stmt = conn.prepareStatement(QueryUtils.UPDATE_PASSWORD_SQL)) {

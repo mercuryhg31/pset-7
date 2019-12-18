@@ -71,4 +71,15 @@ public class QueryUtils {
         "UPDATE users " +
             "SET auth = ? " +
         "WHERE username = ?";
+    
+    public static final String GET_TEACHERS_SQL =
+        "SELECT * FROM teachers, departments " +
+        "WHERE teachers.department_id = departments.department_id " +
+        "ORDER BY last_name, first_name";
+
+    public static final String GET_DEPARTMENTS_SQL =
+        "SELECT * FROM teachers, departments " +
+        "WHERE teachers.department_id = departments.department_id " +
+        "AND title = ? " +
+        "ORDER BY title";
 }

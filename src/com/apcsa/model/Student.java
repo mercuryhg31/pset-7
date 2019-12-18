@@ -31,4 +31,8 @@ public class Student extends User {
     public String getFirstName() {
         return firstName;
     }
+
+    public String getName() {
+        return firstName + " " + lastName;
+    }
 }
