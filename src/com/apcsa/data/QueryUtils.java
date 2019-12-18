@@ -80,6 +80,6 @@ public class QueryUtils {
     public static final String GET_DEPARTMENTS_SQL =
         "SELECT * FROM teachers as t, departments as d " +
         "WHERE t.department_id = d.department_id " +
-        "AND title = d.? " +
+        "AND d.title = ? " +
         "ORDER BY title";
 }
