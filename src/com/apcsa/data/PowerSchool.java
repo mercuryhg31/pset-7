@@ -119,13 +119,13 @@ public class PowerSchool {
         return teachers;
     }
 
-    public static String getDepartments() {
+    public static String getDepartments(String department) {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
         
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_DEPARTMENTS_SQL)) {
             
-            stmt.setString(1, "hi"); // TODO wip
+            stmt.setString(1, department); // TODO wip
                         
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_DEPARTMENTS_SQL)) {
                 while (rs.next()) {

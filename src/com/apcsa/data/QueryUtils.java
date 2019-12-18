@@ -78,8 +78,8 @@ public class QueryUtils {
         "ORDER BY last_name, first_name";
 
     public static final String GET_DEPARTMENTS_SQL =
-        "SELECT * FROM teachers as t, departments as d " +
+        "SELECT * FROM teachers t, departments d " +
         "WHERE t.department_id = d.department_id " +
         "AND d.title = ? " +
-        "ORDER BY title";
+        "ORDER BY t.last_name, t.first_name";
 }
