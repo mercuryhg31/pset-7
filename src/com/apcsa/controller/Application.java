@@ -107,10 +107,10 @@ public class Application {
                                 viewEnrollmentByCourse(); // TODO
                                 break;
                             case ADD_ASSNG:
-                                addAssng(); // TODO
+                                addAssignment(); // TODO
                                 break;
                             case DELETE_ASSNG:
-                                deleteAssng(); // TODO
+                                deleteAssignment(); // TODO
                                 break;
                             case ENTER_GRADE:
                                 enterGrade(); // TODO
@@ -206,34 +206,6 @@ public class Application {
      * Student method
      */
     public void viewAssngGradesByCourse() {
-
-    }
-
-    /**
-     * Teacher method
-     */
-    public void viewEnrollmentByCourse() {
-
-    }
-
-    /**
-     * Teacher method
-     */
-    public void addAssng() {
-
-    }
-
-    /**
-     * Teacher method
-     */
-    public void deleteAssng() {
-
-    }
-
-    /**
-     * Teacher method
-     */
-    public void enterGrade() {
 
     }
 

@@ -44,4 +44,21 @@ public class Teacher extends User {
     public String getDepartmentName() {
         return departmentName;
     }
+
+    // APPLICATION THINGS
+    public static void viewEnrollmentByCourse() {
+
+    }
+
+    public static void addAssignment() {
+
+    }
+
+    public static void deleteAssignment() {
+
+    }
+
+    public static void enterGrade() {
+
+    }
 }
