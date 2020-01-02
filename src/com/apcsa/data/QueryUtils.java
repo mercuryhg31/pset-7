@@ -145,9 +145,6 @@ public class QueryUtils {
         return updStmt;
     }
 
-    private static String elementUpdate(ArrayList<String> elements, ArrayList<String> values) {
-        
-    }
     
     // Allows students to see their grades by course. TODO
 
