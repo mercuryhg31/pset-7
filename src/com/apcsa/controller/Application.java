@@ -66,7 +66,7 @@ public class Application {
 
             // if login is successful, update generic user to administrator, teacher, or student
 
-            if (login(username, password)) { 
+            if (login(username, password)) {
                 activeUser = activeUser.isAdministrator()
                     ? PowerSchool.getAdministrator(activeUser) : activeUser.isTeacher()
                     ? PowerSchool.getTeacher(activeUser) : activeUser.isStudent()
@@ -85,10 +85,10 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
-                                viewCourseGrades(); // TODO
+                                Student.viewCourseGrades(); // TODO
                                 break;
                             case VIEW_GRADES_COURSE:
-                                viewAssngGradesByCourse(); // TODO
+                                Student.viewAssngGradesByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -104,16 +104,16 @@ public class Application {
                         teacherMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_ENROLL_COURSE:
-                                viewEnrollmentByCourse(); // TODO
+                                Teacher.viewEnrollmentByCourse(); // TODO
                                 break;
                             case ADD_ASSNG:
-                                addAssignment(); // TODO
+                                Teacher.addAssignment(); // TODO
                                 break;
                             case DELETE_ASSNG:
-                                deleteAssignment(); // TODO
+                                Teacher.deleteAssignment(); // TODO
                                 break;
                             case ENTER_GRADE:
-                                enterGrade(); // TODO
+                                Teacher.enterGrade(); // TODO
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -129,19 +129,19 @@ public class Application {
                         adminMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_FCLTY:
-                                viewFaculty(); // TODO
+                                Administrator.viewFaculty(); // TODO
                                 break;
                             case VIEW_FCLTY_DEPT:
-                                viewFacultyByDept(); // TODO
+                                Administrator.viewFacultyByDept(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL:
-                                viewStudentEnroll(); // TODO
+                                Administrator.viewStudentEnroll(); // TODO
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                viewStudentEnrollByGrade(); // TODO
+                                Administrator.viewStudentEnrollByGrade(); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                viewStudentEnrollByCourse(); // TODO
+                                Administrator.viewStudentEnrollByCourse(); // TODO
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -193,115 +193,6 @@ public class Application {
             System.out.println(confirm.equals("y"));
         } while (!confirm.equals("y") && !confirm.equals("n"));
         return false;
-    }
-
-    /**
-     * Student method
-     */
-    public void viewCourseGrades() {
-
-    }
-
-    /**
-     * Student method
-     */
-    public void viewAssngGradesByCourse() {
-
-    }
-
-    /**
-     * Admin method
-     */
-    public void viewFaculty() {
-        ArrayList<Teacher> teachers = PowerSchool.getTeachers();
-    
-        if (teachers.isEmpty()) {
-            System.out.println("\nNo teachers to display.\n");
-        } else {
-            System.out.println();
-            int i = 1;
-            for (Teacher teacher : teachers) {
-                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
-            }
-            System.out.println();
-        }
-    }
-
-    /**
-     * Retrieves the user's department selection.
-     * Not a menu method.
-     * 
-     * @return the selected department
-     */
-
-    private int getDepartmentSelection() {
-        int selection = -1;
-        System.out.println("\nChoose a department.");
-        while (selection < 1 || selection > 6) {
-            System.out.println("\n[1] Computer Science.");
-            System.out.println("[2] English.");
-            System.out.println("[3] History.");
-            System.out.println("[4] Mathematics.");
-            System.out.println("[5] Physical Education.");
-            System.out.println("[6] Science.");
-            System.out.print("\n::: ");
-            selection = Utils.getInt(in, -1);
-        }
-        return selection;
-    }
-
-    /**
-     * Admin method
-     */
-    public void viewFacultyByDept() {
-        switch (getDepartmentSelection()) {
-            
-        }
-    }
-
-    /**
-     * Admin method
-     */
-    public void viewStudentEnroll() {
-
-    }
-
-    /**
-     * Retrieves a user's grade selection.
-     * Not a menu method.
-     * 
-     * @return the selected grade
-     */
-
-    private int getGradeSelection() {
-        int selection = -1;
-        System.out.println("\nChoose a grade level.");
-        
-        while (selection < 1 || selection > 4) {
-            System.out.println("\n[1] Freshman.");
-            System.out.println("[2] Sophomore.");
-            System.out.println("[3] Junior.");
-            System.out.println("[4] Senior.");
-            System.out.print("\n::: ");
-            
-            selection = Utils.getInt(in, -1);
-        }
-        
-        return selection + 8;   // +8 because you want a value between 9 and 12
-    }
-
-    /**
-     * Admin method
-     */
-    public void viewStudentEnrollByGrade() {
-
-    }
-
-    /**
-     * Admin method
-     */
-    public void viewStudentEnrollByCourse() {
-
     }
 
     /**

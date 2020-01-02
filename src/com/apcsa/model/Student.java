@@ -35,4 +35,13 @@ public class Student extends User {
     public String getName() {
         return firstName + " " + lastName;
     }
+
+    // APPLICATION THINGS
+    public static void viewCourseGrades() {
+
+    }
+
+    public static void viewAssngGradesByCourse() {
+
+    }
 }
