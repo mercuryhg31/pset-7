@@ -142,11 +142,11 @@ public class Administrator extends User {
         }
     }
 
-    /**
-     * Retrieves a user's course selection.
-     * 
-     * @return the selected course
-     */
+    // /**
+    //  * Retrieves a user's course selection.
+    //  * 
+    //  * @return the selected course
+    //  */
 
     // private static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
     //     boolean valid = false;
