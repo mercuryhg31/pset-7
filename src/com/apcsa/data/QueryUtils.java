@@ -111,10 +111,15 @@ public class QueryUtils {
         return "SELECT * FROM students s, course_grades cg, courses c " +
         "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
         "AND c.course_no = " + course + " " +
-        "ORDER BY last_name, first_name"; // TODO error: says there's no such column, jkdsf, kill me
+        "ORDER BY last_name, first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
     }
 
-    public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm
+    public static String GET_STUDENT_GRADES_SQL = 
+        "SELECT grade FROM course_grades " +
+        "WHERE student_id = ?";
+
+
+    public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm (okay you know what youre right)
         String selStmt =
             (!(order.equals(null)) && !(where.equals(null))) ?
             "SELECT ? FROM ? " +
