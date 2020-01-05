@@ -252,7 +252,7 @@ public class Application {
      * For all account types
      */
     public void logout() {
-        if (confirm("Are you sure? y/n ")) {
+        if (confirm("Are you sure you want to logout? (y/n) ")) {
             activeUser = null;
         }
     }
@@ -270,6 +270,7 @@ public class Application {
             System.out.println("\nInvalid current password.");
         } else {
             activeUser.setPassword(newPW);
+            System.out.println("\nSuccessfully changed password.\n");
         }
     }
 
@@ -377,30 +378,6 @@ public class Application {
             return Menu.INVALID;
         }
     }
-
-    /**
-     * Retrieves a user's course selection.
-     * 
-     * @return the selected course
-     */
-
-    // private String getCourseSelection() throws SQLException {
-    //     boolean valid = false;
-    //     String courseNo = null;
-        
-    //     while (!valid) {
-    //         System.out.print("\nCourse No.: ");
-    //         courseNo = in.next();
-            
-    //         if (/* is a valid course number */) { // TODO
-    //             valid = true;
-    //         } else {
-    //             System.out.println("\nCourse not found.");
-    //         }
-    //     }
-        
-    //     return courseNo;
-    // }
 
     /**
      * Logs in with the provided credentials.

@@ -142,9 +142,32 @@ public class Administrator extends User {
         }
     }
 
+    /**
+     * Retrieves a user's course selection.
+     * 
+     * @return the selected course
+     */
+
+    private static String getCourseSelection(Scanner in) throws SQLException {
+        boolean valid = false;
+        String courseNo = null;
+        
+        while (!valid) {
+            System.out.print("\nCourse No.: ");
+            courseNo = in.next();
+            
+            if (/* is a valid course number */) { // TODO
+                valid = true;
+            } else {
+                System.out.println("\nCourse not found.");
+            }
+        }
+        
+        return courseNo;
+    }
+
     public static void viewStudentEnrollByCourse(Scanner in) {
-        System.out.print("Course No.: ");
-        ArrayList<Student> students = PowerSchool.getStudentsByCourse(in.next());;
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(getCourseSelection(in));
 
         if (students.isEmpty()) {
             System.out.println("\nNo students to display.\n");
