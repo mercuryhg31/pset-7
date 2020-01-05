@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.management.Query;
+
 import java.util.ArrayList;
 import com.apcsa.controller.Utils;
 import com.apcsa.model.Administrator;
@@ -209,6 +213,40 @@ public class PowerSchool {
             e.printStackTrace();
         }
         return grades;
+    }
+
+    public static String getCourseTitle(int courseId) {
+        String title = new String();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+            
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSE_TITLE_SQL(courseId))) {
+                if (rs.next()) {
+                    title = new String(String.valueOf(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return title;
+    }
+
+    public static String getCourseNo(int courseId) {
+        String courseNo = new String();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+            
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSE_NO_SQL(courseId))) {
+                if (rs.next()) {
+                    courseNo = new String(String.valueOf(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return courseNo;
     }
 
     /**

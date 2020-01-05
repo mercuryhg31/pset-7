@@ -114,11 +114,38 @@ public class QueryUtils {
         "ORDER BY last_name, first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
     }
 
-    public static String GET_STUDENT_GRADES_SQL(int student_id) {
+    public static String GET_STUDENT_GRADES_SQL(int studentId) {
         return "SELECT grade FROM course_grades " +
-        "WHERE student_id = " + String.valueOf(student_id);
+        "WHERE student_id = " + String.valueOf(studentId) + " " +
+        "ORDER BY course_id";
     } 
 
+    // Gives grade of a course that a student is taking given the student id and course id
+    public static String GET_STUDENT_GRADES_SQL(int studentId, int courseId) {
+        return "SELECT grade FROM course_grades " +
+        "WHERE student_id = " + String.valueOf(studentId) + " AND WHERE course_id = " + String.valueOf(courseId);
+
+    }
+
+    // Gives grades from all courses that a student is taking given their student id
+    public static String GET_STUDENT_COURSES_SQL(int studentId) {
+        return "SELECT course_id FROM course_grades " + 
+        "WHERE student_id = " + String.valueOf(studentId) + " " +
+        "ORDER BY course_id";
+    }
+
+
+    // Gives the title of a course given the course id (ex something like AP Computer Science Principles)
+    public static String GET_COURSE_TITLE_SQL(int courseId) {
+        return "SELECT title FROM courses " + 
+        "WHERE course_id = " + String.valueOf(courseId);
+    }
+
+    // Gives the course no. of a course given the course id (ex something like CS1000)
+    public static String GET_COURSE_NO_SQL(int courseId) {
+        return "SELECT course_no FROM courses " + 
+        "WHERE course_id = " + String.valueOf(courseId);
+    }
 
     public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm (okay you know what youre right)
         String selStmt =
