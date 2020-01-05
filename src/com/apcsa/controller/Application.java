@@ -129,19 +129,19 @@ public class Application {
                         adminMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_FCLTY:
-                                Administrator.viewFaculty(); // TODO
+                                Administrator.viewFaculty();
                                 break;
                             case VIEW_FCLTY_DEPT:
-                                Administrator.viewFacultyByDept(in); // TODO
+                                Administrator.viewFacultyByDept(in);
                                 break;
                             case VIEW_ST_ENROLL:
                                 Administrator.viewStudentEnroll(); // TODO
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                Administrator.viewStudentEnrollByGrade(); // TODO
+                                Administrator.viewStudentEnrollByGrade(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                Administrator.viewStudentEnrollByCourse(); // TODO
+                                Administrator.viewStudentEnrollByCourse(in); // TODO
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -352,7 +352,7 @@ public class Application {
                 case 4:
                     return Menu.VIEW_ST_ENROLL_GRADE;
                 case 5:
-                    return Menu.VIEW_ENROLL_COURSE;
+                    return Menu.VIEW_ST_ENROLL_COURSE;
                 case 6:
                     return Menu.CHANGE_PW;
                 case 7:

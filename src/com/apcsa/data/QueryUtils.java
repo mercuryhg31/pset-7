@@ -100,6 +100,19 @@ public class QueryUtils {
         "SELECT * FROM students s, users u " +
         "WHERE s.user_id = u.user_id " +
         "ORDER BY s.last_name, s.first_name";
+    
+    public static String GET_STUDENTS_BY_GRADE_SQL(int grade) {
+        return "SELECT * FROM students " +
+        "WHERE grade_level = " + grade + " " +
+        "ORDER BY last_name, first_name";
+    }
+
+    public static String GET_STUDENTS_BY_COURSE_SQL(String course) {
+        return "SELECT * FROM students s, course_grades cg, courses c " +
+        "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
+        "AND c.course_no = " + course + " " +
+        "ORDER BY last_name, first_name"; // TODO error: says there's no such column, jkdsf, kill me
+    }
 
     public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm
         String selStmt =

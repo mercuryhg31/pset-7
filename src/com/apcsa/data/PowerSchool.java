@@ -128,7 +128,7 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_BY_DEPARTMENTS_SQL(department))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_BY_DEPARTMENTS_SQL(department))) { // Michael, I've been doing it with a function because it some errors when I tried a prepared statement.
                 while (rs.next()) {
                     teachers.add(new Teacher(rs));
                 }
@@ -147,6 +147,42 @@ public class PowerSchool {
             Statement stmt = conn.createStatement()) {
 
             try (ResultSet rs = stmt.executeQuery("SELECT * FROM students")) {
+                while (rs.next()) {
+                    students.add(new Student(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+
+    public static ArrayList<Student> getStudentsByGrade(int grade) {
+        ArrayList<Student> students = new ArrayList<Student>();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENTS_BY_GRADE_SQL(grade))) {
+                while (rs.next()) {
+                    students.add(new Student(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+
+    public static ArrayList<Student> getStudentsByCourse(String course) {
+        ArrayList<Student> students = new ArrayList<Student>();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENTS_BY_COURSE_SQL(course))) {
                 while (rs.next()) {
                     students.add(new Student(rs));
                 }

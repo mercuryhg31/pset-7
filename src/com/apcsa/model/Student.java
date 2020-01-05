@@ -52,6 +52,10 @@ public class Student extends User {
         return graduationYear;
     }
 
+    public double getGPA() {
+        return gpa;
+    }
+
     // APPLICATION THINGS
     public static void viewCourseGrades() {
 

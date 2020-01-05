@@ -92,7 +92,7 @@ public class Administrator extends User {
         ArrayList<Student> students = PowerSchool.getStudents();;
 
         if (students.isEmpty()) {
-            System.out.println("\nNo teachers to display.\n");
+            System.out.println("\nNo students to display.\n");
         } else {
             System.out.println();
             int i = 1;
@@ -127,11 +127,34 @@ public class Administrator extends User {
         return selection + 8;   // +8 because you want a value between 9 and 12
     }
 
-    public static void viewStudentEnrollByGrade() {
+    public static void viewStudentEnrollByGrade(Scanner in) {
+        ArrayList<Student> students = PowerSchool.getStudentsByGrade(getGradeSelection(in));;
 
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+            }
+            System.out.println();
+        }
     }
 
-    public static void viewStudentEnrollByCourse() {
+    public static void viewStudentEnrollByCourse(Scanner in) {
+        System.out.print("Course No.: ");
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(in.next());;
 
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+            }
+            System.out.println();
+        }
     }
 }
