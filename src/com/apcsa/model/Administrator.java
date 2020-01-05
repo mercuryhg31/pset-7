@@ -148,26 +148,27 @@ public class Administrator extends User {
      * @return the selected course
      */
 
-    private static String getCourseSelection(Scanner in) throws SQLException {
-        boolean valid = false;
-        String courseNo = null;
+    // private static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
+    //     boolean valid = false;
+    //     String courseNo = null;
         
-        while (!valid) {
-            System.out.print("\nCourse No.: ");
-            courseNo = in.next();
+    //     while (!valid) {
+    //         System.out.print("\nCourse No.: ");
+    //         courseNo = in.next();
             
-            if (/* is a valid course number */) { // TODO
-                valid = true;
-            } else {
-                System.out.println("\nCourse not found.");
-            }
-        }
+    //         if (/* is a valid course number */) { // TODO
+    //             valid = true;
+    //         } else {
+    //             System.out.println("\nCourse not found.");
+    //         }
+    //     }
         
-        return courseNo;
-    }
+    //     return courseNo;
+    // }
 
     public static void viewStudentEnrollByCourse(Scanner in) {
-        ArrayList<Student> students = PowerSchool.getStudentsByCourse(getCourseSelection(in));
+        System.out.print("\nCourse No.: "); // TODO need to check if valid
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(in.next());
 
         if (students.isEmpty()) {
             System.out.println("\nNo students to display.\n");
