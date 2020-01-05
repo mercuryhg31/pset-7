@@ -19,7 +19,7 @@ public class Administrator extends User {
     public Administrator (User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
-        this.administratorId = rs.getInt("administrator_id"); 
+        this.administratorId = rs.getInt("administrator_id");
         this.firstName = rs.getString("first_name");
         this.lastName = rs.getString("last_name");
         this.jobTitle = rs.getString("job_title");
@@ -37,7 +37,7 @@ public class Administrator extends User {
     // APPLICATION THINGS
     public static void viewFaculty() {
         ArrayList<Teacher> teachers = PowerSchool.getTeachers();
-    
+
         if (teachers.isEmpty()) {
             System.out.println("\nNo teachers to display.\n");
         } else {
@@ -53,7 +53,7 @@ public class Administrator extends User {
     /**
      * Retrieves the user's department selection.
      * Not a menu method.
-     * 
+     *
      * @return the selected department
      */
 
@@ -74,8 +74,17 @@ public class Administrator extends User {
     }
 
     public static void viewFacultyByDept(Scanner in) {
-        switch (getDepartmentSelection(in)) {
-            
+        ArrayList<Teacher> teachers = PowerSchool.getTeachersByDepartment(getDepartmentSelection(in));;
+
+        if (teachers.isEmpty()) {
+            System.out.println("\nNo teachers to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Teacher teacher : teachers) {
+                System.out.println(i++ + ". " + teacher.getName() + " / " + teacher.getDepartmentName());
+            }
+            System.out.println();
         }
     }
 
@@ -86,24 +95,24 @@ public class Administrator extends User {
     /**
      * Retrieves a user's grade selection.
      * Not a menu method.
-     * 
+     *
      * @return the selected grade
      */
 
     private static int getGradeSelection(Scanner in) {
         int selection = -1;
         System.out.println("\nChoose a grade level.");
-        
+
         while (selection < 1 || selection > 4) {
             System.out.println("\n[1] Freshman.");
             System.out.println("[2] Sophomore.");
             System.out.println("[3] Junior.");
             System.out.println("[4] Senior.");
             System.out.print("\n::: ");
-            
+
             selection = Utils.getInt(in, -1);
         }
-        
+
         return selection + 8;   // +8 because you want a value between 9 and 12
     }
 

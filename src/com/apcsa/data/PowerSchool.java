@@ -97,37 +97,37 @@ public class PowerSchool {
 
     /**
      * Retrieves all faculty members.
-     * 
+     *
      * @return a list of teachers
      */
-    
+
     public static ArrayList<Teacher> getTeachers() {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
-        
+
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
-                        
+
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_SQL)) {
                 while (rs.next()) {
                     teachers.add(new Teacher(rs));
+                    // System.out.println(rs.getInt("teacher_id"));
+                    // System.out.println(rs.getInt("department_id"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return teachers;
     }
 
-    public static String getDepartments(String department) {
+    public static ArrayList<Teacher> getTeachersByDepartment(int department) {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
-        
+
         try (Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_DEPARTMENTS_SQL)) {
-            
-            stmt.setString(1, department); // TODO wip
-                        
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_DEPARTMENTS_SQL)) {
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_BY_DEPARTMENTS_SQL(department))) {
                 while (rs.next()) {
                     teachers.add(new Teacher(rs));
                 }
@@ -135,7 +135,7 @@ public class PowerSchool {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return teachers;
     }
 
