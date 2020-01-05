@@ -194,6 +194,23 @@ public class PowerSchool {
         return students;
     }
 
+    public static ArrayList<String> getGrades(int student_id) {
+        ArrayList<String> grades = new ArrayList<String>();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+               
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_GRADES_SQL(student_id))) {
+                while (rs.next()) {
+                    grades.add(new String(String.valueOf(rs)));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return grades;
+    }
+
     /**
      * Returns the administrator account associated with the user.
      *
