@@ -108,6 +108,7 @@ public class PowerSchool {
             Statement stmt = conn.createStatement()) {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHERS_SQL)) {
+            // try (ResultSet rs = stmt.executeQuery("SELECT * FROM teachers")) {
                 while (rs.next()) {
                     teachers.add(new Teacher(rs));
                     // System.out.println(rs.getInt("teacher_id"));
@@ -137,6 +138,24 @@ public class PowerSchool {
         }
 
         return teachers;
+    }
+
+    public static ArrayList<Student> getStudents() {
+        ArrayList<Student> students = new ArrayList<Student>();
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM students")) {
+                while (rs.next()) {
+                    students.add(new Student(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return students;
     }
 
     /**

@@ -89,7 +89,18 @@ public class Administrator extends User {
     }
 
     public static void viewStudentEnroll() {
+        ArrayList<Student> students = PowerSchool.getStudents();;
 
+        if (students.isEmpty()) {
+            System.out.println("\nNo teachers to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getGraduationYear());
+            }
+            System.out.println();
+        }
     }
 
     /**

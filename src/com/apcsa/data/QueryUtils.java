@@ -89,12 +89,17 @@ public class QueryUtils {
     //     "WHERE d.department_id = ? " +
     //     "ORDER BY t.last_name, t.first_name";
 
-    public static String GET_TEACHERS_BY_DEPARTMENTS_SQL(int departmentId) {
+    public static /*final, lol, why does this work*/ String GET_TEACHERS_BY_DEPARTMENTS_SQL(int department_id) {
         return "SELECT * FROM teachers t " +
         "LEFT JOIN departments d ON t.department_id = d.department_id " +
-        "WHERE d.department_id = " + departmentId + " " +
+        "WHERE d.department_id = " + department_id + " " +
         "ORDER BY t.last_name, t.first_name";
     }
+
+    public static final String GET_STUDENTS_SQL = // TODO this orders by graduation year first for some reason
+        "SELECT * FROM students s, users u " +
+        "WHERE s.user_id = u.user_id " +
+        "ORDER BY s.last_name, s.first_name";
 
     public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm
         String selStmt =
