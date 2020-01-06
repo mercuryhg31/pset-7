@@ -157,70 +157,12 @@ public class QueryUtils {
         "WHERE course_id = " + String.valueOf(courseId);
     }
 
-    public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm (okay you know what youre right)
-        String selStmt =
-            (!(order.equals(null)) && !(where.equals(null))) ?
-            "SELECT ? FROM ? " +
-            "WHERE ?" +
-            "ORDER BY ?" :
-            (!(where.equals(null)) && (order.equals(null))) ?
-            "SELECT ? FROM ?" +
-            "WHERE ?":
-            (where.equals(null) && !(order.equals(null))) ?
-            "SELECT ? FROM ?" +
-            "ORDER BY ?":
-            (where.equals(null) && order.equals(null)) ?
-            "SELECT ? FROM ?" :
-            null;
-
-            int replace = 1;
-            for (int i = 0; i <= selStmt.length(); i++) {
-                if (selStmt.charAt(i) == '?') {
-                    selStmt = selStmt.substring(0, i - 1) +
-                    ((replace == 1) ? elements :
-                    (replace == 2) ? tables :
-                    (replace == 3) ? where :
-                    (replace == 4) ? order :
-                    null) +
-                    selStmt.substring(i);
-                    replace++;
-                }
-            }
-
-
-
-        return selStmt;
-    }
-
-    public static String updateStatement(String table, String elementUpdates, String where) {
-        String updStmt = (!(where.equals(null))) ?
-            "UPDATE ? " +
-                "? " +
-            "WHERE ?"
-            :
-            "UPDATE ? " +
-                "? ";
-
-        int replace = 1;
-        for (int i = 0; i <= updStmt.length() - 1; i++) {
-            if (updStmt.charAt(i) == '?') {
-                updStmt = updStmt.substring(0, i - 1) +
-                    ((replace == 1) ? table :
-                    (replace == 2) ? elementUpdates :
-                    (replace == 3) ? where :
-                    null) +
-                    updStmt.substring(i);
-                    replace++;
-            }
-        }
-        //String updStmt = (where.equals(null)) ? "UPDATE " + table + " SET " +
-
-        return updStmt;
-    }
-
-
-    // Allows students to see their grades by course. TODO
-
-    // public static final String GET_STUDENT_GRADES_COURSE_SQL =
-    //     "SELECT c.course_no FROM "
+    public static final String GET_TEACHER_COURSES_SQL =
+        "SELECT * FROM courses c, teachers t " +
+        "WHERE c.teacher_id = t.teacher_id " +
+        "AND t.teacher_id = ? " +
+        "ORDER BY title";
+    
+    public static final String CREATE_ASSIGNMENT =
+        "INSERT INTO assignments"; // TODO
 }

@@ -180,20 +180,6 @@ public class Application {
         }
     }
 
-    public boolean confirm(String message) {
-        String confirm;
-        do {
-            System.out.print(message);
-            confirm = in.next().toLowerCase();
-            if (confirm.equals("y")) {
-                return true;
-            }
-            System.out.println(confirm);
-            System.out.println(confirm.equals("y"));
-        } while (!confirm.equals("y") && !confirm.equals("n"));
-        return false;
-    }
-
     /**
      * Root method - maybe this shouldn't be in Application, but User?
      */

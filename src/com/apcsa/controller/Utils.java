@@ -37,6 +37,20 @@ public class Utils {
         return pwd.toString();
     }
 
+    public static boolean confirm(String message) {
+        String confirm;
+        do {
+            System.out.print(message);
+            confirm = in.next().toLowerCase();
+            if (confirm.equals("y")) {
+                return true;
+            }
+            System.out.println(confirm);
+            System.out.println(confirm.equals("y"));
+        } while (!confirm.equals("y") && !confirm.equals("n"));
+        return false;
+    }
+
     /**
      * Safely reads an integer from the user.
      * 

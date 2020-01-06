@@ -2,6 +2,12 @@ package com.apcsa.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.apcsa.controller.Application;
+import com.apcsa.controller.Utils;
+import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 
 public class Teacher extends User {
@@ -50,8 +56,56 @@ public class Teacher extends User {
 
     }
 
-    public static void addAssignment() {
+    /**
+     * Prints all courses a teacher teaches and returns course selection
+     *
+     * @param user
+     * @param in
+     * @return course no of selected course
+     */
+    public static String getCourseSelection(User user, Scanner in) {
+        System.out.println("Choose a course.\n");
+        ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
+        int maxCourseNum = 0;
+        for (int i = 1; i <= courses.size(); i++) {
+            System.out.println("[" + i + "]" + " " + courses.get(i-1));
+            maxCourseNum = i;
+        }
+        System.out.print("\n\n");
+        int selection;
+        do {
+            System.out.print("::: ");
+            selection = Utils.getInt(in, -1);
+        } while (selection < 1 || selection > maxCourseNum);
+        return courses.get(selection - 1);
+    }
 
+    public static void addAssignment(User user, Scanner in) {
+        String courseNo = getCourseSelection(user, in);
+
+        System.out.println("\nChoose a marking period or exam status.\n");
+        System.out.println("[1] MP1 assignment.");
+        System.out.println("[2] MP2 assignment.");
+        System.out.println("[3] MP3 assignment.");
+        System.out.println("[4] MP4 assignment.");
+        System.out.println("[5] Midterm exam.");
+        System.out.println("[6] Final exam.");
+        System.out.print("\n\n");
+
+        int mpSelection;
+        do {
+            System.out.print("::: ");
+            mpSelection = Utils.getInt(in, -1);
+        } while (mpSelection < 1 || mpSelection > 6);
+
+        System.out.print("\nAssignment Title: ");
+        String title = in.next();
+        System.out.print("Point Value: ");
+        int ptsPoss = Utils.getInt(in, 0);
+
+        if (Utils.confirm("Are you sure you want to create this assignment? (y/n)")){
+            
+        }
     }
 
     public static void deleteAssignment() {
