@@ -248,6 +248,7 @@ public class PowerSchool {
         }
         return courseNo;
     }
+    
 
     /**
      * Returns the administrator account associated with the user.

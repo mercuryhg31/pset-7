@@ -53,7 +53,6 @@ public class Application {
 
     public void startup() {
         System.out.println("\nPowerSchool -- now for students, teachers, and school administrators!");
-        System.out.println("\nमपददत"); // this means "mpggth." this is totally a real word.
 
         // continuously prompt for login credentials and attempt to login
 
