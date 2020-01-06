@@ -107,12 +107,17 @@ public class QueryUtils {
         "ORDER BY last_name, first_name";
     }
 
-    public static String GET_STUDENTS_BY_COURSE_SQL(String course) {
-        return "SELECT * FROM students s, course_grades cg, courses c " +
-        "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
-        "AND c.course_no = " + course + " " +
-        "ORDER BY last_name, first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
-    }
+    // public static String GET_STUDENTS_BY_COURSE_SQL(String course) {
+    //     // return "SELECT * FROM students s, course_grades cg, courses c " +
+    //     // "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
+    //     // "AND c.course_no = " + course + " " +
+    //     // "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    //     return "SELECT * FROM students s " +
+    //     "LEFT JOIN course_grades cg ON s.student_id = cg.student_id AND " +
+    //     "LEFT JOIN courses c ON cg.course_id = c.course_id " +
+    //     "WHERE c.course_no = " + course + " " +
+    //     "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    // }
 
     public static String GET_STUDENT_GRADES_SQL(int studentId) {
         return "SELECT grade FROM course_grades " +
@@ -135,15 +140,20 @@ public class QueryUtils {
     }
 
 
-    // Gives the title of a course given the course id (ex something like AP Computer Science Principles)
-    public static String GET_COURSE_TITLE_SQL(int courseId) {
-        return "SELECT title FROM courses " + 
-        "WHERE course_id = " + String.valueOf(courseId);
-    }
+    // // Gives the title of a course given the course id (ex something like AP Computer Science Principles)
+    // public static String GET_COURSE_TITLE_SQL(int courseId) {
+    //     return "SELECT title FROM courses " + 
+    //     "WHERE course_id = " + String.valueOf(courseId);
+    // }
 
-    // Gives the course no. of a course given the course id (ex something like CS1000)
-    public static String GET_COURSE_NO_SQL(int courseId) {
-        return "SELECT course_no FROM courses " + 
+    // // Gives the course no. of a course given the course id (ex something like CS1000)
+    // public static String GET_COURSE_NO_SQL(int courseId) {
+    //     return "SELECT course_no FROM courses " + 
+    //     "WHERE course_id = " + String.valueOf(courseId);
+    // }
+
+    public static String GET_COURSES_SQL(int courseId) {
+        return "SELECT * FROM courses " + 
         "WHERE course_id = " + String.valueOf(courseId);
     }
 
