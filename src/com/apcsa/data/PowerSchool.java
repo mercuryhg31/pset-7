@@ -180,15 +180,41 @@ public class PowerSchool {
         return students;
     }
 
-    public static ArrayList<Student> getStudentsByCourse(String course) {
+    public static ArrayList<Student> getStudentsByCourse(String courseNo) {
         ArrayList<Student> students = new ArrayList<Student>();
+        ArrayList<Integer> courseIds = new ArrayList<Integer>();
+        ArrayList<Integer> studentIds = new ArrayList<Integer>();
 
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENTS_BY_COURSE_SQL(course))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo))) {
                 while (rs.next()) {
-                    students.add(new Student(rs));
+                    courseIds.add(rs.getInt("course_id"));
+                }
+
+                for (int courseId : courseIds) {
+                    try (Connection conn2 = getConnection();
+                        Statement stmt2 = conn2.createStatement()) {
+
+                        try (ResultSet rs2 = stmt2.executeQuery(QueryUtils.COURSE_GRADES_BY_COURSEID_SQL(courseId))) {
+                            while (rs2.next()) {
+                                studentIds.add(rs.getInt("student_id"));
+                            }
+            
+                            for (int studentId : studentIds) {
+                                try (Connection conn3 = getConnection();
+                                    Statement stmt3 = conn3.createStatement()) {
+            
+                                    try (ResultSet rs3 = stmt3.executeQuery(QueryUtils.GET_STUDENT_BY_STUDENT_ID_SQL(studentId))) {
+                                        while (rs3.next()) {
+                                            students.add(new Student(rs));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -197,6 +223,27 @@ public class PowerSchool {
 
         return students;
     }
+
+
+    public static String getCourseNo(String courseNo) {
+        String courseNoCheck = "";
+
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo))) {
+                if (rs.next()) {
+                    courseNoCheck = rs.getString("course_no");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            courseNoCheck = null;
+        }
+
+        return courseNoCheck;
+    }
+
 
     public static ArrayList<String> getGrades(int student_id) {
         ArrayList<String> grades = new ArrayList<String>();
@@ -249,6 +296,7 @@ public class PowerSchool {
         return courseNo;
     }
     
+
 
     /**
      * Returns the administrator account associated with the user.

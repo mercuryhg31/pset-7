@@ -2,6 +2,10 @@ package com.apcsa.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 
 public class Teacher extends User {
@@ -46,8 +50,8 @@ public class Teacher extends User {
     }
 
     // APPLICATION THINGS
-    public static void viewEnrollmentByCourse() {
-
+    public static void viewEnrollmentByCourse(Scanner in) {
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);
     }
 
     public static void addAssignment() {

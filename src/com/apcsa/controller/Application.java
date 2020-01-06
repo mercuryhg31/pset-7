@@ -103,7 +103,7 @@ public class Application {
                         teacherMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_ENROLL_COURSE:
-                                Teacher.viewEnrollmentByCourse(); // TODO
+                                Teacher.viewEnrollmentByCourse(in); // TODO
                                 break;
                             case ADD_ASSNG:
                                 Teacher.addAssignment(); // TODO

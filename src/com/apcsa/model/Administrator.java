@@ -142,33 +142,40 @@ public class Administrator extends User {
         }
     }
 
-    // /**
-    //  * Retrieves a user's course selection.
-    //  * 
-    //  * @return the selected course
-    //  */
+    /**
+     * Retrieves a user's course selection.
+     * 
+     * @return the selected course
+     */
 
-    // private static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
-    //     boolean valid = false;
-    //     String courseNo = null;
+    private static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
+        boolean valid = false;
+        String courseNo = null;
         
-    //     while (!valid) {
-    //         System.out.print("\nCourse No.: ");
-    //         courseNo = in.next();
+        while (!valid) {
+            System.out.print("\nCourse No.: ");
+            courseNo = in.next();
+            String courseNoCheck = PowerSchool.getCourseNo(courseNo);
             
-    //         if (/* is a valid course number */) { // TODO
-    //             valid = true;
-    //         } else {
-    //             System.out.println("\nCourse not found.");
-    //         }
-    //     }
+            if (courseNo.equals(courseNoCheck)) { // TODO
+                valid = true;
+            } else {
+                System.out.println("\nCourse not found.");
+            }
+        }
         
-    //     return courseNo;
-    // }
+        return courseNo;
+    }
 
     public static void viewStudentEnrollByCourse(Scanner in) {
-        System.out.print("\nCourse No.: "); // TODO need to check if valid
-        ArrayList<Student> students = PowerSchool.getStudentsByCourse(in.next());
+        String courseNo = "";
+
+        try {
+            courseNo = getCourseSelection(in);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);
 
         if (students.isEmpty()) {
             System.out.println("\nNo students to display.\n");

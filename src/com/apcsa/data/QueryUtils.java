@@ -139,6 +139,11 @@ public class QueryUtils {
         "ORDER BY course_id";
     }
 
+    public static String GET_STUDENT_BY_STUDENT_ID_SQL(int studentId) {
+        return "SELECT * FROM students " + 
+        "WHERE student_id = " + studentId + " " +
+        "ORDER BY last_name, first_name";
+    }
 
     // // Gives the title of a course given the course id (ex something like AP Computer Science Principles)
     // public static String GET_COURSE_TITLE_SQL(int courseId) {
@@ -152,70 +157,23 @@ public class QueryUtils {
     //     "WHERE course_id = " + String.valueOf(courseId);
     // }
 
-    public static String GET_COURSES_SQL(int courseId) {
-        return "SELECT * FROM courses " + 
+    // public static String GET_STUDENT_ID_BY_COURSE(String courseNo) {
+    //     return "SELECT "
+    // }
+
+    public static String COURSE_GRADES_BY_COURSEID_SQL(int courseId) {
+        return "SELECT * FROM course_grades " + 
         "WHERE course_id = " + String.valueOf(courseId);
     }
 
-    public static String selectStatement(String tables, String elements, String where, String order) { // Michael, it's so much easier to just write themmm (okay you know what youre right)
-        String selStmt =
-            (!(order.equals(null)) && !(where.equals(null))) ?
-            "SELECT ? FROM ? " +
-            "WHERE ?" +
-            "ORDER BY ?" :
-            (!(where.equals(null)) && (order.equals(null))) ?
-            "SELECT ? FROM ?" +
-            "WHERE ?":
-            (where.equals(null) && !(order.equals(null))) ?
-            "SELECT ? FROM ?" +
-            "ORDER BY ?":
-            (where.equals(null) && order.equals(null)) ?
-            "SELECT ? FROM ?" :
-            null;
-
-            int replace = 1;
-            for (int i = 0; i <= selStmt.length(); i++) {
-                if (selStmt.charAt(i) == '?') {
-                    selStmt = selStmt.substring(0, i - 1) +
-                    ((replace == 1) ? elements :
-                    (replace == 2) ? tables :
-                    (replace == 3) ? where :
-                    (replace == 4) ? order :
-                    null) +
-                    selStmt.substring(i);
-                    replace++;
-                }
-            }
-
-
-
-        return selStmt;
+    public static String GET_COURSES_BY_COURSENO_SQL(String courseNo) {
+        return "SELECT * FROM courses " + 
+        "WHERE course_no = " + courseNo; 
     }
 
-    public static String updateStatement(String table, String elementUpdates, String where) {
-        String updStmt = (!(where.equals(null))) ?
-            "UPDATE ? " +
-                "? " +
-            "WHERE ?"
-            :
-            "UPDATE ? " +
-                "? ";
-
-        int replace = 1;
-        for (int i = 0; i <= updStmt.length() - 1; i++) {
-            if (updStmt.charAt(i) == '?') {
-                updStmt = updStmt.substring(0, i - 1) +
-                    ((replace == 1) ? table :
-                    (replace == 2) ? elementUpdates :
-                    (replace == 3) ? where :
-                    null) +
-                    updStmt.substring(i);
-                    replace++;
-            }
-        }
-        //String updStmt = (where.equals(null)) ? "UPDATE " + table + " SET " +
-
-        return updStmt;
+    public static String GET_COURSES_SQL(int courseId) {
+        return "SELECT * FROM courses " + 
+        "WHERE course_id = " + String.valueOf(courseId);
     }
 
 
