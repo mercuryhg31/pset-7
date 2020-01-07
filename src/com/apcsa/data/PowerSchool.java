@@ -285,9 +285,9 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
             
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSE_NO_SQL(courseId))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_SQL(courseId)))) {
                 if (rs.next()) {
-                    courseNo = new String(String.valueOf(rs));
+                    courseNo = rs.getString("course_no");
                 }
             }
         } catch (SQLException e) {

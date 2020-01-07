@@ -50,8 +50,46 @@ public class Teacher extends User {
     }
 
     // APPLICATION THINGS
+
+    public static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
+        boolean valid = false;
+        String courseNo = null;
+        
+        while (!valid) {
+            System.out.print("\nCourse No.: ");
+            courseNo = in.next();
+            String courseNoCheck = PowerSchool.getCourseNo(courseNo);
+            
+            if (courseNo.equals(courseNoCheck)) { // TODO
+                valid = true;
+            } else {
+                System.out.println("\nCourse not found.");
+            }
+        }
+        
+        return courseNo;
+    }
+
     public static void viewEnrollmentByCourse(Scanner in) {
+        String courseNo = "";
+
+        try {
+            courseNo = getCourseSelection(in);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);
+
+        if (students.isEmpty()) {
+            System.out.println("\nNo students to display.\n");
+        } else {
+            System.out.println();
+            int i = 1;
+            for (Student student : students) {
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+            }
+            System.out.println();
+        }
     }
 
     public static void addAssignment() {
