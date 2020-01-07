@@ -231,6 +231,7 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
+            System.out.println(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo));
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo))) {
                 if (rs.next()) {
                     courseNoCheck = rs.getString("course_no");
@@ -268,9 +269,9 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
             
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSE_TITLE_SQL(courseId))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_SQL(courseId))) {
                 if (rs.next()) {
-                    title = new String(String.valueOf(rs));
+                    title = rs.getString("title");
                 }
             }
         } catch (SQLException e) {
@@ -285,7 +286,7 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
             
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_SQL(courseId)))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_SQL(courseId))) {
                 if (rs.next()) {
                     courseNo = rs.getString("course_no");
                 }
@@ -346,6 +347,24 @@ public class PowerSchool {
         }
 
         return user;
+    }
+
+    public static String getDepartmentName(int departmentId) {
+        String departmentName = "";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_DEPARTMENT_SQL)) {
+
+            stmt.setInt(1, departmentId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    departmentName = rs.getString("title");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return departmentName;
     }
 
     /**

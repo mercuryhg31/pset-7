@@ -64,6 +64,9 @@ public class QueryUtils {
         "SELECT * FROM users " +
             "WHERE username = ?";
 
+    public static final String GET_DEPARTMENT_SQL = 
+        "SELECT * FROM departments " + 
+            "WHERE department_id = ?";
     /*
      * Sets password for user associated with a username.
      */
@@ -92,7 +95,7 @@ public class QueryUtils {
     public static /*final, lol, why does this work*/ String GET_TEACHERS_BY_DEPARTMENTS_SQL(int department_id) {
         return "SELECT * FROM teachers t " +
         "LEFT JOIN departments d ON t.department_id = d.department_id " +
-        "WHERE d.department_id = " + department_id + " " +
+        "WHERE d.department_id = " + String.valueOf(department_id) + " " +
         "ORDER BY t.last_name, t.first_name";
     }
 
@@ -103,7 +106,7 @@ public class QueryUtils {
     
     public static String GET_STUDENTS_BY_GRADE_SQL(int grade) {
         return "SELECT * FROM students " +
-        "WHERE grade_level = " + grade + " " +
+        "WHERE grade_level = " + String.valueOf(grade) + " " +
         "ORDER BY last_name, first_name";
     }
 
@@ -141,7 +144,7 @@ public class QueryUtils {
 
     public static String GET_STUDENT_BY_STUDENT_ID_SQL(int studentId) {
         return "SELECT * FROM students " + 
-        "WHERE student_id = " + studentId + " " +
+        "WHERE student_id = " + String.valueOf(studentId) + " " +
         "ORDER BY last_name, first_name";
     }
 
@@ -168,7 +171,7 @@ public class QueryUtils {
 
     public static String GET_COURSES_BY_COURSENO_SQL(String courseNo) {
         return "SELECT * FROM courses " + 
-        "WHERE course_no = " + courseNo; 
+        "WHERE course_no = \"" + courseNo + "\"";
     }
 
     public static String GET_COURSES_SQL(int courseId) {

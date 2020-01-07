@@ -327,7 +327,7 @@ public class Application {
         } else if (activeUser.isTeacher()) {
             switch (n) {
                 case 1:
-                    return Menu.VIEW_ST_ENROLL_COURSE;
+                    return Menu.VIEW_ENROLL_COURSE;
                 case 2:
                     return Menu.ADD_ASSNG;
                 case 3:
