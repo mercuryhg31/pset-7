@@ -322,9 +322,24 @@ public class PowerSchool {
              Statement stmt = conn.createStatement()) {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_FROM_USER_SQL(user))) { // i could probably just user getTeacher modified for this but oh well, i am dumb, sorry michael
-                ArrayList<String> courseNos = new ArrayList<String>();
                 if (rs.next()) {
                     return new Teacher(user, rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Student getStudentFromUser(User user) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_FROM_USER_SQL(user))) { // i could probably just user getTeacher modified for this but oh well, i am dumb, sorry michael
+                if (rs.next()) {
+                    return new Student(user, rs);
                 }
             }
         } catch (SQLException e) {
@@ -380,6 +395,23 @@ public class PowerSchool {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static ArrayList<String> getStudentCourses(int student_id) {
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            ArrayList<String> courses = new ArrayList<String>();
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSES_SQL(student_id))) {
+                if (rs.next()) {
+                    courses.add(rs.getString("courses.course_no"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

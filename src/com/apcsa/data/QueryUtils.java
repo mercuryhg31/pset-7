@@ -137,12 +137,12 @@ public class QueryUtils {
 
     }
 
-    // Gives grades from all courses that a student is taking given their student id
-    public static String GET_STUDENT_COURSES_SQL(int studentId) {
-        return "SELECT course_id FROM course_grades " + 
-        "WHERE student_id = " + String.valueOf(studentId) + " " +
-        "ORDER BY course_id";
-    }
+    // // Gives grades from all courses that a student is taking given their student id // TODO do we need this?
+    // public static String GET_STUDENT_COURSES_SQL(int studentId) {
+    //     return "SELECT course_id FROM course_grades " + 
+    //     "WHERE student_id = " + String.valueOf(studentId) + " " +
+    //     "ORDER BY course_id";
+    // }
 
     public static String GET_STUDENT_BY_STUDENT_ID_SQL(int studentId) {
         return "SELECT * FROM students " + 
@@ -224,5 +224,17 @@ public class QueryUtils {
         return "SELECT * FROM teachers t, users u " +
         "WHERE t.user_id = u.user_id " +
         "AND u.user_id = " + user.getUserId();
+    }
+
+    public static String GET_STUDENT_FROM_USER_SQL(User user) {
+        return "SELECT * FROM students s, users u " +
+        "WHERE s.user_id = u.user_id " +
+        "AND u.user_id = " + user.getUserId();
+    }
+
+    public static String GET_STUDENT_COURSES_SQL(int student_id) {
+        return "SELECT * FROM students s, courses c, course_grades cg " +
+        "WHERE s.student_id = cg.student_id AND c.course_id = cg.course_id " +
+        "AND student_id = " + student_id;
     }
 }

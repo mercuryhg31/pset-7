@@ -2,8 +2,13 @@ package com.apcsa.model;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+
+import com.apcsa.controller.Utils;
+import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Student extends User {
 
@@ -14,7 +19,7 @@ public class Student extends User {
     private double gpa;
     private String firstName;
     private String lastName;
-    
+
     public Student(User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
@@ -56,9 +61,35 @@ public class Student extends User {
         return gpa;
     }
 
-    // APPLICATION THINGS
-    public static void viewCourseGrades() {
+    public int getStudentId() {
+        return studentId;
+    }
 
+    // APPLICATION THINGS
+    /**
+     * Not a menu method.
+     *
+     * @param studentId
+     */
+    public static String getCourse(int studentId, Scanner in) {
+        ArrayList<String> courses = PowerSchool.getStudentCourses(studentId);
+        int numCourses = 0;
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println("[" + i + "]" + " " + courses.get(i));
+            numCourses = i;
+        }
+        System.out.println("\n\n");
+        int selection;
+        do {
+            System.out.print("::: ");
+            selection = Utils.getInt(in, -1);
+        } while (selection < 0 || selection > numCourses);
+        return courses.get(selection - 1);
+    }
+
+    public static void viewCourseGrades(User user, Scanner in) {
+        Student student = PowerSchool.getStudentFromUser(user);
+        String courseNo = getCourse(student.getStudentId(), in);
     }
 
     public static void viewAssngGradesByCourse() {
