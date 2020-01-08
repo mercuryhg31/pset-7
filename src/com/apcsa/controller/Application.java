@@ -187,7 +187,7 @@ public class Application {
         System.out.print("\nUsername: ");
         String username = in.next();
         try {
-            if (confirm("Are you sure you want to reset the password for " + username + "? (y/n) ")) {
+            if (Utils.confirm("Are you sure you want to reset the password for " + username + "? (y/n) ")) {
                 PowerSchool.updatePassword(username, Utils.getHash(username));
                 System.out.println("Successfully reset password for " + username + ".\n");
             }
@@ -201,7 +201,7 @@ public class Application {
      * Root method
      */
     public void factoryReset() {
-        if (confirm("\nAre you sure you want to reset all settings and data? (y/n) ")) {
+        if (Utils.confirm("\nAre you sure you want to reset all settings and data? (y/n) ")) {
             PowerSchool.initialize(true);
             System.out.println("\nSuccessfully reset database.\n");
         }
@@ -224,7 +224,7 @@ public class Application {
      * Root method
      */
     public void shutdown() {
-        if (confirm("Are you sure? (y/n) ")) {
+        if (Utils.confirm("Are you sure? (y/n) ")) {
             if (in != null) {
                 in.close();
             }
