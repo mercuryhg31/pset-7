@@ -73,7 +73,7 @@ public class Application {
                     ? activeUser : null;
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
-                    System.out.print("Please set your password: ");
+                    System.out.print("Enter new password: ");
                     activeUser.setPassword(Utils.getHash(in.next()));
                 }
 
@@ -266,7 +266,7 @@ public class Application {
         String newPW = Utils.getHash(in.next());;
 
         if (!currentPW.equals(activeUser.getPassword())) {
-            System.out.println("\nInvalid current password.");
+            System.out.println("\nInvalid current password.\n");
         } else {
             activeUser.setPassword(newPW);
             System.out.println("\nSuccessfully changed password.\n");

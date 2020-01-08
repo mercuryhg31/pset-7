@@ -199,7 +199,7 @@ public class PowerSchool {
 
                         try (ResultSet rs2 = stmt2.executeQuery(QueryUtils.COURSE_GRADES_BY_COURSEID_SQL(courseId))) {
                             while (rs2.next()) {
-                                studentIds.add(rs.getInt("student_id"));
+                                studentIds.add(rs2.getInt("student_id"));
                             }
             
                             for (int studentId : studentIds) {
@@ -208,7 +208,7 @@ public class PowerSchool {
             
                                     try (ResultSet rs3 = stmt3.executeQuery(QueryUtils.GET_STUDENT_BY_STUDENT_ID_SQL(studentId))) {
                                         while (rs3.next()) {
-                                            students.add(new Student(rs));
+                                            students.add(new Student(rs3));
                                         }
                                     }
                                 }
@@ -231,7 +231,7 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            System.out.println(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo));
+            // System.out.println(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo));
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_BY_COURSENO_SQL(courseNo))) {
                 if (rs.next()) {
                     courseNoCheck = rs.getString("course_no");

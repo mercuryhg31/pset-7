@@ -137,6 +137,7 @@ public class Administrator extends User {
             int i = 1;
             for (Student student : students) {
                 System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+                // TODO rank all students
             }
             System.out.println();
         }
@@ -144,6 +145,7 @@ public class Administrator extends User {
 
     /**
      * Retrieves a user's course selection.
+     * Not a menu method.
      * 
      * @return the selected course
      */
@@ -157,7 +159,7 @@ public class Administrator extends User {
             courseNo = in.next();
             String courseNoCheck = PowerSchool.getCourseNo(courseNo);
             
-            if (courseNo.equals(courseNoCheck)) { // TODO
+            if (courseNo.equals(courseNoCheck)) {
                 valid = true;
             } else {
                 System.out.println("\nCourse not found.");
@@ -183,7 +185,7 @@ public class Administrator extends User {
             System.out.println();
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+                System.out.println(i++ + ". " + student.getName() + " / " + (student.getGPA() != -1.0 ? student.getGPA() : "--")); // TODO weird gpa?? do they have one or not??
             }
             System.out.println();
         }

@@ -86,7 +86,7 @@ public class Teacher extends User {
             System.out.println();
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+                System.out.println(i++ + ". " + student.getName() + " / " + (student.getGPA() != -1.0 ? student.getGPA() : "--")); // TODO weird gpa?? do they have one or not??
             }
             System.out.println();
         }
