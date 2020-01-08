@@ -140,7 +140,7 @@ public class Application {
                                 Administrator.viewStudentEnrollByGrade(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                Administrator.viewStudentEnrollByCourse(in); // TODO
+                                Administrator.viewStudentEnrollByCourse(in);
                                 break;
                             case CHANGE_PW:
                                 changePassword();

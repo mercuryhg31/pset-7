@@ -114,12 +114,12 @@ public class QueryUtils {
     //     // return "SELECT * FROM students s, course_grades cg, courses c " +
     //     // "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
     //     // "AND c.course_no = " + course + " " +
-    //     // "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    //     // "ORDER BY s.last_name, s.first_name";
     //     return "SELECT * FROM students s " +
     //     "LEFT JOIN course_grades cg ON s.student_id = cg.student_id AND " +
     //     "LEFT JOIN courses c ON cg.course_id = c.course_id " +
     //     "WHERE c.course_no = " + course + " " +
-    //     "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    //     "ORDER BY s.last_name, s.first_name";
     // }
 
     public static String GET_STUDENT_GRADES_SQL(int studentId) {
@@ -190,6 +190,24 @@ public class QueryUtils {
         "AND t.teacher_id = ? " +
         "ORDER BY title";
     
-    public static final String CREATE_ASSIGNMENT =
-        "INSERT INTO assignments"; // TODO
+    /**
+     * Creates an assignment.
+     * 
+     * @return
+     */
+    public static String CREATE_ASSIGNMENT(
+        int course_id, int assignment_id, int marking_period,
+        int is_midterm, int is_final, String title, int point_value) { // TODO assign assignment_id based on prev id (one higher than the one before)
+
+        return "INSERT INTO assignments " +
+        "(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value) " +
+        "VALUES (" + course_id + ", " + assignment_id + ", " + marking_period + ", " +
+                    is_midterm + ", " + is_final + ", " + title + ", " + point_value + ")";
+    }
+
+    public static final String GET_ASSIGNMENTS_SQL =
+        "SELECT * FROM assignments a, courses c " +
+        "WHERE a.course_id = c.course_id " +
+        "AND c.course_id = ? " +
+        "ORDER BY a.assignment_id";
 }
