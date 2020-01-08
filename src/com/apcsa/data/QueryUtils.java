@@ -184,4 +184,12 @@ public class QueryUtils {
 
     // public static final String GET_STUDENT_GRADES_COURSE_SQL =
     //     "SELECT c.course_no FROM "
+    public static final String GET_TEACHER_COURSES_SQL =
+        "SELECT * FROM courses c, teachers t " +
+        "WHERE c.teacher_id = t.teacher_id " +
+        "AND t.teacher_id = ? " +
+        "ORDER BY title";
+    
+    public static final String CREATE_ASSIGNMENT =
+        "INSERT INTO assignments"; // TODO
 }
