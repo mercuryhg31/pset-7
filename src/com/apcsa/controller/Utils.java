@@ -37,7 +37,7 @@ public class Utils {
         return pwd.toString();
     }
 
-    public static boolean confirm(String message) {
+    public static boolean confirm(String message, Scanner in) {
         String confirmation;
         do {
             System.out.print(message);

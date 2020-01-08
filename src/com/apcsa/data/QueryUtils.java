@@ -1,5 +1,7 @@
 package com.apcsa.data;
 
+import com.apcsa.model.User;
+
 public class QueryUtils {
 
     /////// QUERY CONSTANTS ///////////////////////////////////////////////////////////////
@@ -184,11 +186,18 @@ public class QueryUtils {
 
     // public static final String GET_STUDENT_GRADES_COURSE_SQL =
     //     "SELECT c.course_no FROM "
-    public static final String GET_TEACHER_COURSES_SQL =
-        "SELECT * FROM courses c, teachers t " +
+    // public static final String GET_TEACHER_COURSES_SQL =
+    //     "SELECT * FROM courses c, teachers t " +
+    //     "WHERE c.teacher_id = t.teacher_id " +
+    //     "AND t.teacher_id = ? " +
+    //     "ORDER BY title";
+
+    public static String GET_TEACHER_COURSES_SQL(int teacher_id) {
+        return "SELECT * FROM courses c, teachers t " +
         "WHERE c.teacher_id = t.teacher_id " +
-        "AND t.teacher_id = ? " +
+        "AND t.teacher_id = " + teacher_id + " " +
         "ORDER BY title";
+    }
     
     /**
      * Creates an assignment.
@@ -210,4 +219,10 @@ public class QueryUtils {
         "WHERE a.course_id = c.course_id " +
         "AND c.course_id = ? " +
         "ORDER BY a.assignment_id";
+    
+    public static String GET_TEACHER_FROM_USER_SQL(User user) {
+        return "SELECT * FROM teachers t, users u " +
+        "WHERE t.user_id = u.user_id " +
+        "AND u.user_id = " + user.getUserId();
+    }
 }

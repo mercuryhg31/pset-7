@@ -299,15 +299,32 @@ public class PowerSchool {
 
     public static ArrayList<String> getTeacherCourses(User user) { // TODO
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_TEACHER_COURSES_SQL)) {
+             Statement stmt = conn.createStatement()) {
 
-            stmt.setInt(1, user.getUserId());
-
-            try (ResultSet rs = stmt.executeQuery()) {
+            Teacher teacher = getTeacherFromUser(user);
+            
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_COURSES_SQL(teacher.getTeacherId()))) {
                 ArrayList<String> courseNos = new ArrayList<String>();
                 if (rs.next()) {
                     courseNos.add(rs.getString("course_no"));
                     return courseNos;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Teacher getTeacherFromUser(User user) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_FROM_USER_SQL(user))) { // i could probably just user getTeacher modified for this but oh well, i am dumb, sorry michael
+                ArrayList<String> courseNos = new ArrayList<String>();
+                if (rs.next()) {
+                    return new Teacher(user, rs);
                 }
             }
         } catch (SQLException e) {

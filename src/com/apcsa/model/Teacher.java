@@ -51,6 +51,10 @@ public class Teacher extends User {
         return departmentName;
     }
 
+    public int getTeacherId() {
+        return teacherId;
+    }
+
     // APPLICATION THINGS
 
     /**
@@ -172,7 +176,7 @@ public class Teacher extends User {
             }
 
             int course_id = PowerSchool.getCourseIdFromCourseNo(courseNo);
-            int marking_period; int is_midterm; int is_final;
+            int marking_period = -1; int is_midterm = -1; int is_final = -1;
             
             switch (mpSelection) {
                 case 1:
@@ -207,7 +211,7 @@ public class Teacher extends User {
                     break;
             }
     
-            if (Utils.confirm("Are you sure you want to create this assignment? (y/n)")){
+            if (Utils.confirm("Are you sure you want to create this assignment? (y/n)", in)){
                 PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value);
                 System.out.println("\nSuccessfully created assignment.\n");
             }
