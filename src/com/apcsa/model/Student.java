@@ -56,6 +56,18 @@ public class Student extends User {
         return gpa;
     }
 
+    public void setClassRank(int rank) {
+        classRank = rank;
+    }
+
+    public int getClassRank() {
+        return classRank;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
     // APPLICATION THINGS
     public static void viewCourseGrades() {
 
