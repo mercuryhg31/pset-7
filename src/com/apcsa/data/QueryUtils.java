@@ -1,5 +1,7 @@
 package com.apcsa.data;
 
+import com.apcsa.model.User;
+
 public class QueryUtils {
 
     /////// QUERY CONSTANTS ///////////////////////////////////////////////////////////////
@@ -114,12 +116,12 @@ public class QueryUtils {
     //     // return "SELECT * FROM students s, course_grades cg, courses c " +
     //     // "WHERE s.student_id = cg.student_id AND cg.course_id = c.course_id " +
     //     // "AND c.course_no = " + course + " " +
-    //     // "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    //     // "ORDER BY s.last_name, s.first_name";
     //     return "SELECT * FROM students s " +
     //     "LEFT JOIN course_grades cg ON s.student_id = cg.student_id AND " +
     //     "LEFT JOIN courses c ON cg.course_id = c.course_id " +
     //     "WHERE c.course_no = " + course + " " +
-    //     "ORDER BY s.last_name, s.first_name"; // TODO error: says there's no such column, jkdsf, kill me (maybe try putting s.first_name and s.last_name?)
+    //     "ORDER BY s.last_name, s.first_name";
     // }
 
     public static String GET_STUDENT_BY_STUDENTID_ORDERED_BY_GPA_SQL(int studentId) {
@@ -149,12 +151,12 @@ public class QueryUtils {
 
     }
 
-    // Gives grades from all courses that a student is taking given their student id
-    public static String GET_STUDENT_COURSES_SQL(int studentId) {
-        return "SELECT course_id FROM course_grades " + 
-        "WHERE student_id = " + String.valueOf(studentId) + " " +
-        "ORDER BY course_id";
-    }
+    // // Gives grades from all courses that a student is taking given their student id // TODO do we need this?
+    // public static String GET_STUDENT_COURSES_SQL(int studentId) {
+    //     return "SELECT course_id FROM course_grades " + 
+    //     "WHERE student_id = " + String.valueOf(studentId) + " " +
+    //     "ORDER BY course_id";
+    // }
 
     public static String GET_STUDENT_BY_STUDENT_ID_SQL(int studentId) {
         return "SELECT * FROM students " + 
@@ -198,12 +200,62 @@ public class QueryUtils {
 
     // public static final String GET_STUDENT_GRADES_COURSE_SQL =
     //     "SELECT c.course_no FROM "
-    public static final String GET_TEACHER_COURSES_SQL =
-        "SELECT * FROM courses c, teachers t " +
+    // public static final String GET_TEACHER_COURSES_SQL =
+    //     "SELECT * FROM courses c, teachers t " +
+    //     "WHERE c.teacher_id = t.teacher_id " +
+    //     "AND t.teacher_id = ? " +
+    //     "ORDER BY title";
+
+    public static String GET_TEACHER_COURSES_SQL(int teacher_id) {
+        return "SELECT * FROM courses c, teachers t " +
         "WHERE c.teacher_id = t.teacher_id " +
-        "AND t.teacher_id = ? " +
+        "AND t.teacher_id = " + teacher_id + " " +
         "ORDER BY title";
+    }
     
-    public static final String CREATE_ASSIGNMENT =
-        "INSERT INTO assignments"; // TODO
+    /**
+     * Creates an assignment.
+     * 
+     * @return
+     */
+    public static String CREATE_ASSIGNMENT(
+        int course_id, int assignment_id, int marking_period,
+        int is_midterm, int is_final, String title, int point_value) { // TODO assign assignment_id based on prev id (one higher than the one before)
+
+        return "INSERT INTO assignments " +
+        "(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value) " +
+        "VALUES (" + course_id + ", " + assignment_id + ", " + marking_period + ", " +
+                    is_midterm + ", " + is_final + ", " + title + ", " + point_value + ")";
+    }
+
+    public static final String GET_ASSIGNMENTS_SQL =
+        "SELECT * FROM assignments a, courses c " +
+        "WHERE a.course_id = c.course_id " +
+        "AND c.course_id = ? " +
+        "ORDER BY a.assignment_id";
+    
+    // public static String GET_TEACHER_FROM_USER_SQL(User user) {
+    //     return "SELECT * FROM teachers t, users u " +
+    //     "WHERE t.user_id = u.user_id " +
+    //     "AND u.user_id = " + user.getUserId();
+    // }
+
+    // public static String GET_STUDENT_FROM_USER_SQL(User user) {
+    //     return "SELECT * FROM students s, users u " +
+    //     "WHERE s.user_id = u.user_id " +
+    //     "AND u.user_id = " + user.getUserId();
+    // }
+
+    public static String GET_STUDENT_COURSES_SQL(int student_id) { // THIS. RIGHT HERE. THIS IS HOLY. PRAY TO IT.
+        return "SELECT * FROM courses c, students s, course_grades cg " +
+        "WHERE s.student_id = cg.student_id AND c.course_id = cg.course_id " +
+        "AND s.student_id = " + student_id;
+    }
+
+    public static String GET_STUDENT_COURSE_GRADES_SQL(String title, int student_id) {
+        return "SELECT * FROM courses c, course_grades cg " +
+        "WHERE c.course_id = cg.course_id " +
+        "AND c.title = " + title + " " +
+        "AND cg.student_id = " + student_id;
+    }
 }

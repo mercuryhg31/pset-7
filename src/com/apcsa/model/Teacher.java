@@ -51,8 +51,17 @@ public class Teacher extends User {
         return departmentName;
     }
 
+    public int getTeacherId() {
+        return teacherId;
+    }
+
     // APPLICATION THINGS
 
+    /**
+     * Not a menu method
+     * 
+     * @param in
+     */
     public static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
         boolean valid = false;
         String courseNo = null;
@@ -96,6 +105,7 @@ public class Teacher extends User {
 
     /**
      * Prints all courses a teacher teaches and returns course selection
+     * Not a menu method.
      *
      * @param user
      * @param in
@@ -104,6 +114,9 @@ public class Teacher extends User {
     public static String getCourseSelection(User user, Scanner in) {
         System.out.println("Choose a course.\n");
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
+        if (courses.isEmpty()) {
+            return null;
+        }
         int maxCourseNum = 0;
         for (int i = 1; i <= courses.size(); i++) {
             System.out.println("[" + i + "]" + " " + courses.get(i-1));
@@ -118,9 +131,14 @@ public class Teacher extends User {
         return courses.get(selection - 1);
     }
 
-    public static void addAssignment(User user, Scanner in) {
-        String courseNo = getCourseSelection(user, in);
-
+    /**
+     * Gets marking period (or midterm or final) selection
+     * Not a menu method.
+     * 
+     * @param in
+     * @return numbers 1-6 for mp or exams
+     */
+    public static int getMPSelection(Scanner in) {
         System.out.println("\nChoose a marking period or exam status.\n");
         System.out.println("[1] MP1 assignment.");
         System.out.println("[2] MP2 assignment.");
@@ -136,13 +154,67 @@ public class Teacher extends User {
             mpSelection = Utils.getInt(in, -1);
         } while (mpSelection < 1 || mpSelection > 6);
 
-        System.out.print("\nAssignment Title: ");
-        String title = in.next();
-        System.out.print("Point Value: ");
-        int ptsPoss = Utils.getInt(in, 0);
+        return mpSelection;
+    }
 
-        if (Utils.confirm("Are you sure you want to create this assignment? (y/n)")){
+    public static void addAssignment(User user, Scanner in) {
+        String courseNo = getCourseSelection(user, in);
+
+        if (courseNo.isEmpty()) {
+            System.out.println("\nYou don't teach any courses.\n");
+        } else {
+            int mpSelection = getMPSelection(in);
+    
+            System.out.print("\nAssignment Title: ");
+            String title = in.next();
+            System.out.print("Point Value: ");
+            int point_value = Utils.getInt(in, 0);
+            while (point_value < 1 || point_value > 100) {
+                System.out.println("\nPoint value must be between 1 and 100.\n");
+                System.out.print("Point Value: ");
+                point_value = Utils.getInt(in, 0);
+            }
+
+            int course_id = PowerSchool.getCourseIdFromCourseNo(courseNo);
+            int marking_period = -1; int is_midterm = -1; int is_final = -1;
             
+            switch (mpSelection) {
+                case 1:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 2:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 3:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 4:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 5:
+                    marking_period = 0;
+                    is_midterm = 1;
+                    is_final = 0;
+                    break;
+                case 6:
+                    marking_period = 0;
+                    is_midterm = 0;
+                    is_final = 1;
+                    break;
+            }
+    
+            if (Utils.confirm("Are you sure you want to create this assignment? (y/n)", in)){
+                PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value);
+                System.out.println("\nSuccessfully created assignment.\n");
+            }
         }
     }
 

@@ -37,17 +37,17 @@ public class Utils {
         return pwd.toString();
     }
 
-    public static boolean confirm(String message) {
-        String confirm;
+    public static boolean confirm(String message, Scanner in) {
+        String confirmation;
         do {
             System.out.print(message);
-            confirm = in.next().toLowerCase();
-            if (confirm.equals("y")) {
+            confirmation = in.next().toLowerCase();
+            if (confirmation.equals("y")) {
                 return true;
             }
-            System.out.println(confirm);
-            System.out.println(confirm.equals("y"));
-        } while (!confirm.equals("y") && !confirm.equals("n"));
+            System.out.println(confirmation);
+            System.out.println(confirmation.equals("y"));
+        } while (!confirmation.equals("y") && !confirmation.equals("n"));
         return false;
     }
 

@@ -2,8 +2,13 @@ package com.apcsa.model;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+
+import com.apcsa.controller.Utils;
+import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Student extends User {
 
@@ -14,7 +19,7 @@ public class Student extends User {
     private double gpa;
     private String firstName;
     private String lastName;
-    
+
     public Student(User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
@@ -56,6 +61,7 @@ public class Student extends User {
         return gpa;
     }
 
+<<<<<<< HEAD
     public void setClassRank(int rank) {
         classRank = rank;
     }
@@ -64,13 +70,47 @@ public class Student extends User {
         return classRank;
     }
 
+=======
+>>>>>>> c6b5af1722f8b6b8b0e7f79468d4f59edff53ad8
     public int getStudentId() {
         return studentId;
     }
 
     // APPLICATION THINGS
-    public static void viewCourseGrades() {
+    /**
+     * Not a menu method.
+     * Okay, this whole method is actually irrelevant, but leave it because it functions and I will use it for admin, I wanna cry, but of happiness rn.
+     *
+     * @param studentId
+     */
+    public static String getCourse(int studentId, Scanner in) {
+        ArrayList<String> courses = PowerSchool.getStudentCoursesBreakthrough(studentId);
+        int numCourses = 0;
+        if (courses.isEmpty()) {
+            System.out.println("You take no courses.");
+            return null;
+        }
+        for (int i = 1; i <= courses.size(); i++) {
+            System.out.println("[" + i + "]" + " " + courses.get(i-1));
+            numCourses = i;
+        }
+        System.out.print("\n");
+        int selection;
+        do {
+            System.out.print("::: ");
+            selection = Utils.getInt(in, -1);
+        } while (selection < 0 || selection > numCourses);
+        return courses.get(selection - 1);
 
+        // System.out.println();
+        // String courseNo = getCourse(((Student) user).getStudentId(), in);
+        // System.out.println(courseNo);
+        // int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
+        // System.out.println(courseId);
+    }
+
+    public static void viewCourseGrades(User user, Scanner in) {
+        
     }
 
     public static void viewAssngGradesByCourse() {
