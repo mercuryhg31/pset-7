@@ -363,7 +363,8 @@ public class PowerSchool {
         return -1;
     }
 
-    public static ArrayList<String> getStudentCourses(int student_id) {
+    // KEEP THIS, PLEASE, JUST DON'T DELETE IT, IT IS A MONUMENT TO THE BIGGEST, STUPIDEST BREAKTHROUGH OF MY LIFE
+    public static ArrayList<String> getStudentCoursesBreakthrough(int student_id) {
         ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
@@ -377,6 +378,40 @@ public class PowerSchool {
             e.printStackTrace();
         }
         return courses;
+    }
+
+    public static ArrayList<String> getStudentCourses(int student_id) { // TODO for student
+        ArrayList<String> courses = new ArrayList<String>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSES_SQL(student_id))) {
+                while (rs.next()) {
+                    courses.add(rs.getString("title"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return courses;
+    }
+
+    public static int getStudentCourseGrade(String title, int student_id) { // TODO for student
+        int grade = 0;
+        int numGrades = 0;
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADES_SQL(title, student_id))) {
+                while (rs.next()) {
+                    grade += rs.getInt("grade");
+                    numGrades++;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return grades / numGrades;
     }
 
 

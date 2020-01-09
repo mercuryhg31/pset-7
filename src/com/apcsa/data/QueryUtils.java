@@ -232,9 +232,16 @@ public class QueryUtils {
     //     "AND u.user_id = " + user.getUserId();
     // }
 
-    public static String GET_STUDENT_COURSES_SQL(int student_id) {
-        return "SELECT * FROM students s, courses c, course_grades cg " +
+    public static String GET_STUDENT_COURSES_SQL(int student_id) { // THIS. RIGHT HERE. THIS IS HOLY. PRAY TO IT.
+        return "SELECT * FROM courses c, students s, course_grades cg " +
         "WHERE s.student_id = cg.student_id AND c.course_id = cg.course_id " +
         "AND s.student_id = " + student_id;
+    }
+
+    public static String GET_STUDENT_COURSE_GRADES_SQL(String title, int student_id) {
+        return "SELECT * FROM courses c, course_grades cg " +
+        "WHERE c.course_id = cg.course_id " +
+        "AND c.title = " + title + " " +
+        "AND cg.student_id = " + student_id;
     }
 }

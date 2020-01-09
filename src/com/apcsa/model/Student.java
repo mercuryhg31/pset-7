@@ -68,11 +68,12 @@ public class Student extends User {
     // APPLICATION THINGS
     /**
      * Not a menu method.
+     * Okay, this whole method is actually irrelevant, but leave it because it functions and I will use it for admin, I wanna cry, but of happiness rn.
      *
      * @param studentId
      */
     public static String getCourse(int studentId, Scanner in) {
-        ArrayList<String> courses = PowerSchool.getStudentCourses(studentId);
+        ArrayList<String> courses = PowerSchool.getStudentCoursesBreakthrough(studentId);
         int numCourses = 0;
         if (courses.isEmpty()) {
             System.out.println("You take no courses.");
@@ -89,14 +90,16 @@ public class Student extends User {
             selection = Utils.getInt(in, -1);
         } while (selection < 0 || selection > numCourses);
         return courses.get(selection - 1);
+
+        // System.out.println();
+        // String courseNo = getCourse(((Student) user).getStudentId(), in);
+        // System.out.println(courseNo);
+        // int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
+        // System.out.println(courseId);
     }
 
     public static void viewCourseGrades(User user, Scanner in) {
-        System.out.println();
-        String courseNo = getCourse(((Student) user).getStudentId(), in);
-        System.out.println(courseNo);
-        int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
-        System.out.println(courseId);
+        
     }
 
     public static void viewAssngGradesByCourse() {
