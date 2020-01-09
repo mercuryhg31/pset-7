@@ -104,7 +104,7 @@ public class Application {
                         teacherMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_ENROLL_COURSE:
-                                Teacher.viewEnrollmentByCourse(activeUser, in); // TODO
+                                Teacher.viewEnrollmentByCourse(activeUser, in);
                                 break;
                             case ADD_ASSNG:
                                 Teacher.addAssignment(activeUser, in); // TODO
@@ -135,13 +135,13 @@ public class Application {
                                 Administrator.viewFacultyByDept(in);
                                 break;
                             case VIEW_ST_ENROLL:
-                                Administrator.viewStudentEnroll(); // TODO
+                                Administrator.viewStudentEnroll();
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
                                 Administrator.viewStudentEnrollByGrade(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                Administrator.viewStudentEnrollByCourse(in);
+                                Administrator.viewStudentEnrollByCourse(in); // TODO
                                 break;
                             case CHANGE_PW:
                                 changePassword();
