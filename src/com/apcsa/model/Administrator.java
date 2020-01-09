@@ -128,7 +128,7 @@ public class Administrator extends User {
     }
 
     public static void viewStudentEnrollByGrade(Scanner in) {
-        ArrayList<Student> students = PowerSchool.getStudentsByGrade(getGradeSelection(in));;
+        ArrayList<Student> students = PowerSchool.getStudentsByGrade(getGradeSelection(in));
 
         if (students.isEmpty()) {
             System.out.println("\nNo students to display.\n");

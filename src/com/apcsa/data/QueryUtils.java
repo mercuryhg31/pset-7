@@ -124,6 +124,20 @@ public class QueryUtils {
     //     "ORDER BY s.last_name, s.first_name";
     // }
 
+    public static String GET_STUDENT_BY_STUDENTID_ORDERED_BY_GPA_SQL(int studentId) {
+        return "SELECT * FROM students " + 
+        "WHERE student_id = " + String.valueOf(studentId) + " " + 
+        "ORDER BY gpa";
+    }
+
+    public static String UPDATE_CLASS_RANK_SQL(int studentId, int classRank) {
+        return 
+        "UPDATE students " + 
+            "SET class_rank = " + String.valueOf(classRank) + " " +
+        "WHERE student_id = " + String.valueOf(studentId);
+
+    }
+
     public static String GET_STUDENT_GRADES_SQL(int studentId) {
         return "SELECT grade FROM course_grades " +
         "WHERE student_id = " + String.valueOf(studentId) + " " +
