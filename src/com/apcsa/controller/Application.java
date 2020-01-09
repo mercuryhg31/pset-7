@@ -85,7 +85,7 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
-                                Student.viewCourseGrades(activeUser, in); // TODO
+                                Student.viewCourseGrades(activeUser, in); // TODO there's something up with what courses I have...
                                 break;
                             case VIEW_GRADES_COURSE:
                                 Student.viewAssngGradesByCourse(); // TODO
@@ -107,7 +107,7 @@ public class Application {
                                 Teacher.viewEnrollmentByCourse(activeUser, in);
                                 break;
                             case ADD_ASSNG:
-                                Teacher.addAssignment(activeUser, in); // TODO
+                                Teacher.addAssignment(activeUser, in);
                                 break;
                             case DELETE_ASSNG:
                                 Teacher.deleteAssignment(); // TODO

@@ -225,7 +225,7 @@ public class QueryUtils {
         return "INSERT INTO assignments " +
         "(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value) " +
         "VALUES (" + course_id + ", " + assignment_id + ", " + marking_period + ", " +
-                    is_midterm + ", " + is_final + ", " + title + ", " + point_value + ")";
+                    is_midterm + ", " + is_final + ", \"" + title + "\", " + point_value + ")";
     }
 
     public static final String GET_ASSIGNMENTS_SQL =

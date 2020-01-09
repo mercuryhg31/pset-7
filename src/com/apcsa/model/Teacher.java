@@ -124,7 +124,7 @@ public class Teacher extends User {
             System.out.println("[" + i + "]" + " " + courses.get(i-1));
             maxCourseNum = i;
         }
-        System.out.print("\n\n");
+        System.out.print("\n");
         int selection;
         do {
             System.out.print("::: ");
@@ -148,7 +148,7 @@ public class Teacher extends User {
         System.out.println("[4] MP4 assignment.");
         System.out.println("[5] Midterm exam.");
         System.out.println("[6] Final exam.");
-        System.out.print("\n\n");
+        System.out.print("\n");
 
         int mpSelection;
         do {
@@ -213,9 +213,10 @@ public class Teacher extends User {
                     break;
             }
 
-            if (Utils.confirm("Are you sure you want to create this assignment? (y/n)", in)){
-                PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value);
-                System.out.println("\nSuccessfully created assignment.\n");
+            if (Utils.confirm("Are you sure you want to create this assignment? (y/n) ", in)){
+                if (PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value) == 1) {
+                    System.out.println("\nThere was an error.\n");
+                }
             }
         }
     }

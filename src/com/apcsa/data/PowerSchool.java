@@ -317,12 +317,18 @@ public class PowerSchool {
 
     public static int createAssignment(int course_id, int marking_period, int is_midterm, int is_final, String title, int point_value) {
         int assignment_id = getNextAssignmentId(course_id);
+        System.out.println();
+        System.out.println(assignment_id);
+        System.out.println();
 
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.CREATE_ASSIGNMENT(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value))) {
+            if (stmt.executeUpdate(QueryUtils.CREATE_ASSIGNMENT(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value)) == 1) {
+                System.out.println("\nSuccessfully created assignment.\n");
                 return 0;
+            } else {
+                return 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
