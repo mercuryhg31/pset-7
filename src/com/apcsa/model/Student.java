@@ -99,7 +99,7 @@ public class Student extends User {
     }
 
     public static void viewCourseGrades(User user, Scanner in) {
-        
+        getCourse(((Student) user).getStudentId(), in);
     }
 
     public static void viewAssngGradesByCourse() {

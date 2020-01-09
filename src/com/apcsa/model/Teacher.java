@@ -59,33 +59,35 @@ public class Teacher extends User {
 
     /**
      * Not a menu method
-     * 
+     *
      * @param in
      */
-    public static String getCourseSelection(Scanner in) throws SQLException { // Mr. Wilson's
-        boolean valid = false;
-        String courseNo = null;
-        
-        while (!valid) {
-            System.out.print("\nCourse No.: ");
-            courseNo = in.next();
-            String courseNoCheck = PowerSchool.getCourseNo(courseNo);
-            
-            if (courseNo.equals(courseNoCheck)) { // TODO
-                valid = true;
-            } else {
-                System.out.println("\nCourse not found.");
-            }
+    public static String getCourseSelection(Scanner in, User user) throws SQLException {
+        ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
+        int numCourses = 0;
+        if (courses.isEmpty()) {
+            System.out.println("You teach no courses.");
+            return null;
         }
-        
-        return courseNo;
+        for (int i = 1; i <= courses.size(); i++) {
+            System.out.println("[" + i + "]" + " " + courses.get(i-1));
+            numCourses = i;
+        }
+        System.out.print("\n");
+        int selection;
+        do {
+            System.out.print("::: ");
+            selection = Utils.getInt(in, -1);
+        } while (selection < 0 || selection > numCourses);
+        return courses.get(selection - 1);
     }
 
-    public static void viewEnrollmentByCourse(Scanner in) {
+    public static void viewEnrollmentByCourse(User user, Scanner in) {
+        System.out.println();
         String courseNo = "";
 
         try {
-            courseNo = getCourseSelection(in);
+            courseNo = getCourseSelection(in, user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,7 +136,7 @@ public class Teacher extends User {
     /**
      * Gets marking period (or midterm or final) selection
      * Not a menu method.
-     * 
+     *
      * @param in
      * @return numbers 1-6 for mp or exams
      */
@@ -164,7 +166,7 @@ public class Teacher extends User {
             System.out.println("\nYou don't teach any courses.\n");
         } else {
             int mpSelection = getMPSelection(in);
-    
+
             System.out.print("\nAssignment Title: ");
             String title = in.next();
             System.out.print("Point Value: ");
@@ -177,7 +179,7 @@ public class Teacher extends User {
 
             int course_id = PowerSchool.getCourseIdFromCourseNo(courseNo);
             int marking_period = -1; int is_midterm = -1; int is_final = -1;
-            
+
             switch (mpSelection) {
                 case 1:
                     marking_period = mpSelection;
@@ -210,7 +212,7 @@ public class Teacher extends User {
                     is_final = 1;
                     break;
             }
-    
+
             if (Utils.confirm("Are you sure you want to create this assignment? (y/n)", in)){
                 PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value);
                 System.out.println("\nSuccessfully created assignment.\n");

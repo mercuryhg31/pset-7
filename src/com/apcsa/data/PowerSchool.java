@@ -396,9 +396,9 @@ public class PowerSchool {
         return courses;
     }
 
-    public static int getStudentCourseGrade(String title, int student_id) { // TODO for student
-        int grade = 0;
-        int numGrades = 0;
+    public static double getStudentCourseGrade(String title, int student_id) { // TODO for student
+        double grade = 0;
+        double numGrades = 0;
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
@@ -411,7 +411,7 @@ public class PowerSchool {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return grades / numGrades;
+        return (grade / numGrades);
     }
 
 

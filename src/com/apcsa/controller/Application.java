@@ -74,7 +74,7 @@ public class Application {
                     ? activeUser : null;
 
                 if (isFirstLogin() && !activeUser.isRoot()) {
-                    System.out.print("Enter new password: ");
+                    System.out.print("\nEnter new password: ");
                     activeUser.setPassword(Utils.getHash(in.next()));
                 }
 
@@ -104,7 +104,7 @@ public class Application {
                         teacherMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_ENROLL_COURSE:
-                                Teacher.viewEnrollmentByCourse(in); // TODO
+                                Teacher.viewEnrollmentByCourse(activeUser, in); // TODO
                                 break;
                             case ADD_ASSNG:
                                 Teacher.addAssignment(activeUser, in); // TODO
