@@ -220,21 +220,21 @@ public class QueryUtils {
         "AND c.course_id = ? " +
         "ORDER BY a.assignment_id";
     
-    public static String GET_TEACHER_FROM_USER_SQL(User user) {
-        return "SELECT * FROM teachers t, users u " +
-        "WHERE t.user_id = u.user_id " +
-        "AND u.user_id = " + user.getUserId();
-    }
+    // public static String GET_TEACHER_FROM_USER_SQL(User user) {
+    //     return "SELECT * FROM teachers t, users u " +
+    //     "WHERE t.user_id = u.user_id " +
+    //     "AND u.user_id = " + user.getUserId();
+    // }
 
-    public static String GET_STUDENT_FROM_USER_SQL(User user) {
-        return "SELECT * FROM students s, users u " +
-        "WHERE s.user_id = u.user_id " +
-        "AND u.user_id = " + user.getUserId();
-    }
+    // public static String GET_STUDENT_FROM_USER_SQL(User user) {
+    //     return "SELECT * FROM students s, users u " +
+    //     "WHERE s.user_id = u.user_id " +
+    //     "AND u.user_id = " + user.getUserId();
+    // }
 
     public static String GET_STUDENT_COURSES_SQL(int student_id) {
         return "SELECT * FROM students s, courses c, course_grades cg " +
         "WHERE s.student_id = cg.student_id AND c.course_id = cg.course_id " +
-        "AND student_id = " + student_id;
+        "AND s.student_id = " + student_id;
     }
 }

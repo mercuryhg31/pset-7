@@ -85,7 +85,7 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
-                                Student.viewCourseGrades(); // TODO
+                                Student.viewCourseGrades(activeUser, in); // TODO
                                 break;
                             case VIEW_GRADES_COURSE:
                                 Student.viewAssngGradesByCourse(); // TODO
@@ -121,9 +121,6 @@ public class Application {
                             case LOGOUT:
                                 logout();
                                 validLogin = false;
-                                break;
-                            case TEST:
-                                Teacher.getCourseSelection(activeUser, in); // TODO fix course selection and then get rid of this test case, i wanna die
                                 break;
                             default:
                                 System.out.println("\nInvalid selection.\n");
@@ -328,8 +325,6 @@ public class Application {
                     return Menu.CHANGE_PW;
                 case 6:
                     return Menu.LOGOUT;
-                case 7:
-                    return Menu.TEST;
                 default:
                     return Menu.INVALID;
             }

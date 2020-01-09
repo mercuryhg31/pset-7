@@ -74,11 +74,15 @@ public class Student extends User {
     public static String getCourse(int studentId, Scanner in) {
         ArrayList<String> courses = PowerSchool.getStudentCourses(studentId);
         int numCourses = 0;
-        for (int i = 0; i < courses.size(); i++) {
-            System.out.println("[" + i + "]" + " " + courses.get(i));
+        if (courses.isEmpty()) {
+            System.out.println("You take no courses.");
+            return null;
+        }
+        for (int i = 1; i <= courses.size(); i++) {
+            System.out.println("[" + i + "]" + " " + courses.get(i-1));
             numCourses = i;
         }
-        System.out.println("\n\n");
+        System.out.print("\n");
         int selection;
         do {
             System.out.print("::: ");
@@ -88,8 +92,11 @@ public class Student extends User {
     }
 
     public static void viewCourseGrades(User user, Scanner in) {
-        Student student = PowerSchool.getStudentFromUser(user);
-        String courseNo = getCourse(student.getStudentId(), in);
+        System.out.println();
+        String courseNo = getCourse(((Student) user).getStudentId(), in);
+        System.out.println(courseNo);
+        int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
+        System.out.println(courseId);
     }
 
     public static void viewAssngGradesByCourse() {

@@ -301,46 +301,12 @@ public class PowerSchool {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            Teacher teacher = getTeacherFromUser(user);
-            
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_COURSES_SQL(teacher.getTeacherId()))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_COURSES_SQL(((Teacher) user).getTeacherId()))) {
                 ArrayList<String> courseNos = new ArrayList<String>();
-                if (rs.next()) {
+                while (rs.next()) {
                     courseNos.add(rs.getString("course_no"));
-                    return courseNos;
                 }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Teacher getTeacherFromUser(User user) {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
-
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_FROM_USER_SQL(user))) { // i could probably just user getTeacher modified for this but oh well, i am dumb, sorry michael
-                if (rs.next()) {
-                    return new Teacher(user, rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Student getStudentFromUser(User user) {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
-
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_FROM_USER_SQL(user))) { // i could probably just user getTeacher modified for this but oh well, i am dumb, sorry michael
-                if (rs.next()) {
-                    return new Student(user, rs);
-                }
+                return courseNos;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -372,7 +338,7 @@ public class PowerSchool {
             stmt.setInt(1, course_id);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+                while (rs.next()) {
                     assignmentId = rs.getInt("assignment_id") + 1;
                 }
             }
@@ -398,20 +364,19 @@ public class PowerSchool {
     }
 
     public static ArrayList<String> getStudentCourses(int student_id) {
+        ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            ArrayList<String> courses = new ArrayList<String>();
-
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSES_SQL(student_id))) {
-                if (rs.next()) {
-                    courses.add(rs.getString("courses.course_no"));
+                while (rs.next()) {
+                    courses.add(rs.getString("course_no"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return courses;
     }
 
 
