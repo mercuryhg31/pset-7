@@ -379,8 +379,6 @@ public class PowerSchool {
         }
         return courses;
     }
-<<<<<<< HEAD
-=======
 
     public static ArrayList<String> getStudentCourses(int student_id) { // TODO for student
         ArrayList<String> courses = new ArrayList<String>();
@@ -416,7 +414,6 @@ public class PowerSchool {
         return (grade / numGrades);
     }
 
->>>>>>> c6b5af1722f8b6b8b0e7f79468d4f59edff53ad8
 
 
     /**
