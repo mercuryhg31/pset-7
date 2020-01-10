@@ -65,11 +65,7 @@ public class Teacher extends User {
      * @param in
      * @return course no of selected course
      */
-<<<<<<< HEAD
-    public static String getCourseSelection(Scanner in, User user) throws SQLException {
-=======
     public static String getCourseSelection(Scanner in, User user) {
->>>>>>> e2055edcfa9afe09002efdcc437e2181449c577e
         System.out.println("\nChoose a course.\n");
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         int numCourses = 0;
