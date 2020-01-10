@@ -517,9 +517,50 @@ public class PowerSchool {
 
     // This may not work because the connection thing is outside of the for loop meaning there is not a new connection being made every time.
     // I have to check whether or not this method works for that reason.
-    public static ArrayList<Student> getStudentsRanks(ArrayList<Student> students) { // TODO (Check if works)
+    // public static ArrayList<Student> getStudentsRanks(ArrayList<Student> students) { // TODO (Check if works)
 
-        // Calculaing the rank for each student in this set
+    //     // Calculaing the rank for each student in this set
+    //     for (int i = 0; i < students.size(); i++) {
+    //         Student comparing = students.get(i);
+    //         int numOfBetterStudents = 0;
+    //         for (int j = 0; i < students.size(); i++) {
+    //             if (comparing.getGPA() < students.get(j).getGPA()) {
+    //                 numOfBetterStudents++;
+    //             }
+    //         }
+
+    //         comparing.setClassRank(numOfBetterStudents + 1);
+    //         students.set(i, comparing);
+    //     }
+
+    //     // Updating their ranks
+    //     try (Connection conn = getConnection();
+    //         Statement stmt = conn.createStatement()) {
+    //             for (Student student : students) {
+    //                 if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
+    //                     conn.commit();
+    //                 } else {
+    //                     conn.rollback();
+        
+    //                     return null;
+    //                 }
+    //             }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+
+    //         return null;
+    //     }
+
+    //     return students;
+    // }
+
+    // This should be run every time a grade is updated/changed. Wait idea just set everyone using the getStudentRanks() (rename it setStudentsRanks() or whatever)
+    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade 
+    // is equal to whatever the grade that was selected. TODO
+    public static void setStudentRank(int grade) {
+
+        ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));
+
         for (int i = 0; i < students.size(); i++) {
             Student comparing = students.get(i);
             int numOfBetterStudents = 0;
@@ -533,46 +574,36 @@ public class PowerSchool {
             students.set(i, comparing);
         }
 
-        // Updating their ranks
-        try (Connection conn = getConnection();
-            Statement stmt = conn.createStatement()) {
-                for (Student student : students) {
-                    if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
-                        conn.commit();
-                    } else {
-                        conn.rollback();
-        
-                        return null;
-                    }
-                }
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            return null;
-        }
-
-        return students;
-    }
-
-    // This should be run every time a grade is updated/changed. Wait idea just set everyone using the getStudentRanks() (rename it setStudentsRanks() or whatever)
-    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade 
-    // is equal to whatever the grade that was selected. TODO
-    public static void setStudentRank(int studentId) {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            ArrayList<Student> students = null;
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENTS_SQL)) {
-                while (rs.next()) {
-                    students.add(new Student(rs));
+            for (Student student : students) {
+                if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
+                    conn.commit();
+                } else {
+                    conn.rollback();
+    
+                    return;
                 }
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
+
+            return;
         }
+        
+        
     }
+
+    public static ArrayList<Student> getStudentsByGradeWithUpdatedRank(int grade) {
+        setStudentRank(grade);
+        ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));
+
+        return students;
+
+    }
+
+    
 
     // public static int getStudentRank(ArrayList<Student> students) { // TODO
     //     setStudentRank(students);
