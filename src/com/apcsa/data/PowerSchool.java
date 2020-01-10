@@ -297,7 +297,7 @@ public class PowerSchool {
         return courseNo;
     }
 
-    public static ArrayList<String> getTeacherCourses(User user) { // TODO
+    public static ArrayList<String> getTeacherCourses(User user) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -315,11 +315,11 @@ public class PowerSchool {
         return null;
     }
 
-    public static ArrayList<String> getTeacherAssignments(User user) { // TODO
+    public static ArrayList<String> getTeacherAssignments(User user, String course_no, int marking_period, int is_midterm, int is_final) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId(), course_no, marking_period, is_midterm, is_final))) {
                 ArrayList<String> assignments = new ArrayList<String>();
                 while (rs.next()) {
                     assignments.add(rs.getString("title"));
@@ -333,11 +333,59 @@ public class PowerSchool {
         return null;
     }
 
-    public static ArrayList<Integer> getTeacherAssignmentPoints(User user) { // TODO
+    public static ArrayList<Student> getAssignmentStudents(String course_no) { // TODO
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ASSIGNMENT_STUDENTS_SQL(course_no))) {
+                ArrayList<Student> students = new ArrayList<Student>();
+                while (rs.next()) {
+                    students.add(new Student(rs));
+                }
+                return students;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static int getAssignmentPoints(String course_no, int assignment_id) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ASSIGNMENT_POINTS(course_no, assignment_id))) {
+                if (rs.next()) {
+                    return rs.getInt("point_value");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int enterGrades(int course_id, int assignment_id, int student_id, int points_earned, int points_possible) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            if (stmt.executeUpdate(QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible)) == 1) {
+                System.out.println("\nSuccessfully entered grade.\n");
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    } // QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible))
+
+    public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) { // TODO
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId(), course_no, marking_period, is_midterm, is_final))) {
                 ArrayList<Integer> assignmentsPts = new ArrayList<Integer>();
                 while (rs.next()) {
                     assignmentsPts.add(rs.getInt("point_value"));
@@ -392,7 +440,7 @@ public class PowerSchool {
             Statement stmt = conn.createStatement()) {
 
             if (stmt.executeUpdate(QueryUtils.DELETE_ASSIGNMENT_SQL(course_id, assignment_id)) == 1) {
-                System.out.println("\nSuccessfully deleted" + title + ".\n");
+                System.out.println("\nSuccessfully deleted " + title + ".\n");
                 return 0;
             } else {
                 return 1;
