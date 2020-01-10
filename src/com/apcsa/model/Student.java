@@ -106,6 +106,10 @@ public class Student extends User {
         // System.out.println(courseId);
     }
 
+    public static void getCourses() {
+        
+    }
+
     public static void viewCourseGrades(User user, Scanner in) {
         System.out.println();
         getCourse(((Student) user).getStudentId(), in);

@@ -298,7 +298,7 @@ public class PowerSchool {
         return courseNo;
     }
 
-    public static ArrayList<String> getTeacherCourses(User user) { // TODO
+    public static ArrayList<String> getTeacherCourses(User user) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -316,11 +316,11 @@ public class PowerSchool {
         return null;
     }
 
-    public static ArrayList<String> getTeacherAssignments(User user) { // TODO
+    public static ArrayList<String> getTeacherAssignments(User user, String course_no, int marking_period, int is_midterm, int is_final) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId(), course_no, marking_period, is_midterm, is_final))) {
                 ArrayList<String> assignments = new ArrayList<String>();
                 while (rs.next()) {
                     assignments.add(rs.getString("title"));
@@ -334,11 +334,59 @@ public class PowerSchool {
         return null;
     }
 
-    public static ArrayList<Integer> getTeacherAssignmentPoints(User user) { // TODO
+    public static ArrayList<Student> getAssignmentStudents(String course_no) { // TODO
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ASSIGNMENT_STUDENTS_SQL(course_no))) {
+                ArrayList<Student> students = new ArrayList<Student>();
+                while (rs.next()) {
+                    students.add(new Student(rs));
+                }
+                return students;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static int getAssignmentPoints(String course_no, int assignment_id) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ASSIGNMENT_POINTS(course_no, assignment_id))) {
+                if (rs.next()) {
+                    return rs.getInt("point_value");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int enterGrades(int course_id, int assignment_id, int student_id, int points_earned, int points_possible) {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            if (stmt.executeUpdate(QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible)) == 1) {
+                System.out.println("\nSuccessfully entered grade.\n");
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    } // QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible))
+
+    public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) { // TODO
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId(), course_no, marking_period, is_midterm, is_final))) {
                 ArrayList<Integer> assignmentsPts = new ArrayList<Integer>();
                 while (rs.next()) {
                     assignmentsPts.add(rs.getInt("point_value"));
@@ -393,7 +441,7 @@ public class PowerSchool {
             Statement stmt = conn.createStatement()) {
 
             if (stmt.executeUpdate(QueryUtils.DELETE_ASSIGNMENT_SQL(course_id, assignment_id)) == 1) {
-                System.out.println("\nSuccessfully deleted" + title + ".\n");
+                System.out.println("\nSuccessfully deleted " + title + ".\n");
                 return 0;
             } else {
                 return 1;
@@ -470,7 +518,7 @@ public class PowerSchool {
         return courses;
     }
 
-    public static double getStudentCourseGrade(String title, int student_id) { // TODO for student
+    public static double getStudentCourseGrades(String title, int student_id) { // TODO for student or not - calculate grade
         double grade = 0;
         double numGrades = 0;
         try (Connection conn = getConnection();
@@ -480,6 +528,22 @@ public class PowerSchool {
                 while (rs.next()) {
                     grade += rs.getInt("grade");
                     numGrades++;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (grade / numGrades);
+    }
+
+    public static ArrayList<String> getStudentCoursesAndGrades(int student_id) { // TODO for student
+        ArrayList<String> courses = new ArrayList<String>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADE_SQL(student_id))) {
+                while (rs.next()) {
+                    courses.add(rs.getString("title") + " / " + rs.getInt("grade"));
                 }
             }
         } catch (SQLException e) {
@@ -609,7 +673,7 @@ public class PowerSchool {
     //                     conn.commit();
     //                 } else {
     //                     conn.rollback();
-        
+
     //                     return null;
     //                 }
     //             }
@@ -623,7 +687,7 @@ public class PowerSchool {
     // }
 
     // This should be run every time a grade is updated/changed. Wait idea just set everyone using the getStudentRanks() (rename it setStudentsRanks() or whatever)
-    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade 
+    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade
     // is equal to whatever the grade that was selected. TODO
     public static void setStudentRank(int grade) {
 
@@ -647,9 +711,19 @@ public class PowerSchool {
             
             conn.setAutoCommit(false);
             for (Student student : students) {
+<<<<<<< HEAD
                 stmt.setInt(1, student.getClassRank());
                 stmt.setInt(2, student.getStudentId());
                 stmt.executeUpdate();
+=======
+                if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
+                    conn.commit();
+                } else {
+                    conn.rollback();
+
+                    return;
+                }
+>>>>>>> harshita
             }
 
             conn.commit();
@@ -658,8 +732,14 @@ public class PowerSchool {
             e.printStackTrace();
 
             return;
+<<<<<<< HEAD
         }        
         
+=======
+        }
+
+
+>>>>>>> harshita
     }
 
     public static ArrayList<Student> getStudentsByGradeWithUpdatedRank(int grade) {
@@ -670,7 +750,7 @@ public class PowerSchool {
         return students;
     }
 
-    
+
 
     // public static int getStudentRank(ArrayList<Student> students) { // TODO
     //     setStudentRank(students);
