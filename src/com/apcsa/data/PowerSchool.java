@@ -438,11 +438,18 @@ public class PowerSchool {
 
     public static int deleteAssignment(int course_id, int assignment_id, String title) {
         try (Connection conn = getConnection();
-            Statement stmt = conn.createStatement()) {
+            Statement stmt = conn.createStatement();
+            Statement stmt2 = conn.createStatement()) {
 
             if (stmt.executeUpdate(QueryUtils.DELETE_ASSIGNMENT_SQL(course_id, assignment_id)) == 1) {
-                System.out.println("\nSuccessfully deleted " + title + ".\n");
-                return 0;
+                if (!getAssignmentsAssignmentGrades(course_id, assignment_id).isEmpty()) {
+                    if (stmt2.executeUpdate(QueryUtils.DELETE_ASSIGNMENT_GRADES_SQL(course_id, assignment_id)) == 1) {
+                        System.out.println("\nSuccessfully deleted " + title + ".\n");
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } return 0;
             } else {
                 return 1;
             }
@@ -450,6 +457,29 @@ public class PowerSchool {
             e.printStackTrace();
         }
         return 1;
+    }
+
+    /**
+     * Getting the assignment_grades rows associated with an assignment
+     * 
+     * @param course_id
+     * @param assignment_id
+     * @return an arraylist of numbers which are the assng_id of whatever it finds in assng_grades associated with an assng, if empty, we no delete anything
+     */
+    public static ArrayList<Integer> getAssignmentsAssignmentGrades(int course_id, int assignment_id) {
+        ArrayList<Integer> stuff = new ArrayList<Integer>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades WHERE course_id = " + course_id + " AND assignment_id = " + assignment_id)) {
+                if (rs.next()) {
+                    stuff.add(rs.getInt("assignment_id"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stuff;
     }
 
     public static int getNextAssignmentId(int course_id) {

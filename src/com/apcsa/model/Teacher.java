@@ -143,7 +143,7 @@ public class Teacher extends User {
             int mpSelection = getMPSelection(in);
 
             System.out.print("\nAssignment Title: ");
-            String title = in.next();
+            String title = in.nextLine();
             System.out.print("Point Value: ");
             int point_value = Utils.getInt(in, 0);
             while (point_value < 1 || point_value > 100) {
@@ -238,11 +238,15 @@ public class Teacher extends User {
                     break;
             }
             int assignment_id = getAssignment(user, in, courseNo, marking_period, is_midterm, is_final);
-            String title = getAssignmentName(user, in, assignment_id, courseNo, marking_period, is_midterm, is_final);
+            if (assignment_id == 0) {
+                System.out.println();
+            } else {
+                String title = getAssignmentName(user, in, assignment_id, courseNo, marking_period, is_midterm, is_final);
 
-            if (Utils.confirm("Are you sure you want to delete this assignment? (y/n) ", in)){
-                if (PowerSchool.deleteAssignment(course_id, assignment_id, title) == 1) {
-                    System.out.println("\nThere was an error.\n");
+                if (Utils.confirm("Are you sure you want to delete this assignment? (y/n) ", in)){
+                    if (PowerSchool.deleteAssignment(course_id, assignment_id, title) == 1) {
+                        System.out.println("\nThere was an error.\n");
+                    }
                 }
             }
         }
@@ -252,6 +256,11 @@ public class Teacher extends User {
         ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final); // TODO this is choosing all of their assignments
         ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user, course_no, marking_period, is_midterm, is_final);
         int count = 0;
+
+        if (assignments.isEmpty()) {
+            System.out.println("You have no assignments here.");
+            return 0;
+        }
 
         System.out.println("Choose an assignment.\n");
         for (int i = 1; i <= assignments.size(); i++) {
@@ -266,7 +275,7 @@ public class Teacher extends User {
             selection = Utils.getInt(in, 0);
         } while (selection < 0 || selection > count);
 
-        return selection;
+        return 0; // TODO get assignment id
     }
 
     public static String getAssignmentName(User user, Scanner in, int selection, String course_no, int marking_period, int is_midterm, int is_final) {

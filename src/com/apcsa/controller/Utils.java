@@ -45,8 +45,6 @@ public class Utils {
             if (confirmation.equals("y")) {
                 return true;
             }
-            System.out.println(confirmation);
-            System.out.println(confirmation.equals("y"));
         } while (!confirmation.equals("y") && !confirmation.equals("n"));
         return false;
     }

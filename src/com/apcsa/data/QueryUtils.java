@@ -263,6 +263,12 @@ public class QueryUtils {
         "AND assignment_id = " + assignment_id;
     }
 
+    public static String DELETE_ASSIGNMENT_GRADES_SQL(int course_id, int assignment_id) {
+        return "DELETE FROM assignment_grades " +
+        "WHERE course_id = " + course_id + " " +
+        "AND assignment_id = " + assignment_id;
+    }
+
     public static String ENTER_GRADE_SQL(int course_id, int assignment_id, int student_id, int points_earned, int points_possible) {
         return "INSERT INTO assignment_grades " +
         "(course_id, assignment_id, student_id, points_earned, points_possible, is_graded) " +
