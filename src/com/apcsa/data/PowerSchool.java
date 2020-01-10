@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.lang.Thread;
 
 import javax.management.Query;
 
@@ -628,69 +629,45 @@ public class PowerSchool {
 
         ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));
 
-        //System.out.println(students.size());
         for (int i = 0; i < students.size(); i++) {
             Student comparing = students.get(i);
             int numOfBetterStudents = 0;
+
             for (int j = 0; j < students.size(); j++) {
-                //System.out.println(comparing.getGPA() < students.get(j).getGPA());
                 if (comparing.getGPA() < students.get(j).getGPA()) {
                     numOfBetterStudents++;
                 }
             }
-            //System.out.println(comparing.getName() + String.valueOf(numOfBetterStudents+1));
-            //comparing.setClassRank(numOfBetterStudents + 1);
-            //students.set(i, comparing);
             students.get(i).setClassRank(numOfBetterStudents+1);
-            //System.out.println(students.get(i));
-            //System.out.println(students.get(i).getClassRank());
-            //System.out.println(students.get(i).getName() + String.valueOf(students.get(i).getClassRank()));
         }
 
-        // try (Connection conn = getConnection();
-        //     Statement stmt = conn.createStatement()) {
-        try (Connection conn = getConnection()) {
-
+        try {
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE students SET class_rank = ? WHERE student_id = ?");
+            
+            conn.setAutoCommit(false);
             for (Student student : students) {
-                try (Statement stmt = conn.createStatement()) {
-
-                    conn.setAutoCommit(false);
-                    //System.out.println(stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())));
-
-                    //System.out.println(student.getName() + "/" + String.valueOf(student.getStudentId()) + "/" + String.valueOf(student.getClassRank()));
-                    stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank()));
-                    
-                    
-                    // if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
-                    //     conn.commit();
-                    // } else {
-                    //     conn.rollback();
-
-                    //     return;
-                    // }
-                }
+                stmt.setInt(1, student.getClassRank());
+                stmt.setInt(2, student.getStudentId());
+                stmt.executeUpdate();
             }
+
             conn.commit();
+        
         } catch (SQLException e) {
             e.printStackTrace();
 
             return;
-        }
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-
-        //     return;
-        // }
-        
+        }        
         
     }
 
     public static ArrayList<Student> getStudentsByGradeWithUpdatedRank(int grade) {
+        ArrayList <Student> students = new ArrayList<Student>();
         setStudentRank(grade);
-        ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));
-
+        students = getStudentsByGrade(grade);
+        
         return students;
-
     }
 
     

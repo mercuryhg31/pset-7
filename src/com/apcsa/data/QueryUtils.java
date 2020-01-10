@@ -109,7 +109,13 @@ public class QueryUtils {
     public static String GET_STUDENTS_BY_GRADE_SQL(int grade) {
         return "SELECT * FROM students " +
         "WHERE grade_level = " + String.valueOf(grade) + " " +
-        "ORDER BY last_name, first_name";
+        "ORDER BY student_id";//"ORDER BY last_name, first_name";
+    }
+
+    public static String GET_STUDENTS_BY_GRADE_ORDERED_BY_GPA_SQL(int grade) {
+        return "SELECT * FROM students " + 
+        "WHERE grade_level = " + String.valueOf(grade) + " " +
+        "ORDER BY gpa";
     }
 
     // public static String GET_STUDENTS_BY_COURSE_SQL(String course) {

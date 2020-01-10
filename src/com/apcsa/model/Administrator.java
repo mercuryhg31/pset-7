@@ -114,7 +114,7 @@ public class Administrator extends User {
         int selection = -1;
         System.out.println("\nChoose a grade level.");
 
-        while (selection < 1 || selection > 4) {
+        while (selection < 1 || selection > 5) {
             System.out.println("\n[1] Freshman.");
             System.out.println("[2] Sophomore.");
             System.out.println("[3] Junior.");
@@ -137,8 +137,7 @@ public class Administrator extends User {
             int i = 1;
 
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + student.getClassRank()); // TODO weird gpa?? do they have one or not??
-                // TODO rank all students
+                System.out.println(i++ + ". " + student.getName() + " / #" + student.getClassRank()); 
             }
             System.out.println();
         }
