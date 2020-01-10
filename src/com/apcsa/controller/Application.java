@@ -85,7 +85,7 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
-                                Student.viewCourseGrades(activeUser, in); // TODO there's something up with what courses I have...
+                                Student.viewCourseGrades(activeUser, in); // TODO
                                 break;
                             case VIEW_GRADES_COURSE:
                                 Student.viewAssngGradesByCourse(); // TODO
@@ -138,10 +138,10 @@ public class Application {
                                 Administrator.viewStudentEnroll();
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                Administrator.viewStudentEnrollByGrade(in); // TODO
+                                Administrator.viewStudentEnrollByGrade(in); // TODO michael plz
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
-                                Administrator.viewStudentEnrollByCourse(in); // TODO
+                                Administrator.viewStudentEnrollByCourse(in);
                                 break;
                             case CHANGE_PW:
                                 changePassword();
