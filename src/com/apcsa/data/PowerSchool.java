@@ -549,7 +549,7 @@ public class PowerSchool {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (grade / numGrades);
+        return courses;
     }
 
 
