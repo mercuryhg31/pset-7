@@ -722,14 +722,8 @@ public class PowerSchool {
             e.printStackTrace();
 
             return;
-<<<<<<< HEAD
         }        
         
-=======
-        }
-
-
->>>>>>> harshita
     }
 
     public static ArrayList<Student> getStudentsByGradeWithUpdatedRank(int grade) {
