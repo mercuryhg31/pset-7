@@ -110,7 +110,7 @@ public class Administrator extends User {
      * @return the selected grade
      */
 
-    private static int getGradeSelection(Scanner in) {
+    private static int getGradeSelection(Scanner in) { // Mr. Wilson's
         int selection = -1;
         System.out.println("\nChoose a grade level.");
 
@@ -124,7 +124,7 @@ public class Administrator extends User {
             selection = Utils.getInt(in, -1);
         }
 
-        return selection + 8;   // +8 because you want a value between 9 and 12
+        return selection + 8;
     }
 
     public static void viewStudentEnrollByGrade(Scanner in) {

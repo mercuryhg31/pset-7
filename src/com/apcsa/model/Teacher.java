@@ -63,6 +63,7 @@ public class Teacher extends User {
      * @param in
      */
     public static String getCourseSelection(Scanner in, User user) throws SQLException {
+        System.out.println("\nChoose a course.\n")
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         int numCourses = 0;
         if (courses.isEmpty()) {
@@ -83,7 +84,6 @@ public class Teacher extends User {
     }
 
     public static void viewEnrollmentByCourse(User user, Scanner in) {
-        System.out.println();
         String courseNo = "";
 
         try {
@@ -114,7 +114,7 @@ public class Teacher extends User {
      * @return course no of selected course
      */
     public static String getCourseSelection(User user, Scanner in) {
-        System.out.println("Choose a course.\n");
+        System.out.println("\nChoose a course.\n");
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         if (courses.isEmpty()) {
             return null;
