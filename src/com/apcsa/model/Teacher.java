@@ -63,6 +63,7 @@ public class Teacher extends User {
      * @param in
      */
     public static String getCourseSelection(Scanner in, User user) throws SQLException {
+        System.out.println("\nChoose a course.\n")
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         int numCourses = 0;
         if (courses.isEmpty()) {
@@ -83,7 +84,6 @@ public class Teacher extends User {
     }
 
     public static void viewEnrollmentByCourse(User user, Scanner in) {
-        System.out.println();
         String courseNo = "";
 
         try {
@@ -114,7 +114,7 @@ public class Teacher extends User {
      * @return course no of selected course
      */
     public static String getCourseSelection(User user, Scanner in) {
-        System.out.println("Choose a course.\n");
+        System.out.println("\nChoose a course.\n");
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         if (courses.isEmpty()) {
             return null;
@@ -221,8 +221,84 @@ public class Teacher extends User {
         }
     }
 
-    public static void deleteAssignment() {
+    public static void deleteAssignment(User user, Scanner in) {
+        String courseNo = getCourseSelection(user, in);
 
+        if (courseNo.isEmpty()) {
+            System.out.println("\nYou don't teach any courses.\n");
+        } else {
+            int mpSelection = getMPSelection(in);
+            int course_id = PowerSchool.getCourseIdFromCourseNo(courseNo);
+            int marking_period = -1; int is_midterm = -1; int is_final = -1;
+            switch (mpSelection) {
+                case 1:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 2:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 3:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 4:
+                    marking_period = mpSelection;
+                    is_midterm = 0;
+                    is_final = 0;
+                    break;
+                case 5:
+                    marking_period = 0;
+                    is_midterm = 1;
+                    is_final = 0;
+                    break;
+                case 6:
+                    marking_period = 0;
+                    is_midterm = 0;
+                    is_final = 1;
+                    break;
+            }
+            int assignment_id = getAssignment(user, in);
+            String title = getAssignmentName(user, in, assignment_id);
+
+            if (Utils.confirm("Are you sure you want to delete this assignment? (y/n) ", in)){
+                if (PowerSchool.deleteAssignment(course_id, assignment_id, title) == 1) {
+                    System.out.println("\nThere was an error.\n");
+                }
+            }
+        }
+    }
+
+    public static int getAssignment(User user, Scanner in) {
+        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user); // TODO this is choosing all of their assignments
+        ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user);
+        int count = 0;
+
+        System.out.println("Choose an assignment.\n");
+        for (int i = 1; i <= assignments.size(); i++) {
+            System.out.println("[" + i + "]" + " " + assignments.get(i-1) + " (" + points.get(i-1) + ")");
+            count++;
+        }
+        System.out.print("\n");
+
+        int selection = 0;
+        do {
+            System.out.print("::: ");
+            selection = Utils.getInt(in, 0);
+        } while (selection < 0 || selection > count);
+
+        return selection;
+    }
+
+    public static String getAssignmentName(User user, Scanner in, int selection) {
+        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user);
+        ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user);
+
+        return assignments.get(selection-1);
     }
 
     public static void enterGrade() {

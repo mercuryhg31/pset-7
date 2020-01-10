@@ -315,6 +315,60 @@ public class PowerSchool {
         return null;
     }
 
+    public static ArrayList<String> getTeacherAssignments(User user) { // TODO
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+                ArrayList<String> assignments = new ArrayList<String>();
+                while (rs.next()) {
+                    assignments.add(rs.getString("title"));
+                }
+                return assignments;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Integer> getTeacherAssignmentPoints(User user) { // TODO
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_TEACHER_ASSIGNMENTS_SQL(((Teacher) user).getTeacherId()))) {
+                ArrayList<Integer> assignmentsPts = new ArrayList<Integer>();
+                while (rs.next()) {
+                    assignmentsPts.add(rs.getInt("point_value"));
+                }
+                return assignmentsPts;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    // public static ArrayList<Integer> getAssignment(User user, int course_id, int assignment_id) { // TODO
+    //     try (Connection conn = getConnection();
+    //          Statement stmt = conn.createStatement()) {
+
+    //         try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_ASSIGNMENT_SQL(((Teacher) user).getTeacherId(), course_id, assignment_id))) {
+    //             ArrayList<Integer> assignmentsPts = new ArrayList<Integer>();
+    //             while (rs.next()) {
+    //                 assignmentsPts.add(rs.getInt("point_value"));
+    //             }
+    //             return assignmentsPts;
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return null;
+    // }
+
     public static int createAssignment(int course_id, int marking_period, int is_midterm, int is_final, String title, int point_value) {
         int assignment_id = getNextAssignmentId(course_id);
         System.out.println();
@@ -324,8 +378,24 @@ public class PowerSchool {
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
-            if (stmt.executeUpdate(QueryUtils.CREATE_ASSIGNMENT(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value)) == 1) {
+            if (stmt.executeUpdate(QueryUtils.CREATE_ASSIGNMENT_SQL(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value)) == 1) {
                 System.out.println("\nSuccessfully created assignment.\n");
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    public static int deleteAssignment(int course_id, int assignment_id, String title) {
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            if (stmt.executeUpdate(QueryUtils.DELETE_ASSIGNMENT_SQL(course_id, assignment_id)) == 1) {
+                System.out.println("\nSuccessfully deleted" + title + ".\n");
                 return 0;
             } else {
                 return 1;
