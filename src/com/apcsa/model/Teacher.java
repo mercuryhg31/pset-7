@@ -58,12 +58,15 @@ public class Teacher extends User {
     // APPLICATION THINGS
 
     /**
-     * Not a menu method
+     * Prints all courses a teacher teaches and returns course selection
+     * Not a menu method.
      *
+     * @param user
      * @param in
+     * @return course no of selected course
      */
-    public static String getCourseSelection(Scanner in, User user) throws SQLException {
-        System.out.println("\nChoose a course.\n")
+    public static String getCourseSelection(Scanner in, User user) {
+        System.out.println("\nChoose a course.\n");
         ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
         int numCourses = 0;
         if (courses.isEmpty()) {
@@ -88,7 +91,7 @@ public class Teacher extends User {
 
         try {
             courseNo = getCourseSelection(in, user);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ArrayList<Student> students = PowerSchool.getStudentsByCourse(courseNo);
@@ -103,34 +106,6 @@ public class Teacher extends User {
             }
             System.out.println();
         }
-    }
-
-    /**
-     * Prints all courses a teacher teaches and returns course selection
-     * Not a menu method.
-     *
-     * @param user
-     * @param in
-     * @return course no of selected course
-     */
-    public static String getCourseSelection(User user, Scanner in) {
-        System.out.println("\nChoose a course.\n");
-        ArrayList<String> courses = PowerSchool.getTeacherCourses(user);
-        if (courses.isEmpty()) {
-            return null;
-        }
-        int maxCourseNum = 0;
-        for (int i = 1; i <= courses.size(); i++) {
-            System.out.println("[" + i + "]" + " " + courses.get(i-1));
-            maxCourseNum = i;
-        }
-        System.out.print("\n");
-        int selection;
-        do {
-            System.out.print("::: ");
-            selection = Utils.getInt(in, -1);
-        } while (selection < 1 || selection > maxCourseNum);
-        return courses.get(selection - 1);
     }
 
     /**
@@ -160,7 +135,7 @@ public class Teacher extends User {
     }
 
     public static void addAssignment(User user, Scanner in) {
-        String courseNo = getCourseSelection(user, in);
+        String courseNo = getCourseSelection(in, user);
 
         if (courseNo.isEmpty()) {
             System.out.println("\nYou don't teach any courses.\n");
@@ -222,7 +197,7 @@ public class Teacher extends User {
     }
 
     public static void deleteAssignment(User user, Scanner in) {
-        String courseNo = getCourseSelection(user, in);
+        String courseNo = getCourseSelection(in, user);
 
         if (courseNo.isEmpty()) {
             System.out.println("\nYou don't teach any courses.\n");
@@ -302,6 +277,6 @@ public class Teacher extends User {
     }
 
     public static void enterGrade() {
-
+        // int course = getCourseSelection(in, user);
     }
 }
