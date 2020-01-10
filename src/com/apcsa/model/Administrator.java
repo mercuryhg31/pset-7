@@ -128,15 +128,16 @@ public class Administrator extends User {
     }
 
     public static void viewStudentEnrollByGrade(Scanner in) {
-        ArrayList<Student> students = PowerSchool.getStudentsByGrade(getGradeSelection(in));
+        ArrayList<Student> students = PowerSchool.getStudentsByGradeWithUpdatedRank(getGradeSelection(in));
 
         if (students.isEmpty()) {
             System.out.println("\nNo students to display.\n");
         } else {
             System.out.println();
             int i = 1;
+
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + student.getGPA()); // TODO weird gpa?? do they have one or not??
+                System.out.println(i++ + ". " + student.getName() + " / " + student.getClassRank()); // TODO weird gpa?? do they have one or not??
                 // TODO rank all students
             }
             System.out.println();
