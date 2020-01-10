@@ -631,7 +631,7 @@ public class PowerSchool {
         for (int i = 0; i < students.size(); i++) {
             Student comparing = students.get(i);
             int numOfBetterStudents = 0;
-            for (int j = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.size(); j++) {
                 if (comparing.getGPA() < students.get(j).getGPA()) {
                     numOfBetterStudents++;
                 }
