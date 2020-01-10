@@ -212,13 +212,32 @@ public class QueryUtils {
         "AND t.teacher_id = " + teacher_id + " " +
         "ORDER BY title";
     }
+
+    public static String GET_TEACHER_ASSIGNMENTS_SQL(int teacher_id) {
+        return "SELECT * FROM assignments a, courses c, teachers t " +
+        "WHERE c.teacher_id = t.teacher_id AND c.course_id = a.course_id " +
+        "AND t.teacher_id = " + teacher_id + " " +
+        "ORDER BY a.assignment_id";
+    }
+
+    // public static String GET_ASSIGNMENT_SQL(int teacher_id, int course_id, int assignment_id) {
+    //     return "SELECT * FROM assignments a " +
+    //     "WHERE course_id = " + course_id + " " +
+    //     "AND assignment_id = " + assignment_id;
+    // }
+
+    public static String DELETE_ASSIGNMENT_SQL(int course_id, int assignment_id) {
+        return "DELETE * FROM assignments a " +
+        "WHERE course_id = " + course_id + " " +
+        "AND assignment_id = " + assignment_id;
+    }
     
     /**
      * Creates an assignment.
      * 
      * @return
      */
-    public static String CREATE_ASSIGNMENT(
+    public static String CREATE_ASSIGNMENT_SQL(
         int course_id, int assignment_id, int marking_period,
         int is_midterm, int is_final, String title, int point_value) { // TODO assign assignment_id based on prev id (one higher than the one before)
 

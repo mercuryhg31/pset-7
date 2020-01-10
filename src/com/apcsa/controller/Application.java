@@ -110,7 +110,7 @@ public class Application {
                                 Teacher.addAssignment(activeUser, in);
                                 break;
                             case DELETE_ASSNG:
-                                Teacher.deleteAssignment(); // TODO
+                                Teacher.deleteAssignment(activeUser, in); // TODO
                                 break;
                             case ENTER_GRADE:
                                 Teacher.enterGrade(); // TODO
