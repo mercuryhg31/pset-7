@@ -517,7 +517,7 @@ public class PowerSchool {
         return courses;
     }
 
-    public static double getStudentCourseGrade(String title, int student_id) { // TODO for student
+    public static double getStudentCourseGrades(String title, int student_id) { // TODO for student or not - calculate grade
         double grade = 0;
         double numGrades = 0;
         try (Connection conn = getConnection();
@@ -527,6 +527,22 @@ public class PowerSchool {
                 while (rs.next()) {
                     grade += rs.getInt("grade");
                     numGrades++;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (grade / numGrades);
+    }
+
+    public static ArrayList<String> getStudentCoursesAndGrades(int student_id) { // TODO for student
+        ArrayList<String> courses = new ArrayList<String>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADE_SQL(student_id))) {
+                while (rs.next()) {
+                    courses.add(rs.getString("title") + " / " + rs.getInt("grade"));
                 }
             }
         } catch (SQLException e) {
@@ -656,7 +672,7 @@ public class PowerSchool {
     //                     conn.commit();
     //                 } else {
     //                     conn.rollback();
-        
+
     //                     return null;
     //                 }
     //             }
@@ -670,7 +686,7 @@ public class PowerSchool {
     // }
 
     // This should be run every time a grade is updated/changed. Wait idea just set everyone using the getStudentRanks() (rename it setStudentsRanks() or whatever)
-    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade 
+    // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade
     // is equal to whatever the grade that was selected. TODO
     public static void setStudentRank(int grade) {
 
@@ -697,7 +713,7 @@ public class PowerSchool {
                     conn.commit();
                 } else {
                     conn.rollback();
-    
+
                     return;
                 }
             }
@@ -706,8 +722,8 @@ public class PowerSchool {
 
             return;
         }
-        
-        
+
+
     }
 
     public static ArrayList<Student> getStudentsByGradeWithUpdatedRank(int grade) {
@@ -718,7 +734,7 @@ public class PowerSchool {
 
     }
 
-    
+
 
     // public static int getStudentRank(ArrayList<Student> students) { // TODO
     //     setStudentRank(students);

@@ -324,7 +324,7 @@ public class Teacher extends User {
 
             System.out.println("\nAssignment: " + title + " (" + PowerSchool.getAssignmentPoints(course_no, assignment_id) + " pts)");
             System.out.println("Student: " + student.getName());
-            System.out.println("Current Grade: " + "NEED TO PROGRAM");
+            System.out.println("Current Grade: " + "NEED TO PROGRAM"); // TODO
             System.out.print("\n");
 
             int newGrade;
