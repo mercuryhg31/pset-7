@@ -711,19 +711,9 @@ public class PowerSchool {
             
             conn.setAutoCommit(false);
             for (Student student : students) {
-<<<<<<< HEAD
                 stmt.setInt(1, student.getClassRank());
                 stmt.setInt(2, student.getStudentId());
                 stmt.executeUpdate();
-=======
-                if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
-                    conn.commit();
-                } else {
-                    conn.rollback();
-
-                    return;
-                }
->>>>>>> harshita
             }
 
             conn.commit();
