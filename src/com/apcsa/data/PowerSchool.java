@@ -628,36 +628,59 @@ public class PowerSchool {
 
         ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));
 
+        //System.out.println(students.size());
         for (int i = 0; i < students.size(); i++) {
             Student comparing = students.get(i);
             int numOfBetterStudents = 0;
             for (int j = 0; j < students.size(); j++) {
+                //System.out.println(comparing.getGPA() < students.get(j).getGPA());
                 if (comparing.getGPA() < students.get(j).getGPA()) {
                     numOfBetterStudents++;
                 }
             }
-
-            comparing.setClassRank(numOfBetterStudents + 1);
-            students.set(i, comparing);
+            //System.out.println(comparing.getName() + String.valueOf(numOfBetterStudents+1));
+            //comparing.setClassRank(numOfBetterStudents + 1);
+            //students.set(i, comparing);
+            students.get(i).setClassRank(numOfBetterStudents+1);
+            //System.out.println(students.get(i));
+            //System.out.println(students.get(i).getClassRank());
+            //System.out.println(students.get(i).getName() + String.valueOf(students.get(i).getClassRank()));
         }
 
-        try (Connection conn = getConnection();
-            Statement stmt = conn.createStatement()) {
+        // try (Connection conn = getConnection();
+        //     Statement stmt = conn.createStatement()) {
+        try (Connection conn = getConnection()) {
 
             for (Student student : students) {
-                if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
-                    conn.commit();
-                } else {
-                    conn.rollback();
-    
-                    return;
+                try (Statement stmt = conn.createStatement()) {
+
+                    conn.setAutoCommit(false);
+                    //System.out.println(stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())));
+
+                    //System.out.println(student.getName() + "/" + String.valueOf(student.getStudentId()) + "/" + String.valueOf(student.getClassRank()));
+                    stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank()));
+                    
+                    
+                    // if (stmt.executeUpdate(QueryUtils.UPDATE_CLASS_RANK_SQL(student.getStudentId(), student.getClassRank())) == 1) {
+                    //     conn.commit();
+                    // } else {
+                    //     conn.rollback();
+
+                    //     return;
+                    // }
                 }
             }
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
 
             return;
         }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+
+        //     return;
+        // }
         
         
     }

@@ -23,7 +23,7 @@ public class Student extends User {
     public Student(User user, ResultSet rs) throws SQLException {
         super(user.getUserId(), user.getAccountType(), user.getUsername(), user.getPassword(), user.getLastLogin());
 
-        this.studentId = rs.getInt("user_id");
+        this.studentId = rs.getInt("student_id");
         this.classRank = rs.getInt("class_rank");
         this.gradeLevel = rs.getInt("grade_level");
         this.graduationYear = rs.getInt("graduation");
