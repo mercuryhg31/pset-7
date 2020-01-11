@@ -102,7 +102,7 @@ public class Teacher extends User {
             System.out.println();
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + (student.getGPA() != -1.0 ? student.getGPA() : "--")); // TODO weird gpa?? do they have one or not??
+                System.out.println(i++ + ". " + student.getName() + " / " + " NEEDS TO BE PROGRAMMED!!!"); // TODO weird gpa?? do they have one or not??
             }
             System.out.println();
         }
@@ -241,7 +241,7 @@ public class Teacher extends User {
             if (assignment_id == 0) {
                 System.out.println();
             } else {
-                String title = getAssignmentName(user, in, assignment_id, courseNo, marking_period, is_midterm, is_final);
+                String title = PowerSchool.getAssignmentName(courseNo, assignment_id);
 
                 if (Utils.confirm("Are you sure you want to delete this assignment? (y/n) ", in)){
                     if (PowerSchool.deleteAssignment(course_id, assignment_id, title) == 1) {
@@ -253,7 +253,7 @@ public class Teacher extends User {
     }
 
     public static int getAssignment(User user, Scanner in, String course_no, int marking_period, int is_midterm, int is_final) {
-        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final); // TODO this is choosing all of their assignments
+        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final);
         ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user, course_no, marking_period, is_midterm, is_final);
         int count = 0;
 
@@ -275,6 +275,7 @@ public class Teacher extends User {
             selection = Utils.getInt(in, 0);
         } while (selection < 0 || selection > count);
 
+<<<<<<< HEAD
         return 0; // TODO get assignment id
     }
 
@@ -283,6 +284,9 @@ public class Teacher extends User {
         ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user, course_no, marking_period, is_midterm, is_final);
 
         return assignments.get(selection);
+=======
+        return PowerSchool.getAssignmentId(course_no, assignments.get(selection-1));
+>>>>>>> 9dbb781cabca853bed3e39587c7b3c1592c74df9
     }
 
     public static void enterGrade(User user, Scanner in) {
@@ -327,7 +331,7 @@ public class Teacher extends User {
                     break;
             }
             int assignment_id = getAssignment(user, in, course_no, marking_period, is_midterm, is_final);
-            String title = getAssignmentName(user, in, assignment_id, course_no, marking_period, is_midterm, is_final);
+            String title = PowerSchool.getAssignmentName(course_no, assignment_id);
 
             Student student = getStudent(in, course_no);
 
@@ -343,7 +347,7 @@ public class Teacher extends User {
             } while (newGrade < 0 || newGrade > PowerSchool.getAssignmentPoints(course_no, assignment_id));
 
             if (Utils.confirm("\nAre you sure you want to enter this grade? (y/n) ", in)){
-                if (PowerSchool.enterGrades(course_id, assignment_id, student.getStudentId(), newGrade, PowerSchool.getAssignmentPoints(course_no, assignment_id)) == 1) {
+                if (PowerSchool.enterGrade(course_id, assignment_id, student.getStudentId(), newGrade, PowerSchool.getAssignmentPoints(course_no, assignment_id)) == 1) {
                     System.out.println("\nThere was an error.\n");
                 }
             }

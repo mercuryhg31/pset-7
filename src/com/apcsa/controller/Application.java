@@ -81,21 +81,29 @@ public class Application {
                 }
 
                 System.out.println("\nHello, again, " + activeUser.getFirstName() + "!\n");
-                // if (username.equals("rwilson") && Utils.confirm("Would you like to see an important message?(y/n) ", in)) { // https://www.journaldev.com/864/java-open-file
-                //     if(!Desktop.isDesktopSupported()){
-                //         System.out.println("Dang, I didn't look into this very much because I needed to do the pset, but I guess we can't open the message.");
-                //         return;
-                //     }
-                //     Desktop desktop = Desktop.getDesktop(); System.out.println("df");
-                //     try {
-                //         File file = new File("duck.PNG");
-                //         if(file.exists()) desktop.open(file);
-                //         System.out.println("sdkflj");
-                //     } catch (Exception e) {
-                //         System.out.println("\nSorry, couldn't find the message :(\n");
-                //     }
-                //     System.out.println();
-                // }
+                if (username.equals("rwilson") && Utils.confirm("Would you like to see an important message? (y/n) ", in)) { // https://www.journaldev.com/864/java-open-file
+                    // if(!Desktop.isDesktopSupported()){
+                    //     System.out.println("Dang, I didn't look into this very much because I needed to do the pset, but I guess we can't open the message.");
+                    //     return;
+                    // }
+                    // Desktop desktop = Desktop.getDesktop(); System.out.println("df");
+                    // try {
+                    //     File file = new File("duck.PNG");
+                    //     if(file.exists()) desktop.open(file);
+                    //     System.out.println("sdkflj");
+                    // } catch (Exception e) {
+                    //     System.out.println("\nSorry, couldn't find the message :(\n");
+                    // }
+                    // System.out.println();
+                    System.out.println("           _");
+                    System.out.println("       .__(.)< (MEOW)");
+                    System.out.println("        \\___)   ");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+                    System.out.println("credit to amazon.com");
+                    System.out.println("          & nicole\n");
+                } else {
+                    System.out.println();
+                }
                 boolean validLogin = true;
                 while (validLogin) {
                     if (activeUser.isStudent()) {
@@ -155,7 +163,7 @@ public class Application {
                                 Administrator.viewStudentEnroll();
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                Administrator.viewStudentEnrollByGrade(in); // TODO michael plz
+                                Administrator.viewStudentEnrollByGrade(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
                                 Administrator.viewStudentEnrollByCourse(in);
@@ -201,13 +209,15 @@ public class Application {
     /**
      * Root method - maybe this shouldn't be in Application, but User?
      */
-    public void resetPassword() { // TODO wip
+    public void resetPassword() {
         System.out.print("\nUsername: ");
         String username = in.next();
         try {
             if (Utils.confirm("Are you sure you want to reset the password for " + username + "? (y/n) ", in)) {
                 PowerSchool.updatePassword(username, Utils.getHash(username));
                 System.out.println("Successfully reset password for " + username + ".\n");
+            } else {
+                System.out.println();
             }
         } catch (Exception e) {
             System.out.println("\nInvalid username.\n");
@@ -222,6 +232,8 @@ public class Application {
         if (Utils.confirm("\nAre you sure you want to reset all settings and data? (y/n) ", in)) {
             PowerSchool.initialize(true);
             System.out.println("\nSuccessfully reset database.\n");
+        } else {
+            System.out.println();
         }
     }
 
@@ -249,7 +261,7 @@ public class Application {
             System.out.println("\nGoodbye!");
             System.exit(0);
         } else {
-            System.out.println(); // TODO  revise confirm or confirms?
+            System.out.println(); // TODO review all confirms
         }
     }
 

@@ -103,7 +103,7 @@ public class QueryUtils {
         "ORDER BY t.last_name, t.first_name";
     }
 
-    public static final String GET_STUDENTS_SQL = // TODO this orders by graduation year first for some reason
+    public static final String GET_STUDENTS_SQL =
         "SELECT * FROM students s, users u " +
         "WHERE s.user_id = u.user_id " +
         "ORDER BY s.last_name, s.first_name";
@@ -289,7 +289,7 @@ public class QueryUtils {
      */
     public static String CREATE_ASSIGNMENT_SQL(
         int course_id, int assignment_id, int marking_period,
-        int is_midterm, int is_final, String title, int point_value) { // TODO assign assignment_id based on prev id (one higher than the one before)
+        int is_midterm, int is_final, String title, int point_value) {
 
         return "INSERT INTO assignments " +
         "(course_id, assignment_id, marking_period, is_midterm, is_final, title, point_value) " +
@@ -301,6 +301,13 @@ public class QueryUtils {
         "SELECT * FROM assignments a, courses c " +
         "WHERE a.course_id = c.course_id " +
         "AND c.course_id = ? " +
+        "ORDER BY a.assignment_id";
+
+    public static final String GET_ASSIGNMENT_ID_FOR_ALTER_SQL =
+        "SELECT * FROM assignments a, courses c " +
+        "WHERE a.course_id = c.course_id " +
+        "AND c.course_id = ? " +
+        "AND a.title = ? " +
         "ORDER BY a.assignment_id";
     
     // public static String GET_TEACHER_FROM_USER_SQL(User user) {
