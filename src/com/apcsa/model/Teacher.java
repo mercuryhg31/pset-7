@@ -282,7 +282,7 @@ public class Teacher extends User {
         ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final);
         ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user, course_no, marking_period, is_midterm, is_final);
 
-        return assignments.get(selection-1);
+        return assignments.get(selection);
     }
 
     public static void enterGrade(User user, Scanner in) {

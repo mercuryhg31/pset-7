@@ -777,6 +777,7 @@ public class PowerSchool {
             student.setGPA(calculatedGpa);
 
             stmt = conn.createStatement();
+            conn.setAutoCommit(false);
             stmt.executeUpdate("UPDATE students SET gpa = " + student.getGPA() + " WHERE student_id = " + student.getStudentId());
             conn.commit();
 
