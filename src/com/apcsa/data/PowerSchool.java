@@ -814,8 +814,6 @@ public class PowerSchool {
             stmt.executeUpdate("UPDATE students SET gpa = " + student.getGPA() + " WHERE student_id = " + student.getStudentId());
             conn.commit();
 
-            
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
