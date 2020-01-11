@@ -688,12 +688,17 @@ public class PowerSchool {
             Student comparing = students.get(i);
             int numOfBetterStudents = 0;
 
-            for (int j = 0; j < students.size(); j++) {
-                if (comparing.getGPA() < students.get(j).getGPA()) {
-                    numOfBetterStudents++;
+            if (comparing.getGPA() == -1.0) {
+                students.get(i).setClassRank(0);
+            } else {
+
+                for (int j = 0; j < students.size(); j++) {
+                    if (comparing.getGPA() < students.get(j).getGPA()) {
+                        numOfBetterStudents++;
+                    }
                 }
+                students.get(i).setClassRank(numOfBetterStudents+1);
             }
-            students.get(i).setClassRank(numOfBetterStudents+1);
         }
 
         try {
@@ -781,11 +786,11 @@ public class PowerSchool {
     }
 
     public static void updateGpaAndClassRank(int studentId) {
+        setStudentGpa(studentId);
+
         for (int i = 9; i < 13; i++) {
             setStudentRank(i);
         }
-
-        setStudentGpa(studentId);
     }
 
 
