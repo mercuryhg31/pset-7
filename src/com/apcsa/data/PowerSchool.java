@@ -405,6 +405,8 @@ public class PowerSchool {
             }
 
             if (stmt.executeUpdate(QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible)) == 1) {
+                updateGpaAndClassRank(student_id);
+                updateCourseGrades(student_id, course_id);
                 System.out.println("\nSuccessfully entered grade.\n");
                 return 0;
             } else {
@@ -415,6 +417,80 @@ public class PowerSchool {
         }
         return -1;
     } // QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible))
+
+    public static void updateCourseGrades(int student_id, int course_id) {
+        String set = "";
+        double mp1 = calculateMP(1, student_id, course_id);
+        if (mp1 / mp1 == 1) set += ", mp1 = " + mp1;
+        double mp2 = calculateMP(2, student_id, course_id);
+        if (mp2 / mp2 == 1) set += ", mp2 = " + mp2;
+        double mp3 = calculateMP(3, student_id, course_id);
+        if (mp3 / mp3 == 1) set += ", mp3 = " + mp3;
+        double mp4 = calculateMP(4, student_id, course_id);
+        if (mp4 / mp4 == 1) set += ", mp4 = " + mp4;
+        double midterm = calculateMP(5, student_id, course_id);
+        if (midterm / midterm == 1) set += ", midterm_exam = " + midterm;
+        double final_exam = calculateMP(6, student_id, course_id);
+        if (final_exam / final_exam == 1) set += ", final_exam = " + final_exam;
+        double grade = ((mp1 + mp2 + mp3 + mp4) * 0.2 + (midterm + final_exam) * 0.1);
+        if (grade / grade == 1) set += ", grade = " + grade;
+
+        // System.out.println(mp1);
+        // System.out.println(mp2);
+        // System.out.println(mp3);
+        // System.out.println(mp4);
+        // System.out.println(midterm);
+        // System.out.println(final_exam);
+        
+
+        String updateCG =
+        "UPDATE course_grades " +
+            "SET " + set.substring(2, set.length()) +
+        " WHERE student_id = " + student_id + " AND course_id = " + course_id;
+
+        // System.o ut.println(updateCG);
+
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+            
+            stmt.executeUpdate(updateCG);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static double calculateMP(int mp, int student_id, int course_id) {
+        double ptsPoss = 0;
+        double ptsEarned = 0;
+        int mpVal = 0; int midtermVal = 0; int finalVal = 0;
+        if (mp >= 1 && mp <= 4) {
+            mpVal = mp;
+            midtermVal = 0;
+            finalVal = 0;
+        } else if (mp == 5) {
+            mpVal = 0;
+            midtermVal = 1;
+            finalVal = 0;
+        } else if (mp == 6) {
+            mpVal = 0;
+            midtermVal = 0;
+            finalVal = 1;
+        }
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades ag, assignments a WHERE ag.course_id = a.course_id AND ag.assignment_id = a.assignment_id AND ag.student_id = " + student_id + " AND ag.course_id = " + course_id + " AND a.marking_period = " + mpVal + " AND a.is_midterm = " + midtermVal + " AND a.is_final = " + finalVal)) { // TODO
+                while (rs.next()) {
+                    ptsPoss += rs.getInt("points_possible");
+                    ptsEarned += rs.getInt("points_earned");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return (ptsEarned / ptsPoss);
+    }
 
     public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) { // TODO
         try (Connection conn = getConnection();
