@@ -296,6 +296,13 @@ public class QueryUtils {
         "WHERE a.course_id = c.course_id " +
         "AND c.course_id = ? " +
         "ORDER BY a.assignment_id";
+
+    public static final String GET_ASSIGNMENT_ID_FOR_ALTER_SQL =
+        "SELECT * FROM assignments a, courses c " +
+        "WHERE a.course_id = c.course_id " +
+        "AND c.course_id = ? " +
+        "AND a.title = ? " +
+        "ORDER BY a.assignment_id";
     
     // public static String GET_TEACHER_FROM_USER_SQL(User user) {
     //     return "SELECT * FROM teachers t, users u " +
