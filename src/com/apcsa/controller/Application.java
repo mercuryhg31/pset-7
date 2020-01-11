@@ -163,7 +163,7 @@ public class Application {
                                 Administrator.viewStudentEnroll();
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                Administrator.viewStudentEnrollByGrade(in); // TODO michael plz
+                                Administrator.viewStudentEnrollByGrade(in); // TODO
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
                                 Administrator.viewStudentEnrollByCourse(in);
@@ -209,7 +209,7 @@ public class Application {
     /**
      * Root method - maybe this shouldn't be in Application, but User?
      */
-    public void resetPassword() { // TODO wip
+    public void resetPassword() {
         System.out.print("\nUsername: ");
         String username = in.next();
         try {

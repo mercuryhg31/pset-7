@@ -253,7 +253,7 @@ public class Teacher extends User {
     }
 
     public static int getAssignment(User user, Scanner in, String course_no, int marking_period, int is_midterm, int is_final) {
-        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final); // TODO this is choosing all of their assignments
+        ArrayList<String> assignments = PowerSchool.getTeacherAssignments(user, course_no, marking_period, is_midterm, is_final);
         ArrayList<Integer> points = PowerSchool.getTeacherAssignmentPoints(user, course_no, marking_period, is_midterm, is_final);
         int count = 0;
 
@@ -275,7 +275,7 @@ public class Teacher extends User {
             selection = Utils.getInt(in, 0);
         } while (selection < 0 || selection > count);
 
-        return PowerSchool.getAssignmentId(course_no, assignments.get(selection-1)); // TODO get assignment id
+        return PowerSchool.getAssignmentId(course_no, assignments.get(selection-1));
     }
 
     public static void enterGrade(User user, Scanner in) {
