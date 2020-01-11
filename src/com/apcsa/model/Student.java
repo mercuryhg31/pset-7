@@ -92,7 +92,13 @@ public class Student extends User {
             return null;
         }
         for (int i = 1; i <= courses.size(); i++) {
-            System.out.println("[" + i + "]" + " " + courses.get(i-1));
+            double grade = PowerSchool.getCourseGrade(studentId, courses.get(i));
+            String gradePrint = "";
+            // TODO
+            // if (grade == null) { 
+            //     gradePrint = "--";
+            // }
+            System.out.println(i + "." + " " + courses.get(i-1) + " / " + );
             numCourses = i;
         }
         System.out.print("\n");
