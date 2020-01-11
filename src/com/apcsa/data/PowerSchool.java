@@ -366,9 +366,19 @@ public class PowerSchool {
         return -1;
     }
 
-    public static int enterGrades(int course_id, int assignment_id, int student_id, int points_earned, int points_possible) {
+    public static int enterGrade(int course_id, int assignment_id, int student_id, int points_earned, int points_possible) {
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement();
+             Statement stmt2 = conn.createStatement()) {
+            
+            try (ResultSet rs = stmt2.executeQuery(
+                "SELECT * FROM assignment_grades WHERE course_id = " + course_id +
+                " AND student_id = " + student_id + " AND assignment_id = " + assignment_id)) {
+                if (rs.next()) {
+                    System.out.println("\nA grade already exists for this assignment and student.\n");
+                    return 0;
+                }
+            }
 
             if (stmt.executeUpdate(QueryUtils.ENTER_GRADE_SQL(course_id, assignment_id, student_id, points_earned, points_possible)) == 1) {
                 System.out.println("\nSuccessfully entered grade.\n");
@@ -449,7 +459,9 @@ public class PowerSchool {
                     } else {
                         return 1;
                     }
-                } return 0;
+                }
+                System.out.println("\nSuccessfully deleted " + title + ".\n");
+                return 0;
             } else {
                 return 1;
             }
@@ -498,6 +510,50 @@ public class PowerSchool {
             e.printStackTrace();
         }
         return assignmentId;
+    }
+
+    public static int getAssignmentId(String course_no, String title) {
+        int course_id = getCourseIdFromCourseNo(course_no);
+        int assignmentId = 0;
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(QueryUtils.GET_ASSIGNMENT_ID_FOR_ALTER_SQL)) {
+
+            stmt.setInt(1, course_id);
+            stmt.setString(2, title);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    assignmentId = rs.getInt("assignment_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return assignmentId;
+    }
+
+    public static String getAssignmentName(String course_no, int assignment_id) {
+        int course_id = getCourseIdFromCourseNo(course_no);
+        String title = "";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM assignments a, courses c " +
+            "WHERE a.course_id = c.course_id " +
+            "AND c.course_id = ? " +
+            "AND a.assignment_id = ? " +
+            "ORDER BY a.assignment_id")) {
+
+            stmt.setInt(1, course_id);
+            stmt.setInt(2, assignment_id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    title = rs.getString("title");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return title;
     }
 
     public static int getCourseIdFromCourseNo(String courseNo) {
