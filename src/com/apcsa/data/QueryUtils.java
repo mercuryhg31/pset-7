@@ -146,6 +146,12 @@ public class QueryUtils {
 
     }
 
+    public static String GET_STUDENT_GRADES_ALL_SQL(int studentId) {
+        return "SELECT * FROM course_grades " + 
+        "WHERE student_id = " + String.valueOf(studentId) + " " + 
+        "ORDER BY course_id";
+    }
+
     public static String GET_STUDENT_GRADES_SQL(int studentId) {
         return "SELECT grade FROM course_grades " +
         "WHERE student_id = " + String.valueOf(studentId) + " " +

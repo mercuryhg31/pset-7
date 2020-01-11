@@ -764,6 +764,63 @@ public class PowerSchool {
         return students;
     }
 
+    public static void setStudentGpa(int studentId) {
+        Student student = null;
+        ArrayList<Double> courseGrades = new ArrayList<Double>();
+        ArrayList<Integer> courseIds = new ArrayList<Integer>();
+        ArrayList<Double> courseWeights = new ArrayList<Double>();
+        try(Connection conn = getConnection()) {
+            
+            Statement stmt = conn.createStatement();
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_BY_STUDENT_ID_SQL(studentId))) {
+                if (rs.next()) {
+                    student = new Student(rs);
+                }
+            }
+
+            stmt = conn.createStatement();
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_GRADES_ALL_SQL(studentId))) {
+                while (rs.next()) {
+                    courseGrades.add(rs.getDouble("grade"));
+                    courseIds.add(rs.getInt("course_id"));
+                }
+            }
+
+            stmt = conn.createStatement();
+            for (int courseId : courseIds) {
+                try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSES_SQL(courseId))) {
+                    if (rs.next()) {
+                        courseWeights.add(rs.getDouble("weight"));
+                    }
+                }
+            }
+            
+            double totalWeight = 0;
+            int numCourses = courseGrades.size();
+            double calculatedGpa = -1.0;
+            for (int i = 0; i < courseGrades.size(); i++) {
+                totalWeight += courseWeights.get(i);
+                calculatedGpa = courseGrades.get(i) * courseWeights.get(i);
+            }
+
+            if (courseGrades != null) {
+                calculatedGpa = (((calculatedGpa / totalWeight) / numCourses) / 100) * 4.0;
+
+            }
+
+            student.setGPA(calculatedGpa);
+
+            stmt = conn.createStatement();
+            stmt.executeUpdate("UPDATE students SET gpa = " + student.getGPA() + " WHERE student_id = " + student.getStudentId());
+            conn.commit();
+
+            
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     // public static int getStudentRank(ArrayList<Student> students) { // TODO
