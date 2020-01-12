@@ -818,7 +818,6 @@ public class PowerSchool {
     }
 
     public static boolean gradePretest(int student_id, int course_id) {
-        ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
