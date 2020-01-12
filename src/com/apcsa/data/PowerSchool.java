@@ -766,7 +766,9 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADE_SQL(student_id))) {
                 while (rs.next()) {
-                    courses.add(rs.getString("title") + " / " + (Double.valueOf(rs.getInt("grade")).isNaN() ? "--" : rs.getInt("grade"))); // TODO this returns 0 for not graded stuff yet, fix that
+                    courses.add(rs.getString("title") + " / " + ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? "--" : rs.getInt("grade"))); // TODO this returns 0 for not graded stuff yet, fix that
+                    System.out.println((String.valueOf(rs.getInt("grade") + 1).isEmpty()) ? "--" : rs.getInt("grade"));
+                    System.out.println(rs.getInt("grade") + 1);
                 }
             }
         } catch (SQLException e) {
