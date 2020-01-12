@@ -249,6 +249,8 @@ public class Teacher extends User {
                     if (PowerSchool.deleteAssignment(course_id, assignment_id, title) == 1) {
                         System.out.println("\nThere was an error.\n");
                     }
+                } else {
+                    System.out.println();
                 }
             }
         }
@@ -344,6 +346,8 @@ public class Teacher extends User {
                     if (PowerSchool.enterGrade(course_id, assignment_id, student.getStudentId(), newGrade, PowerSchool.getAssignmentPoints(course_no, assignment_id)) == 1) {
                         System.out.println("\nThere was an error.\n");
                     }
+                } else {
+                    System.out.println();
                 }
             }
         }
