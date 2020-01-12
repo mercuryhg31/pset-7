@@ -322,24 +322,29 @@ public class Teacher extends User {
                     break;
             }
             int assignment_id = getAssignment(user, in, course_no, marking_period, is_midterm, is_final);
-            String title = PowerSchool.getAssignmentName(course_no, assignment_id);
+            if (assignment_id == 0) {
+                System.out.println("\nYou have no assignments here.\n");
+            } else {
+                String title = PowerSchool.getAssignmentName(course_no, assignment_id);
 
-            Student student = getStudent(in, course_no);
-
-            System.out.println("\nAssignment: " + title + " (" + PowerSchool.getAssignmentPoints(course_no, assignment_id) + " pts)");
-            System.out.println("Student: " + student.getName());
-            System.out.println("Current Grade: " + "NEED TO PROGRAM"); // TODO NEED TO PROGRAM
-            System.out.print("\n");
-
-            int newGrade;
-            do {
-                System.out.print("New Grade: ");
-                newGrade = Utils.getInt(in, -1);
-            } while (newGrade < 0 || newGrade > PowerSchool.getAssignmentPoints(course_no, assignment_id));
-
-            if (Utils.confirm("\nAre you sure you want to enter this grade? (y/n) ", in)){
-                if (PowerSchool.enterGrade(course_id, assignment_id, student.getStudentId(), newGrade, PowerSchool.getAssignmentPoints(course_no, assignment_id)) == 1) {
-                    System.out.println("\nThere was an error.\n");
+                Student student = getStudent(in, course_no);
+    
+                System.out.println("\nAssignment: " + title + " (" + PowerSchool.getAssignmentPoints(course_no, assignment_id) + " pts)");
+                System.out.println("Student: " + student.getName());
+                int grade = PowerSchool.getStudentGradeInCourse(PowerSchool.getCourseIdFromCourseNo(course_no), student.getStudentId());
+                System.out.println("Current Grade: " + (grade == -1 ? "--" : grade)); // TODO NEED TO PROGRAM
+                System.out.print("\n");
+    
+                int newGrade;
+                do {
+                    System.out.print("New Grade: ");
+                    newGrade = Utils.getInt(in, -1);
+                } while (newGrade < 0 || newGrade > PowerSchool.getAssignmentPoints(course_no, assignment_id));
+    
+                if (Utils.confirm("\nAre you sure you want to enter this grade? (y/n) ", in)){
+                    if (PowerSchool.enterGrade(course_id, assignment_id, student.getStudentId(), newGrade, PowerSchool.getAssignmentPoints(course_no, assignment_id)) == 1) {
+                        System.out.println("\nThere was an error.\n");
+                    }
                 }
             }
         }

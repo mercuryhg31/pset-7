@@ -841,7 +841,8 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery("SELECT * FROM course_grades WHERE student_id = " + student_id + " AND course_id = " + course_id)) {
                 while (rs.next()) {
-                    return ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? -1 : rs.getInt("grade"));
+                    return (!gradePretest(student_id, rs.getInt("course_id")) ? -1 : rs.getInt("grade"));
+                    // return ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? -1 : rs.getInt("grade"));
                 }
             }
         } catch (SQLException e) {
