@@ -178,6 +178,10 @@ public class QueryUtils {
         "ORDER BY last_name, first_name";
     }
 
+    public static String GET_COURSE_ID_BY_TITLE_SQL(String title) {
+        return "SELECT course_id FROM courses WHERE title = \"" + title + "\"";
+    }
+
     // // Gives the title of a course given the course id (ex something like AP Computer Science Principles)
     // public static String GET_COURSE_TITLE_SQL(int courseId) {
     //     return "SELECT title FROM courses " + 

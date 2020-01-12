@@ -264,6 +264,30 @@ public class PowerSchool {
         return grades;
     }
 
+    public static double getCourseGrade(int studentId, String title) {
+        double grade = 0;
+        try (Connection conn = getConnection()) {
+            int courseId = 0;
+
+            Statement stmt = conn.createStatement();
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_COURSE_ID_BY_TITLE_SQL(title))) {
+                if (rs.next()) {
+                    courseId = rs.getInt("course_id");
+                }
+            }
+            
+            stmt = conn.createStatement();
+            try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_GRADES_SQL(studentId, courseId))) {
+                if (rs.next()) {
+                    grade = rs.getDouble("grade");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return grade;
+    }
+
     public static String getCourseTitle(int courseId) {
         String title = new String();
 
