@@ -447,15 +447,34 @@ public class PowerSchool {
         if (mid) exams += midterm;
         if (fin) exams += final_exam;
 
-        double grade = (year) * 0.2 + (year) * 0.1;
+        double grade = year * 0.2 + exams * 0.1;
+        System.out.println(year * 0.2);
+        System.out.println(exams * 0.1);
+        System.out.println();
+
+        if (mid || fin) {
+            grade = (year * 0.2) + (exams * 0.1);
+        } else {
+            int numMp = 0;
+            if (one) numMp++;
+            if (two) numMp++;
+            if (three) numMp++;
+            if (four) numMp++;
+            
+            grade = year / numMp;
+        }
+
+
         if (grade / grade == 1) set += ", grade = " + grade;
 
         System.out.println(mp1);
         System.out.println(mp2);
         System.out.println(mp3);
         System.out.println(mp4);
+        System.out.println(year);
         System.out.println(midterm);
         System.out.println(final_exam);
+        System.out.println(exams);
         System.out.println(grade);
         
 

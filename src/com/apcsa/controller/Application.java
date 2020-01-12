@@ -101,7 +101,7 @@ public class Application {
                     System.out.println("~~~~~~~~~~~~~~~~~~~~~");
                     System.out.println("credit to amazon.com");
                     System.out.println("          & nicole\n");
-                } else {
+                } else if (username.equals("rwilson")) {
                     System.out.println();
                 }
                 boolean validLogin = true;
@@ -119,8 +119,7 @@ public class Application {
                                 changePassword();
                                 break;
                             case LOGOUT:
-                                logout();
-                                validLogin = false;
+                                if (logout()) validLogin = false;
                                 break;
                             default:
                                 System.out.println("\nInvalid selection.\n");
@@ -144,8 +143,7 @@ public class Application {
                                 changePassword();
                                 break;
                             case LOGOUT:
-                                logout();
-                                validLogin = false;
+                                if (logout()) validLogin = false;
                                 break;
                             default:
                                 System.out.println("\nInvalid selection.\n");
@@ -172,8 +170,7 @@ public class Application {
                                 changePassword();
                                 break;
                             case LOGOUT:
-                                logout();
-                                validLogin = false;
+                                if (logout()) validLogin = false;
                                 break;
                             default:
                                 System.out.println("\nInvalid selection.\n");
@@ -188,8 +185,7 @@ public class Application {
                                 factoryReset();
                                 break;
                             case LOGOUT:
-                                logout();
-                                validLogin = false;
+                                if (logout()) validLogin = false;
                                 break;
                             case SHUTDOWN:
                                 shutdown();
@@ -268,10 +264,13 @@ public class Application {
     /**
      * For all account types
      */
-    public void logout() {
+    public boolean logout() {
         if (Utils.confirm("Are you sure you want to logout? (y/n) ", in)) {
             activeUser = null;
+            return true;
         }
+        System.out.println();
+        return false;
     }
 
     /**
