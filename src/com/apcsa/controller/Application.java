@@ -78,6 +78,7 @@ public class Application {
                 if (isFirstLogin() && !activeUser.isRoot()) {
                     System.out.print("\nEnter new password: ");
                     activeUser.setPassword(Utils.getHash(in.next()));
+                    System.out.println("\nSuccessfully changed password.");
                 }
 
                 System.out.println("\nHello, again, " + activeUser.getFirstName() + "!\n");
