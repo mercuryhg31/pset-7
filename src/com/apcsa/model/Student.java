@@ -95,13 +95,7 @@ public class Student extends User {
             return null;
         }
         for (int i = 1; i <= courses.size(); i++) {
-            double grade = PowerSchool.getCourseGrade(studentId, courses.get(i));
-            String gradePrint = "";
-            // TODO
-            // if (grade == null) { 
-            //     gradePrint = "--";
-            // }
-            System.out.println(i + "." + " " + courses.get(i-1) + " / " + );
+            System.out.println("[" + i + "]" + " " + courses.get(i-1));
             numCourses = i;
         }
         System.out.print("\n");
@@ -187,7 +181,7 @@ public class Student extends User {
                 break;
         }
 
-        ArrayList<String> assignments = PowerSchool.getStudentAssignments(((Student) user).getStudentId(), courseId);
+        ArrayList<String> assignments = PowerSchool.getStudentAssignments(((Student) user).getStudentId(), courseId, marking_period, is_midterm, is_final);
         if (assignments.isEmpty()) {
             System.out.println("\nThere are no assignments to display.\n");
         } else {
