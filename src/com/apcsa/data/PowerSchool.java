@@ -448,9 +448,9 @@ public class PowerSchool {
         if (fin) exams += final_exam;
 
         double grade = year * 0.2 + exams * 0.1;
-        System.out.println(year * 0.2);
-        System.out.println(exams * 0.1);
-        System.out.println();
+        // System.out.println(year * 0.2);
+        // System.out.println(exams * 0.1);
+        // System.out.println();
 
         if (mid || fin) {
             grade = (year * 0.2) + (exams * 0.1);
@@ -467,15 +467,15 @@ public class PowerSchool {
 
         if (grade / grade == 1) set += ", grade = " + grade;
 
-        System.out.println(mp1);
-        System.out.println(mp2);
-        System.out.println(mp3);
-        System.out.println(mp4);
-        System.out.println(year);
-        System.out.println(midterm);
-        System.out.println(final_exam);
-        System.out.println(exams);
-        System.out.println(grade);
+        // System.out.println(mp1);
+        // System.out.println(mp2);
+        // System.out.println(mp3);
+        // System.out.println(mp4);
+        // System.out.println(year);
+        // System.out.println(midterm);
+        // System.out.println(final_exam);
+        // System.out.println(exams);
+        // System.out.println(grade);
         
 
         String updateCG =

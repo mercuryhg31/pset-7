@@ -260,7 +260,6 @@ public class Teacher extends User {
         int count = 0;
 
         if (assignments.isEmpty()) {
-            System.out.println("You have no assignments here.");
             return 0;
         }
 
