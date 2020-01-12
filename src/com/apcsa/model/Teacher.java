@@ -101,7 +101,8 @@ public class Teacher extends User {
             System.out.println();
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + " NEEDS TO BE PROGRAMMED!!!"); // TODO ALSO NEED TO PROGRAM
+                int grade = PowerSchool.getStudentGradeInCourse(PowerSchool.getCourseIdFromCourseNo(courseNo), student.getStudentId());
+                System.out.println(i++ + ". " + student.getName() + " / " + (grade == -1 ? "--" : grade)); // TODO ALSO NEED TO PROGRAM
             }
             System.out.println();
         }
@@ -191,6 +192,8 @@ public class Teacher extends User {
                 if (PowerSchool.createAssignment(course_id, marking_period, is_midterm, is_final, title, point_value) == 1) {
                     System.out.println("\nThere was an error.\n");
                 }
+            } else {
+                System.out.println();
             }
         }
     }
