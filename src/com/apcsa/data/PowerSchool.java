@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,9 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.lang.Thread;
-
-import javax.management.Query;
 
 import java.util.ArrayList;
 import com.apcsa.controller.Utils;
@@ -358,7 +354,7 @@ public class PowerSchool {
         return null;
     }
 
-    public static ArrayList<Student> getAssignmentStudents(String course_no) { // TODO
+    public static ArrayList<Student> getAssignmentStudents(String course_no) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -479,7 +475,7 @@ public class PowerSchool {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades ag, assignments a WHERE ag.course_id = a.course_id AND ag.assignment_id = a.assignment_id AND ag.student_id = " + student_id + " AND ag.course_id = " + course_id + " AND a.marking_period = " + mpVal + " AND a.is_midterm = " + midtermVal + " AND a.is_final = " + finalVal)) { // TODO
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades ag, assignments a WHERE ag.course_id = a.course_id AND ag.assignment_id = a.assignment_id AND ag.student_id = " + student_id + " AND ag.course_id = " + course_id + " AND a.marking_period = " + mpVal + " AND a.is_midterm = " + midtermVal + " AND a.is_final = " + finalVal)) { // TODO damn, this is a bad method, but here it is
                 while (rs.next()) {
                     ptsPoss += rs.getInt("points_possible");
                     ptsEarned += rs.getInt("points_earned");
@@ -492,7 +488,7 @@ public class PowerSchool {
         return (ptsEarned / ptsPoss);
     }
 
-    public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) { // TODO
+    public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
@@ -510,7 +506,7 @@ public class PowerSchool {
         return null;
     }
 
-    // public static ArrayList<Integer> getAssignment(User user, int course_id, int assignment_id) { // TODO
+    // public static ArrayList<Integer> getAssignment(User user, int course_id, int assignment_id) { // todo
     //     try (Connection conn = getConnection();
     //          Statement stmt = conn.createStatement()) {
 
@@ -720,7 +716,7 @@ public class PowerSchool {
         return assignments;
     }
 
-    public static ArrayList<String> getStudentCourses(int student_id) { // TODO for student
+    public static ArrayList<String> getStudentCourses(int student_id) {
         ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
@@ -736,7 +732,10 @@ public class PowerSchool {
         return courses;
     }
 
-    public static double getStudentCourseGrades(String title, int student_id) { // TODO for student or not - calculate grade
+    /**
+     * for student or not - calculate grade
+     */
+    public static double getStudentCourseGrades(String title, int student_id) {
         double grade = 0;
         double numGrades = 0;
         try (Connection conn = getConnection();
@@ -873,7 +872,7 @@ public class PowerSchool {
 
     // This should be run every time a grade is updated/changed (meaning when gpa is changed). Wait idea just set everyone using the getStudentRanks() (rename it setStudentsRanks() or whatever)
     // but then make a function that whenever they want to get the student rank just update the ranks (set function) and then getStudentsByGrade() where the grade
-    // is equal to whatever the grade that was selected. TODO
+    // is equal to whatever the grade that was selected. todo
     public static void setStudentRank(int grade) {
 
         ArrayList<Student> students = new ArrayList<Student>(getStudentsByGrade(grade));

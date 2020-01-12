@@ -1,6 +1,5 @@
 package com.apcsa.model;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 
 import com.apcsa.controller.Utils;

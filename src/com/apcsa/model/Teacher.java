@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.apcsa.controller.Application;
 import com.apcsa.controller.Utils;
 import com.apcsa.data.PowerSchool;
 import com.apcsa.model.User;
@@ -102,7 +101,7 @@ public class Teacher extends User {
             System.out.println();
             int i = 1;
             for (Student student : students) {
-                System.out.println(i++ + ". " + student.getName() + " / " + " NEEDS TO BE PROGRAMMED!!!"); // TODO weird gpa?? do they have one or not??
+                System.out.println(i++ + ". " + student.getName() + " / " + " NEEDS TO BE PROGRAMMED!!!"); // TODO ALSO NEED TO PROGRAM
             }
             System.out.println();
         }

@@ -1,7 +1,5 @@
 package com.apcsa.data;
 
-import com.apcsa.model.User;
-
 public class QueryUtils {
 
     /////// QUERY CONSTANTS ///////////////////////////////////////////////////////////////
@@ -165,7 +163,7 @@ public class QueryUtils {
 
     }
 
-    // // Gives grades from all courses that a student is taking given their student id // TODO do we need this?
+    // // Gives grades from all courses that a student is taking given their student id // todo do we need this? who knows
     // public static String GET_STUDENT_COURSES_SQL(int studentId) {
     //     return "SELECT course_id FROM course_grades " + 
     //     "WHERE student_id = " + String.valueOf(studentId) + " " +
@@ -214,7 +212,7 @@ public class QueryUtils {
     }
 
 
-    // Allows students to see their grades by course. TODO
+    // Allows students to see their grades by course. todo maybe, i took out the todo so that i could see what we actually needed to do
 
     // public static final String GET_STUDENT_GRADES_COURSE_SQL =
     //     "SELECT c.course_no FROM "
