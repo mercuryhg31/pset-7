@@ -416,27 +416,47 @@ public class PowerSchool {
 
     public static void updateCourseGrades(int student_id, int course_id) {
         String set = "";
-        double mp1 = calculateMP(1, student_id, course_id);
+        double mp1 = calculateMP(1, student_id, course_id); boolean one = false;
         if (mp1 / mp1 == 1) set += ", mp1 = " + mp1;
-        double mp2 = calculateMP(2, student_id, course_id);
+        if (mp1 / mp1 == 1) one = true;;
+        double mp2 = calculateMP(2, student_id, course_id); boolean two = false;
         if (mp2 / mp2 == 1) set += ", mp2 = " + mp2;
-        double mp3 = calculateMP(3, student_id, course_id);
+        if (mp2 / mp2 == 1) two = true;
+        double mp3 = calculateMP(3, student_id, course_id); boolean three = false;
         if (mp3 / mp3 == 1) set += ", mp3 = " + mp3;
-        double mp4 = calculateMP(4, student_id, course_id);
+        if (mp3 / mp3 == 1) three = true;;
+        double mp4 = calculateMP(4, student_id, course_id); boolean four = false;
         if (mp4 / mp4 == 1) set += ", mp4 = " + mp4;
-        double midterm = calculateMP(5, student_id, course_id);
+        if (mp4 / mp4 == 1) four = true;
+        double midterm = calculateMP(5, student_id, course_id); boolean mid = false;
         if (midterm / midterm == 1) set += ", midterm_exam = " + midterm;
-        double final_exam = calculateMP(6, student_id, course_id);
+        if (midterm / midterm == 1) mid = true;
+        double final_exam = calculateMP(6, student_id, course_id); boolean fin = false;
         if (final_exam / final_exam == 1) set += ", final_exam = " + final_exam;
-        double grade = ((mp1 + mp2 + mp3 + mp4) * 0.2 + (midterm + final_exam) * 0.1);
+        if (final_exam / final_exam == 1) fin = true;
+
+
+        // double grade = ((mp1 + mp2 + mp3 + mp4) * 0.2 + (midterm + final_exam) * 0.1);
+        double year = 0;
+        if (one) year += mp1;
+        if (two) year += mp2;
+        if (three) year += mp3;
+        if (four) year += mp4;
+
+        double exams = 0;
+        if (mid) exams += midterm;
+        if (fin) exams += final_exam;
+
+        double grade = (year) * 0.2 + (year) * 0.1;
         if (grade / grade == 1) set += ", grade = " + grade;
 
-        // System.out.println(mp1);
-        // System.out.println(mp2);
-        // System.out.println(mp3);
-        // System.out.println(mp4);
-        // System.out.println(midterm);
-        // System.out.println(final_exam);
+        System.out.println(mp1);
+        System.out.println(mp2);
+        System.out.println(mp3);
+        System.out.println(mp4);
+        System.out.println(midterm);
+        System.out.println(final_exam);
+        System.out.println(grade);
         
 
         String updateCG =
@@ -485,7 +505,7 @@ public class PowerSchool {
             e.printStackTrace();
         }
 
-        return (ptsEarned / ptsPoss);
+        return (ptsEarned / ptsPoss) * 100;
     }
 
     public static ArrayList<Integer> getTeacherAssignmentPoints(User user, String course_no, int marking_period, int is_midterm, int is_final) {
@@ -766,15 +786,49 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADE_SQL(student_id))) {
                 while (rs.next()) {
-                    courses.add(rs.getString("title") + " / " + ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? "--" : rs.getInt("grade"))); // TODO this returns 0 for not graded stuff yet, fix that
-                    System.out.println((String.valueOf(rs.getInt("grade") + 1).isEmpty()) ? "--" : rs.getInt("grade"));
-                    System.out.println(rs.getInt("grade") + 1);
+                    // courses.add(rs.getString("title") + " / " + ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? "--" : rs.getInt("grade"))); // TODO this returns 0 for not graded stuff yet, fix that
+                    // System.out.println((String.valueOf(rs.getInt("grade") + 1).isEmpty()) ? "--" : rs.getInt("grade"));
+                    // System.out.println(rs.getInt("grade") + 1);
+                    courses.add(rs.getString("title") + " / " + (!gradePretest(student_id, rs.getInt("course_id")) ? "--" : rs.getInt("grade")));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return courses;
+    }
+
+    public static boolean gradePretest(int student_id, int course_id) {
+        ArrayList<String> courses = new ArrayList<String>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades WHERE student_id = " + student_id + " AND course_id = " + course_id)) { // TODO
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static int getStudentGradeInCourse(int course_id, int student_id) {
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM course_grades WHERE student_id = " + student_id + " AND course_id = " + course_id)) {
+                while (rs.next()) {
+                    return ((Double.valueOf(rs.getInt("grade") + 1).isNaN()) ? -1 : rs.getInt("grade"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 
