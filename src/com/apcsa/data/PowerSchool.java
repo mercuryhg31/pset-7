@@ -648,6 +648,13 @@ public class PowerSchool {
     }
 
     // KEEP THIS, PLEASE, JUST DON'T DELETE IT, IT IS A MONUMENT TO THE BIGGEST, STUPIDEST BREAKTHROUGH OF MY LIFE
+    // also, this is actually necessary now, god bless
+    /**
+     * Good times.
+     * 
+     * @param student_id
+     * @return course numbers of student courses
+     */
     public static ArrayList<String> getStudentCoursesBreakthrough(int student_id) {
         ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
@@ -655,13 +662,29 @@ public class PowerSchool {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSES_SQL(student_id))) {
                 while (rs.next()) {
-                    courses.add(rs.getString("title"));
+                    courses.add(rs.getString("course_no"));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return courses;
+    }
+
+    public static ArrayList<String> getStudentAssignments(int student_id, int course_id) {
+        ArrayList<String> assignments = new ArrayList<String>();
+        try (Connection conn = getConnection();
+            Statement stmt = conn.createStatement()) {
+
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM assignment_grades ag LEFT JOIN assignments a ON ag.assignment_id = a.assignment_id AND ag.course_id = a.course_id WHERE ag.student_id = " + student_id + " AND ag.course_id = " + course_id)) {
+                while (rs.next()) {
+                    assignments.add(rs.getString("title") + " / " + rs.getInt("points_earned") + " (out of " + rs.getInt("points_possible") + " pts)");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return assignments;
     }
 
     public static ArrayList<String> getStudentCourses(int student_id) { // TODO for student
@@ -698,14 +721,20 @@ public class PowerSchool {
         return (grade / numGrades);
     }
 
-    public static ArrayList<String> getStudentCoursesAndGrades(int student_id) { // TODO for student
+    /**
+     * For student, view grades by course
+     * 
+     * @param student_id
+     * @return array of strings, to be printed in succession as they are
+     */
+    public static ArrayList<String> getStudentCoursesAndGrades(int student_id) {
         ArrayList<String> courses = new ArrayList<String>();
         try (Connection conn = getConnection();
             Statement stmt = conn.createStatement()) {
 
             try (ResultSet rs = stmt.executeQuery(QueryUtils.GET_STUDENT_COURSE_GRADE_SQL(student_id))) {
                 while (rs.next()) {
-                    courses.add(rs.getString("title") + " / " + rs.getInt("grade"));
+                    courses.add(rs.getString("title") + " / " + (Double.valueOf(rs.getInt("grade")).isNaN() ? "--" : rs.getInt("grade"))); // TODO this returns 0 for not graded stuff yet, fix that
                 }
             }
         } catch (SQLException e) {

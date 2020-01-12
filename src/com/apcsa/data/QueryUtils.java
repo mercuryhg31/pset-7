@@ -254,7 +254,7 @@ public class QueryUtils {
     public static String GET_STUDENT_COURSE_GRADE_SQL(int student_id) { // for student, because if i don't start commenting, i will loose what small amount of sanity i have regained through my 3 hours of sleep
         return "SELECT * FROM courses c, students s, course_grades cg " +
         "WHERE c.course_id = cg.course_id AND cg.student_id = s.student_id " +
-        "AND student_id = " + student_id;
+        "AND cg.student_id = " + student_id;
     }
 
     // public static String GET_ASSIGNMENT_SQL(int teacher_id, int course_id, int assignment_id) {

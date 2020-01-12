@@ -110,10 +110,10 @@ public class Application {
                         studentMenu();
                         switch (returnSelection(Utils.getInt(in, -1))) {
                             case VIEW_GRADES:
-                                Student.viewCourseGrades(activeUser, in); // TODO
+                                Student.viewCourseGrades(activeUser, in);
                                 break;
                             case VIEW_GRADES_COURSE:
-                                Student.viewAssngGradesByCourse(); // TODO
+                                Student.viewAssngGradesByCourse(activeUser, in);
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -138,7 +138,7 @@ public class Application {
                                 Teacher.deleteAssignment(activeUser, in);
                                 break;
                             case ENTER_GRADE:
-                                Teacher.enterGrade(activeUser, in); // TODO
+                                Teacher.enterGrade(activeUser, in); // TODO test thoroughly
                                 break;
                             case CHANGE_PW:
                                 changePassword();
@@ -163,7 +163,7 @@ public class Application {
                                 Administrator.viewStudentEnroll();
                                 break;
                             case VIEW_ST_ENROLL_GRADE:
-                                Administrator.viewStudentEnrollByGrade(in); // TODO
+                                Administrator.viewStudentEnrollByGrade(in); // TODO reorder students by ranking first and test if ranking works perfectly fine
                                 break;
                             case VIEW_ST_ENROLL_COURSE:
                                 Administrator.viewStudentEnrollByCourse(in);

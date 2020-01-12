@@ -81,8 +81,11 @@ public class Student extends User {
     /**
      * Not a menu method.
      * Okay, this whole method is actually irrelevant, but leave it because it functions and I will use it for admin, I wanna cry, but of happiness rn.
+     * Nevermind, it is now relevant, god bless.
      *
      * @param studentId
+     * @param in
+     * @return course no of selected course
      */
     public static String getCourse(int studentId, Scanner in) {
         ArrayList<String> courses = PowerSchool.getStudentCoursesBreakthrough(studentId);
@@ -102,24 +105,90 @@ public class Student extends User {
             selection = Utils.getInt(in, -1);
         } while (selection < 0 || selection > numCourses);
         return courses.get(selection - 1);
-
-        // System.out.println();
-        // String courseNo = getCourse(((Student) user).getStudentId(), in);
-        // System.out.println(courseNo);
-        // int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
-        // System.out.println(courseId);
     }
 
-    public static void getCourses() {
-        
+    /**
+     * Gets marking period (or midterm or final) selection
+     * Not a menu method.
+     *
+     * @param in
+     * @return numbers 1-6 for mp or exams
+     */
+    public static int getMPSelection(Scanner in) {
+        System.out.println("\nChoose a marking period or exam status.\n");
+        System.out.println("[1] MP1 assignment.");
+        System.out.println("[2] MP2 assignment.");
+        System.out.println("[3] MP3 assignment.");
+        System.out.println("[4] MP4 assignment.");
+        System.out.println("[5] Midterm exam.");
+        System.out.println("[6] Final exam.");
+        System.out.print("\n");
+
+        int mpSelection;
+        do {
+            System.out.print("::: ");
+            mpSelection = Utils.getInt(in, -1);
+        } while (mpSelection < 1 || mpSelection > 6);
+
+        return mpSelection;
     }
 
     public static void viewCourseGrades(User user, Scanner in) {
         System.out.println();
-        getCourse(((Student) user).getStudentId(), in);
+        ArrayList<String> courses = PowerSchool.getStudentCoursesAndGrades(((Student) user).getStudentId());
+        for (int i = 1; i <= courses.size(); i++) {
+            System.out.println(i + ". " + courses.get(i-1));
+        }
+        System.out.println();
     }
 
-    public static void viewAssngGradesByCourse() {
+    public static void viewAssngGradesByCourse(User user, Scanner in) {
+        System.out.println();
+        String courseNo = getCourse(((Student) user).getStudentId(), in);
+        int courseId = PowerSchool.getCourseIdFromCourseNo(courseNo);
+        int mpSelection = getMPSelection(in);
+        int marking_period = -1; int is_midterm = -1; int is_final = -1;
+        switch (mpSelection) {
+            case 1:
+                marking_period = mpSelection;
+                is_midterm = 0;
+                is_final = 0;
+                break;
+            case 2:
+                marking_period = mpSelection;
+                is_midterm = 0;
+                is_final = 0;
+                break;
+            case 3:
+                marking_period = mpSelection;
+                is_midterm = 0;
+                is_final = 0;
+                break;
+            case 4:
+                marking_period = mpSelection;
+                is_midterm = 0;
+                is_final = 0;
+                break;
+            case 5:
+                marking_period = 0;
+                is_midterm = 1;
+                is_final = 0;
+                break;
+            case 6:
+                marking_period = 0;
+                is_midterm = 0;
+                is_final = 1;
+                break;
+        }
 
+        ArrayList<String> assignments = PowerSchool.getStudentAssignments(((Student) user).getStudentId(), courseId);
+        if (assignments.isEmpty()) {
+            System.out.println("\nThere are no assignments to display.\n");
+        } else {
+            for (int i = 1; i <= assignments.size(); i++) {
+                System.out.println(i + ". " + assignments.get(i-1));
+            }
+            System.out.println();
+        }
     }
 }
